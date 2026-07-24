@@ -1,0 +1,607 @@
+openapi: 3.1.2
+info:
+  title: NationBuilder V2 Async Processes Imports API
+  version: '2.0'
+  description: 'The NationBuilder V2 API is a JSON:API-compliant API for managing NationBuilder
+
+    resources such as people, donations, events, and lists. It layers a few
+
+    conventions on top of the JSON:API standard, described below. For a broader
+
+    introduction, see the
+
+    [NationBuilder v2 API core concepts](https://support.nationbuilder.com/en/articles/9757369-nationbuilder-v2-api-core-concepts)
+
+    guide.
+
+
+    ### Request and response format
+
+
+    Requests and responses follow the [JSON:API](https://jsonapi.org/) document
+
+    structure: single resources are returned under a top-level `data` member, and
+
+    collections are paginated arrays of resource objects with `links` for the
+
+    current, previous, and next pages. Related resources can be sideloaded into a
+
+    top-level `included` array with the `include` query parameter, and responses
+
+    can be trimmed to specific attributes with `fields[resource_type]` sparse
+
+    fieldsets (plus opt-in `extra_fields[resource_type]` attributes where noted).
+
+    Responses are served as `application/vnd.api+json`; request bodies may be
+
+    sent as `application/vnd.api+json` or `application/json`.
+
+
+    Filtering uses an operator syntax: `filter[attribute]=value` for
+
+    equality (comma-separated values act as OR), and
+
+    `filter[attribute][operator]=value` for other comparisons. String attributes
+
+    support `eq`, `not_eq`, `eql`, `not_eql`, `prefix`, `not_prefix`, `suffix`,
+
+    `not_suffix`, `match`, and `not_match`; numeric and date attributes support
+
+    `eq`, `not_eq`, `gt`, `gte`, `lt`, and `lte`. Note that JSON:API relationship
+
+    routes (`/resource/{id}/relationships/other`) are not provided; related
+
+    resources are reachable through the filtered index URLs given in each
+
+    resource''s `relationships` links.
+
+
+    ### Errors
+
+
+    Error responses use a flat JSON body with a machine-readable `code` and a
+
+    human-readable `message`. Some errors carry additional detail members (for
+
+    example `validation_errors`). The exception is 422 validation failures,
+
+    which return a JSON:API `errors` array locating each invalid field via
+
+    `source.pointer`.
+
+
+    ### Rate limiting
+
+
+    Requests are limited per access token (250 requests per 10-second window).
+
+    Every response includes `RateLimit-Limit`, `RateLimit-Remaining`, and
+
+    `RateLimit-Reset` headers; exceeding the limit returns a 429 with a
+
+    `Retry-After` header.
+
+    '
+servers:
+- url: https://{subdomain}.nationbuilder.com
+  variables:
+    subdomain:
+      default: yournation
+      description: Your NationBuilder nation slug
+security:
+- BearerAuth: []
+tags:
+- name: Imports
+  x-tag-expanded: false
+  description: All kinds of data can be imported into a nation, when this happens we create an import resource as a record of the imported data. Each import has a type attribute defining the kind of data being imported. Find more information on imports and import types [here](https://support.nationbuilder.com/en/articles/2309526-types-of-imports). This version of the imports API does not currently support creating or archiving imports. Please use the v1 Imports API for this functionality [here](https://nationbuilder.com/imports_api).
+paths:
+  /api/v2/imports:
+    parameters:
+    - $ref: '#/components/parameters/import_index_include'
+    - $ref: '#/components/parameters/import_sparse_fields'
+    get:
+      summary: List all imports in a nation
+      tags:
+      - Imports
+      description: List all imports
+      operationId: listImports
+      responses:
+        '200':
+          description: A page of matching imports.
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/import_index_response'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '429':
+          $ref: '#/components/responses/rate_limited'
+  /api/v2/imports/{id}:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/import_show_include'
+    - $ref: '#/components/parameters/import_sparse_fields'
+    get:
+      summary: Show import with provided ID
+      tags:
+      - Imports
+      description: Returns the import that matches the given ID.
+      operationId: showImport
+      responses:
+        '200':
+          description: The requested import.
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/import_show_response'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/not_found'
+        '429':
+          $ref: '#/components/responses/rate_limited'
+components:
+  schemas:
+    error_response:
+      description: The error body returned for 4xx and 5xx responses, with a machine-readable code and a human-readable message. Some errors include additional detail members alongside these two. The exception is 422 validation failures, which are returned as JSON:API errors documents instead.
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code identifying the failure.
+          examples:
+          - not_found
+        message:
+          type: string
+          description: Human-readable explanation of the failure.
+          examples:
+          - Record not found
+    show_document:
+      description: The JSON:API top-level document shape for responses returning a single resource under the data member.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: object
+          description: The primary resource object; each resource binds its concrete schema here via allOf composition.
+        included:
+          $ref: '#/components/schemas/included'
+        meta:
+          type: object
+          description: Non-standard information about the document. Empty unless the endpoint has metadata to convey.
+    resource_identifier:
+      description: A JSON:API resource identifier object, the type/id pair that uniquely identifies a single resource.
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the resource.
+          examples:
+          - '1'
+        type:
+          type: string
+          description: The JSON:API resource type.
+    import_index_response:
+      description: A paginated JSON:API response containing a list of imports.
+      allOf:
+      - $ref: '#/components/schemas/index_document'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/import_response_data'
+    import_field_values:
+      description: Readable import attribute names selectable with sparse fieldsets (fields[imports]).
+      type: string
+      enum:
+      - content_head
+      - created_at
+      - error_lines
+      - file_name
+      - finished_at
+      - is_overwritable
+      - lines_count
+      - rows_successful
+      - rows_unsuccessful
+      - rows_updated
+      - started_at
+      - status
+      - tag_list
+      - type
+      - updated_at
+    pagination_links:
+      description: JSON:API pagination links for the pages of a collection. A key whose page is unavailable, or that the server's pagination strategy does not provide, is omitted or null.
+      type: object
+      properties:
+        self:
+          type: string
+          description: Link to the current page.
+          examples:
+          - /articles?page[number]=2
+        first:
+          type:
+          - string
+          - 'null'
+          description: Link to the first page.
+          examples:
+          - /articles?page[number]=1
+        last:
+          type:
+          - string
+          - 'null'
+          description: Link to the last page.
+          examples:
+          - /articles?page[number]=5
+        prev:
+          type:
+          - string
+          - 'null'
+          description: Link to the previous page.
+          examples:
+          - /articles?page[number]=1
+        next:
+          type:
+          - string
+          - 'null'
+          description: Link to the next page.
+          examples:
+          - /articles?page[number]=3
+    index_document:
+      description: The JSON:API top-level document shape for paginated collection responses, with resource objects under data and pagination links.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: array
+          description: The page of resource objects for this collection; each resource binds its concrete item schema here via allOf composition.
+        links:
+          $ref: '#/components/schemas/pagination_links'
+        included:
+          $ref: '#/components/schemas/included'
+        meta:
+          type: object
+          description: Non-standard information about the document, such as requested statistics. Empty unless the endpoint has metadata to convey.
+    import_sideload_values:
+      description: Relationship names that can be sideloaded with the include query parameter on import endpoints.
+      type: string
+      enum:
+      - author
+      - point_person
+      - signups
+      - terminator
+    rate_limited_response:
+      description: The body returned by the rate limiter when an access token exceeds its request quota.
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          description: Human-readable explanation of the rate limit.
+          examples:
+          - You have made too many requests. Please try again later.
+    import_show_response:
+      description: A JSON:API response containing a single import.
+      allOf:
+      - $ref: '#/components/schemas/show_document'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/import_response_data'
+    import_response_data:
+      description: The JSON:API resource object representing a import.
+      allOf:
+      - $ref: '#/components/schemas/resource_identifier'
+      - type: object
+        properties:
+          type:
+            const: imports
+            examples:
+            - imports
+          attributes:
+            $ref: '#/components/schemas/import_read_only_attributes'
+    import_read_only_attributes:
+      description: The read-only attributes of a import.
+      type: object
+      properties:
+        content_head:
+          type:
+          - string
+          - 'null'
+          examples:
+          - id, first_name, last_name, amount, amount_in_cents\r\n, Joe, Bloggs, 100, 10000
+          description: Comma separated list containing attribute names for the import.
+        created_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+        error_lines:
+          type:
+          - string
+          - 'null'
+          examples:
+          - 'error: Joe Bloggs,Amount must be at least $0.01'
+          description: Errors created during the import.
+        file_name:
+          type:
+          - string
+          - 'null'
+          examples:
+          - DonationsImport.csv
+          description: File name of the import.
+        finished_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+          description: When the import finished.
+        is_overwritable:
+          type:
+          - boolean
+          - 'null'
+          default: false
+          examples:
+          - false
+          description: Flag used to determine whether non-empty fields are overwritten. Defaults to false.
+        lines_count:
+          type:
+          - integer
+          - 'null'
+          examples:
+          - 1
+          description: Number of lines in the import.
+        rows_successful:
+          type:
+          - integer
+          - 'null'
+          examples:
+          - 1
+          description: Number of successfully imported rows.
+        rows_unsuccessful:
+          type:
+          - integer
+          - 'null'
+          examples:
+          - 1
+          description: Number of unsuccessfully imported rows.
+        rows_updated:
+          type:
+          - integer
+          - 'null'
+          examples:
+          - 1
+          description: Number of updated rows.
+        started_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+          description: When the import started.
+        status:
+          type:
+          - string
+          - 'null'
+          enum:
+          - finished
+          - unprocessable
+          - queueing
+          - in_progress
+          - null
+          examples:
+          - in_progress
+          description: The status of the import.
+        tag_list:
+          type:
+          - string
+          - 'null'
+          examples:
+          - donations-last-week
+          description: Assign these tags to the imported signups.
+        type:
+          type:
+          - string
+          - 'null'
+          examples:
+          - People
+          description: The import type.
+        updated_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+    resource:
+      description: A generic JSON:API resource object. Resources sideloaded in a document's included member use this shape; their attributes are those of the resource type named in the type member.
+      allOf:
+      - $ref: '#/components/schemas/resource_identifier'
+      - type: object
+        properties:
+          attributes:
+            type: object
+            description: The attributes of the resource, as documented for its resource type.
+          relationships:
+            type: object
+            description: References from this resource to other resources in the document.
+    included:
+      description: Sideloaded resources requested via the include query parameter. Each entry is a full resource object whose shape is documented under its own resource type.
+      type: array
+      items:
+        $ref: '#/components/schemas/resource'
+  parameters:
+    import_show_include:
+      name: include
+      in: query
+      description: 'Comma-delimited list of sideloaded resources to include as part of the import response.
+
+        See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
+
+        sideloading large numbers of resources and pagination.
+
+        '
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/import_sideload_values'
+      required: false
+      style: form
+      explode: false
+    id:
+      name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    import_index_include:
+      name: include
+      in: query
+      description: 'Comma-delimited list of sideloaded resources to include as part of the import index response.
+
+        See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
+
+        sideloading large numbers of resources and pagination.
+
+        '
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/import_sideload_values'
+      required: false
+      style: form
+      explode: false
+    import_sparse_fields:
+      name: fields[imports]
+      in: query
+      required: false
+      description: Comma-delimited list of import attributes to only return in the response
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/import_field_values'
+      style: form
+      explode: false
+  headers:
+    RateLimit-Remaining:
+      description: Number of requests remaining for the current access token in the current rate-limit window.
+      schema:
+        type: string
+        examples:
+        - '249'
+      examples: {}
+    Retry-After:
+      description: Number of seconds to wait before retrying. Sent with 429 responses.
+      schema:
+        type: string
+        examples:
+        - '10'
+      examples: {}
+    RateLimit-Limit:
+      description: Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).
+      schema:
+        type: string
+        examples:
+        - '250'
+      examples: {}
+    RateLimit-Reset:
+      description: Unix timestamp (in seconds) at which the current rate-limit window resets.
+      schema:
+        type: string
+        examples:
+        - '1719964810'
+      examples: {}
+  responses:
+    unauthorized:
+      description: The access token is missing, expired, or not authorized to access this resource.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/json:
+          example:
+            code: unauthorized
+            message: You are not authorized to access this content. Your access token may be missing. The resource owner also may not have a permission level sufficient to grant access.
+          schema:
+            $ref: '#/components/schemas/error_response'
+    rate_limited:
+      description: The access token has exceeded its request quota for the current rate-limit window.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+        Retry-After:
+          $ref: '#/components/headers/Retry-After'
+      content:
+        application/json:
+          example:
+            message: You have made too many requests. Please try again later.
+          schema:
+            $ref: '#/components/schemas/rate_limited_response'
+    not_found:
+      description: No resource exists with the provided ID.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/json:
+          example:
+            code: not_found
+            message: Record not found
+          schema:
+            $ref: '#/components/schemas/error_response'
+  securitySchemes:
+    BearerAuth:
+      description: Authentication using a bearer token (JWT) issued via OAuth.
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+externalDocs:
+  description: Get started with the NationBuilder API
+  url: https://nationbuilder.com/api_quickstart

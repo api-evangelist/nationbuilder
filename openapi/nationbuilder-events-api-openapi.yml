@@ -1,0 +1,1588 @@
+openapi: 3.1.2
+info:
+  title: NationBuilder V2 Async Processes Events API
+  version: '2.0'
+  description: 'The NationBuilder V2 API is a JSON:API-compliant API for managing NationBuilder
+
+    resources such as people, donations, events, and lists. It layers a few
+
+    conventions on top of the JSON:API standard, described below. For a broader
+
+    introduction, see the
+
+    [NationBuilder v2 API core concepts](https://support.nationbuilder.com/en/articles/9757369-nationbuilder-v2-api-core-concepts)
+
+    guide.
+
+
+    ### Request and response format
+
+
+    Requests and responses follow the [JSON:API](https://jsonapi.org/) document
+
+    structure: single resources are returned under a top-level `data` member, and
+
+    collections are paginated arrays of resource objects with `links` for the
+
+    current, previous, and next pages. Related resources can be sideloaded into a
+
+    top-level `included` array with the `include` query parameter, and responses
+
+    can be trimmed to specific attributes with `fields[resource_type]` sparse
+
+    fieldsets (plus opt-in `extra_fields[resource_type]` attributes where noted).
+
+    Responses are served as `application/vnd.api+json`; request bodies may be
+
+    sent as `application/vnd.api+json` or `application/json`.
+
+
+    Filtering uses an operator syntax: `filter[attribute]=value` for
+
+    equality (comma-separated values act as OR), and
+
+    `filter[attribute][operator]=value` for other comparisons. String attributes
+
+    support `eq`, `not_eq`, `eql`, `not_eql`, `prefix`, `not_prefix`, `suffix`,
+
+    `not_suffix`, `match`, and `not_match`; numeric and date attributes support
+
+    `eq`, `not_eq`, `gt`, `gte`, `lt`, and `lte`. Note that JSON:API relationship
+
+    routes (`/resource/{id}/relationships/other`) are not provided; related
+
+    resources are reachable through the filtered index URLs given in each
+
+    resource''s `relationships` links.
+
+
+    ### Errors
+
+
+    Error responses use a flat JSON body with a machine-readable `code` and a
+
+    human-readable `message`. Some errors carry additional detail members (for
+
+    example `validation_errors`). The exception is 422 validation failures,
+
+    which return a JSON:API `errors` array locating each invalid field via
+
+    `source.pointer`.
+
+
+    ### Rate limiting
+
+
+    Requests are limited per access token (250 requests per 10-second window).
+
+    Every response includes `RateLimit-Limit`, `RateLimit-Remaining`, and
+
+    `RateLimit-Reset` headers; exceeding the limit returns a 429 with a
+
+    `Retry-After` header.
+
+    '
+servers:
+- url: https://{subdomain}.nationbuilder.com
+  variables:
+    subdomain:
+      default: yournation
+      description: Your NationBuilder nation slug
+security:
+- BearerAuth: []
+tags:
+- name: Events
+  x-tag-expanded: false
+  description: Resource used for managing event data associated with event pages. More details on events within NationBuilder can be found [here](https://support.nationbuilder.com/en/articles/2319673-setting-up-an-event)
+paths:
+  /api/v2/events:
+    parameters:
+    - $ref: '#/components/parameters/event_index_include'
+    - $ref: '#/components/parameters/event_sparse_fields'
+    - $ref: '#/components/parameters/event_extra_fields'
+    post:
+      summary: Create an event
+      tags:
+      - Events
+      description: Create events with the provided payload. Events must be created with a page resource, which can be sideposted as shown in the example payload. Events must also have a start_at time.
+      operationId: createEvent
+      responses:
+        '201':
+          description: The newly created event.
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/event_show_response'
+        '400':
+          $ref: '#/components/responses/bad_request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '422':
+          $ref: '#/components/responses/unprocessable'
+        '429':
+          $ref: '#/components/responses/rate_limited'
+      requestBody:
+        description: The event to create.
+        content:
+          application/vnd.api+json:
+            example:
+              data:
+                type: events
+                attributes:
+                  accept_rsvps: false
+                  additional_rsvps_count: 20
+                  allow_guests: false
+                  attending_count: 100
+                  auto_response_broadcaster_id: '1'
+                  auto_response_content: Content of autoresponse
+                  auto_response_subject: Subject of autoresponse
+                  capacity_count: 200
+                  contact_email: jdoe@work.com
+                  contact_email_private: false
+                  contact_name: John Doe
+                  contact_phone_number: '5555555555'
+                  contact_phone_private: false
+                  content: Event description
+                  donation_tracking_code_id: '1'
+                  duration: 3600
+                  event_form_address: required
+                  event_form_phone: required
+                  gather_volunteers: false
+                  point_person_id: '1'
+                  private: false
+                  sends_auto_response: false
+                  show_guests: false
+                  start_at: '2019-10-26T10:00:00-04:00'
+                  time_zone: Eastern Time (US & Canada)
+                  user_ticket_currency: USD
+                  user_ticket_price_in_cents: 400
+                  user_ticket_purchase_url: https://www.example.com
+                  uses_shifts: false
+                  uses_tickets: false
+                  venue_name: Event Center
+                  venue_address_attributes:
+                    address1: 20 W 34th St.
+                    address2: Suite 100
+                    address3: null
+                    city: New York
+                    state: NY
+                    zip: '10001'
+                    county: New York County
+                    country_code: US
+                    lat: '40.7484'
+                    lng: '73.9857'
+                    fips: '04'
+                    submitted_address: 20 W 34th St. Suite 100, New York, NY 10001
+                    distance: 0
+                    import_id: '2'
+                    work_phone: '5555555555'
+                    phone_number: '5555555555'
+                    phone_country_code: '1'
+                    work_phone_number: '5555555555'
+                    delete: true
+                relationships:
+                  page:
+                    data:
+                      type: pages
+                      temp-id: new-id
+                      method: create
+              included:
+              - type: pages
+                temp-id: new-id
+                attributes:
+                  site_id: '1'
+                  parent_id: '1'
+                  author_id: '1'
+                  external_id: abc
+                  slug: your-slug
+                  status: unlisted
+                  name: Page Name
+                  headline: Page headline
+                  title: Page Title
+                  excerpt: Page excerpt...
+                  page_type_name: Event
+                  permission_level: anyone
+            schema:
+              $ref: '#/components/schemas/event_create_request'
+          application/json:
+            example:
+              data:
+                type: events
+                attributes:
+                  accept_rsvps: false
+                  additional_rsvps_count: 20
+                  allow_guests: false
+                  attending_count: 100
+                  auto_response_broadcaster_id: '1'
+                  auto_response_content: Content of autoresponse
+                  auto_response_subject: Subject of autoresponse
+                  capacity_count: 200
+                  contact_email: jdoe@work.com
+                  contact_email_private: false
+                  contact_name: John Doe
+                  contact_phone_number: '5555555555'
+                  contact_phone_private: false
+                  content: Event description
+                  donation_tracking_code_id: '1'
+                  duration: 3600
+                  event_form_address: required
+                  event_form_phone: required
+                  gather_volunteers: false
+                  point_person_id: '1'
+                  private: false
+                  sends_auto_response: false
+                  show_guests: false
+                  start_at: '2019-10-26T10:00:00-04:00'
+                  time_zone: Eastern Time (US & Canada)
+                  user_ticket_currency: USD
+                  user_ticket_price_in_cents: 400
+                  user_ticket_purchase_url: https://www.example.com
+                  uses_shifts: false
+                  uses_tickets: false
+                  venue_name: Event Center
+                  venue_address_attributes:
+                    address1: 20 W 34th St.
+                    address2: Suite 100
+                    address3: null
+                    city: New York
+                    state: NY
+                    zip: '10001'
+                    county: New York County
+                    country_code: US
+                    lat: '40.7484'
+                    lng: '73.9857'
+                    fips: '04'
+                    submitted_address: 20 W 34th St. Suite 100, New York, NY 10001
+                    distance: 0
+                    import_id: '2'
+                    work_phone: '5555555555'
+                    phone_number: '5555555555'
+                    phone_country_code: '1'
+                    work_phone_number: '5555555555'
+                    delete: true
+                relationships:
+                  page:
+                    data:
+                      type: pages
+                      temp-id: new-id
+                      method: create
+              included:
+              - type: pages
+                temp-id: new-id
+                attributes:
+                  site_id: '1'
+                  parent_id: '1'
+                  author_id: '1'
+                  external_id: abc
+                  slug: your-slug
+                  status: unlisted
+                  name: Page Name
+                  headline: Page headline
+                  title: Page Title
+                  excerpt: Page excerpt...
+                  page_type_name: Event
+                  permission_level: anyone
+            schema:
+              $ref: '#/components/schemas/event_create_request'
+    get:
+      summary: List all events in a nation
+      tags:
+      - Events
+      description: Lists all events within a nation.
+      operationId: listEvents
+      parameters:
+      - $ref: '#/components/parameters/pagination_number'
+      - $ref: '#/components/parameters/pagination_size'
+      responses:
+        '200':
+          description: A page of matching events.
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/event_index_response'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '429':
+          $ref: '#/components/responses/rate_limited'
+  /api/v2/events/{id}:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/event_show_include'
+    - $ref: '#/components/parameters/event_sparse_fields'
+    - $ref: '#/components/parameters/event_extra_fields'
+    get:
+      summary: Show event with provided ID
+      tags:
+      - Events
+      description: Returns the event that matches the given ID.
+      operationId: showEvent
+      responses:
+        '200':
+          description: The requested event.
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/event_show_response'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/not_found'
+        '429':
+          $ref: '#/components/responses/rate_limited'
+    patch:
+      summary: Update an existing event
+      tags:
+      - Events
+      description: Updates an existing event
+      operationId: updateEvent
+      responses:
+        '200':
+          description: The updated event.
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/event_show_response'
+        '400':
+          $ref: '#/components/responses/bad_request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/not_found'
+        '422':
+          $ref: '#/components/responses/unprocessable'
+        '429':
+          $ref: '#/components/responses/rate_limited'
+      requestBody:
+        $ref: '#/components/requestBodies/event_update_request_body'
+    delete:
+      summary: Delete event with provided ID
+      tags:
+      - Events
+      description: Permanently removes the event that matches the given ID.
+      operationId: deleteEvent
+      responses:
+        '200':
+          description: Confirmation that the event was deleted.
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/delete_document'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/not_found'
+        '429':
+          $ref: '#/components/responses/rate_limited'
+components:
+  schemas:
+    error_response:
+      description: The error body returned for 4xx and 5xx responses, with a machine-readable code and a human-readable message. Some errors include additional detail members alongside these two. The exception is 422 validation failures, which are returned as JSON:API errors documents instead.
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code identifying the failure.
+          examples:
+          - not_found
+        message:
+          type: string
+          description: Human-readable explanation of the failure.
+          examples:
+          - Record not found
+    show_document:
+      description: The JSON:API top-level document shape for responses returning a single resource under the data member.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: object
+          description: The primary resource object; each resource binds its concrete schema here via allOf composition.
+        included:
+          $ref: '#/components/schemas/included'
+        meta:
+          type: object
+          description: Non-standard information about the document. Empty unless the endpoint has metadata to convey.
+    event_read_only_attributes:
+      description: The read-only attributes of a event.
+      type: object
+      properties:
+        page_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: ID of the page associated with the event
+    sidepost_relationship_data:
+      description: Identifies a related resource written in the same request (a sidepost), an extension to JSON:API. For method create, the temp-id links this relationship entry to the matching object in the request's top-level included array; the other methods identify an existing related resource by id. Omitting method associates an existing resource without modifying it.
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          description: The JSON:API type of the related resource.
+        id:
+          type: string
+          description: The ID of an existing related resource; used with every method except create.
+        temp-id:
+          type: string
+          description: Client-generated temporary ID tying this relationship to an entry in the included array when creating the related resource.
+          examples:
+          - new-id
+        method:
+          type: string
+          description: The sidepost operation to perform on the related resource.
+          enum:
+          - create
+          - update
+          - destroy
+          - disassociate
+          examples:
+          - create
+    event_sideload_values:
+      description: Relationship names that can be sideloaded with the include query parameter on event endpoints.
+      type: string
+      enum:
+      - auto_response_broadcaster
+      - event_ticket_levels
+      - page
+      - point_person
+      - rsvps
+      - tracking_code
+    page_sidepost_attributes:
+      description: Writable page attributes for sideposting; excludes page_type_name which the parent resource sets.
+      type: object
+      properties:
+        author_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: The author of the page.
+        excerpt:
+          type:
+          - string
+          - 'null'
+          examples:
+          - Page excerpt...
+          description: Longer page description used for search engine optimization.
+        external_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - abc
+          description: Optional reference for pages imported from an external service.
+        headline:
+          type:
+          - string
+          - 'null'
+          examples:
+          - Page headline
+          description: This is a header rendered above the page content.
+        name:
+          type: string
+          examples:
+          - Page Name
+          description: The name of the page.
+        parent_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: The parent page ID (null for top-level pages).
+        permission_level:
+          type: string
+          enum:
+          - anyone
+          - logged_in
+          - members
+          - control_panel_users
+          - admins
+          examples:
+          - anyone
+          description: 'The permission level required to view this page. Options: "anyone" (public access), "logged_in" (any authenticated user), "members" (site members only), "control_panel_users" (users with control panel access), "admins" (site administrators only).'
+        site_id:
+          type: string
+          examples:
+          - '1'
+          description: The site this page belongs to.
+        slug:
+          type: string
+          examples:
+          - your-slug
+          description: A unique identifier that also makes up the url of the page. www.yoursite.com/[slug]
+        status:
+          type: string
+          enum:
+          - archived
+          - deleted
+          - expired
+          - hidden
+          - published
+          - rule_violated
+          - unlisted
+          examples:
+          - unlisted
+          description: The page status - describing the visibility of the page.
+        title:
+          type: string
+          examples:
+          - Page Title
+          description: Brief page description seen on search engines.
+    event_extra_field_values:
+      description: Opt-in event attribute names requestable with extra_fields[events].
+      type: string
+      enum:
+      - venue_address
+    resource_identifier:
+      description: A JSON:API resource identifier object, the type/id pair that uniquely identifies a single resource.
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the resource.
+          examples:
+          - '1'
+        type:
+          type: string
+          description: The JSON:API resource type.
+    event_read_write_attributes:
+      description: The attributes of a event that can be both read and written.
+      type: object
+      properties:
+        accept_rsvps:
+          type: boolean
+          examples:
+          - false
+          description: Allows people to RSVP for the event. If set to false, the event will display, but people will not be able to submit an RSVP to it.
+        additional_rsvps_count:
+          type:
+          - integer
+          - 'null'
+          examples:
+          - 20
+          description: Number of offline RSVPs to add to event's total capacity
+        allow_guests:
+          type:
+          - boolean
+          - 'null'
+          examples:
+          - false
+          description: Allows RSVP to enter the number of guests they will bring to the event.
+        attending_count:
+          type:
+          - integer
+          - 'null'
+          examples:
+          - 100
+          description: The number of attendees for the current event.
+        auto_response_broadcaster_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: ID of the broadcaster that the event's auto response will be sent by
+        auto_response_content:
+          type:
+          - string
+          - 'null'
+          examples:
+          - Content of autoresponse
+          description: Email content of the auto response sent people RSVP-ing to the event.
+        auto_response_subject:
+          type:
+          - string
+          - 'null'
+          examples:
+          - Subject of autoresponse
+          description: Email subject of the auto response sent people RSVP-ing to the event.
+        capacity_count:
+          type:
+          - integer
+          - 'null'
+          examples:
+          - 200
+          description: The number of RSVPs allowed. If set to 0, there is no limit to number of RSVPs.
+        contact_email:
+          type:
+          - string
+          - 'null'
+          examples:
+          - jdoe@work.com
+          description: The email address of the contact person.
+        contact_email_private:
+          type:
+          - boolean
+          - 'null'
+          examples:
+          - false
+          description: Flag used to hide the contact person's email address on public event pages.
+        contact_name:
+          type:
+          - string
+          - 'null'
+          examples:
+          - John Doe
+          description: The name of the contact person for the event.
+        contact_phone_number:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '5555555555'
+          description: The phone number of the contact person.
+        contact_phone_private:
+          type:
+          - boolean
+          - 'null'
+          examples:
+          - false
+          description: Flag used to hide the contact person's phone number on public event pages.
+        content:
+          type:
+          - string
+          - 'null'
+          examples:
+          - Event description
+          description: Content displayed on the public event page
+        donation_tracking_code_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: ID of the donation tracking code to be associated with ticket purchases for the event
+        duration:
+          type:
+          - integer
+          - 'null'
+          examples:
+          - 3600
+          description: Duration of the event in seconds. Updates the end_at time of the event.
+        event_form_address:
+          type:
+          - string
+          - 'null'
+          enum:
+          - required
+          - optional
+          - hidden
+          - null
+          examples:
+          - required
+          description: Attribute used to set address input requirements for RSVPs
+        event_form_phone:
+          type:
+          - string
+          - 'null'
+          enum:
+          - required
+          - optional
+          - hidden
+          - null
+          examples:
+          - required
+          description: Attribute used to set phone number input requirements for RSVPs
+        gather_volunteers:
+          type:
+          - boolean
+          - 'null'
+          examples:
+          - false
+          description: Attribute used to ask RSVPs if they want to volunteer in the public event form.
+        point_person_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: ID of the point person assigned to RSVPs
+        private:
+          type:
+          - boolean
+          - 'null'
+          examples:
+          - false
+          description: When true, the event is hidden in the website
+        sends_auto_response:
+          type:
+          - boolean
+          - 'null'
+          default: true
+          examples:
+          - false
+          description: Automatically send person RSVPing an email
+        show_guests:
+          type:
+          - boolean
+          - 'null'
+          examples:
+          - false
+          description: Controls where RSVPs are shown on the event page
+        start_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+          description: Start time of the event
+        time_zone:
+          type:
+          - string
+          - 'null'
+          enum:
+          - International Date Line West
+          - American Samoa
+          - Midway Island
+          - Hawaii
+          - Alaska
+          - Pacific Time (US & Canada)
+          - Tijuana
+          - Arizona
+          - Mazatlan
+          - Mountain Time (US & Canada)
+          - Central America
+          - Central Time (US & Canada)
+          - Chihuahua
+          - Guadalajara
+          - Mexico City
+          - Monterrey
+          - Saskatchewan
+          - Bogota
+          - Eastern Time (US & Canada)
+          - Indiana (East)
+          - Lima
+          - Quito
+          - Atlantic Time (Canada)
+          - Caracas
+          - Georgetown
+          - La Paz
+          - Puerto Rico
+          - Santiago
+          - Newfoundland
+          - Brasilia
+          - Buenos Aires
+          - Montevideo
+          - Greenland
+          - Mid-Atlantic
+          - Azores
+          - Cape Verde Is.
+          - Edinburgh
+          - Lisbon
+          - London
+          - Monrovia
+          - UTC
+          - Amsterdam
+          - Belgrade
+          - Berlin
+          - Bern
+          - Bratislava
+          - Brussels
+          - Budapest
+          - Casablanca
+          - Copenhagen
+          - Dublin
+          - Ljubljana
+          - Madrid
+          - Paris
+          - Prague
+          - Rome
+          - Sarajevo
+          - Skopje
+          - Stockholm
+          - Vienna
+          - Warsaw
+          - West Central Africa
+          - Zagreb
+          - Zurich
+          - Athens
+          - Bucharest
+          - Cairo
+          - Harare
+          - Helsinki
+          - Jerusalem
+          - Kaliningrad
+          - Kyiv
+          - Pretoria
+          - Riga
+          - Sofia
+          - Tallinn
+          - Vilnius
+          - Baghdad
+          - Istanbul
+          - Kuwait
+          - Minsk
+          - Moscow
+          - Nairobi
+          - Riyadh
+          - St. Petersburg
+          - Volgograd
+          - Tehran
+          - Abu Dhabi
+          - Baku
+          - Muscat
+          - Samara
+          - Tbilisi
+          - Yerevan
+          - Kabul
+          - Almaty
+          - Astana
+          - Ekaterinburg
+          - Islamabad
+          - Karachi
+          - Tashkent
+          - Chennai
+          - Kolkata
+          - Mumbai
+          - New Delhi
+          - Sri Jayawardenepura
+          - Kathmandu
+          - Dhaka
+          - Urumqi
+          - Rangoon
+          - Bangkok
+          - Hanoi
+          - Jakarta
+          - Krasnoyarsk
+          - Novosibirsk
+          - Beijing
+          - Chongqing
+          - Hong Kong
+          - Irkutsk
+          - Kuala Lumpur
+          - Perth
+          - Singapore
+          - Taipei
+          - Ulaanbaatar
+          - Osaka
+          - Sapporo
+          - Seoul
+          - Tokyo
+          - Yakutsk
+          - Adelaide
+          - Darwin
+          - Brisbane
+          - Canberra
+          - Guam
+          - Hobart
+          - Melbourne
+          - Port Moresby
+          - Sydney
+          - Vladivostok
+          - Magadan
+          - New Caledonia
+          - Solomon Is.
+          - Srednekolymsk
+          - Auckland
+          - Fiji
+          - Kamchatka
+          - Marshall Is.
+          - Wellington
+          - Chatham Is.
+          - Nuku'alofa
+          - Samoa
+          - Tokelau Is.
+          - Pacific/Pitcairn
+          - Pacific/Gambier
+          - Pacific/Marquesas
+          - America/Adak
+          - Antarctica/Troll
+          - Australia/Eucla
+          - Australia/Lord_Howe
+          - Pacific/Kiritimati
+          - Canada/Yukon
+          - null
+          examples:
+          - Eastern Time (US & Canada)
+          description: Time zone the event takes place in
+        user_ticket_currency:
+          type:
+          - string
+          - 'null'
+          examples:
+          - USD
+          description: Currency tickets are purchased in. Used only when selling tickets outside of NationBuilder
+        user_ticket_price_in_cents:
+          type:
+          - integer
+          - 'null'
+          examples:
+          - 400
+          description: Price in cents of the ticket level. Used only when selling tickets outside of NationBuilder
+        user_ticket_purchase_url:
+          type:
+          - string
+          - 'null'
+          examples:
+          - https://www.example.com
+          description: URL to third-party seller where tickets are being sold. Used only when selling tickets outside of NationBuilder
+        uses_shifts:
+          type:
+          - boolean
+          - 'null'
+          examples:
+          - false
+          description: Flag controlling whether RSVPs will be asked to sign up for shifts during the event.
+        uses_tickets:
+          type:
+          - boolean
+          - 'null'
+          examples:
+          - false
+          description: Flag controller whether tickets will be sold to people RSVPing to the event
+        venue_name:
+          type:
+          - string
+          - 'null'
+          examples:
+          - Event Center
+          description: Name of the venue
+    event_show_response:
+      description: A JSON:API response containing a single event.
+      allOf:
+      - $ref: '#/components/schemas/show_document'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/event_response_data'
+    pagination_links:
+      description: JSON:API pagination links for the pages of a collection. A key whose page is unavailable, or that the server's pagination strategy does not provide, is omitted or null.
+      type: object
+      properties:
+        self:
+          type: string
+          description: Link to the current page.
+          examples:
+          - /articles?page[number]=2
+        first:
+          type:
+          - string
+          - 'null'
+          description: Link to the first page.
+          examples:
+          - /articles?page[number]=1
+        last:
+          type:
+          - string
+          - 'null'
+          description: Link to the last page.
+          examples:
+          - /articles?page[number]=5
+        prev:
+          type:
+          - string
+          - 'null'
+          description: Link to the previous page.
+          examples:
+          - /articles?page[number]=1
+        next:
+          type:
+          - string
+          - 'null'
+          description: Link to the next page.
+          examples:
+          - /articles?page[number]=3
+    index_document:
+      description: The JSON:API top-level document shape for paginated collection responses, with resource objects under data and pagination links.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: array
+          description: The page of resource objects for this collection; each resource binds its concrete item schema here via allOf composition.
+        links:
+          $ref: '#/components/schemas/pagination_links'
+        included:
+          $ref: '#/components/schemas/included'
+        meta:
+          type: object
+          description: Non-standard information about the document, such as requested statistics. Empty unless the endpoint has metadata to convey.
+    validation_error:
+      description: A single JSON:API error object describing a validation failure, locating the invalid field via source.pointer and carrying the model-level attribute, message, and code under meta.
+      type: object
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code.
+          examples:
+          - unprocessable_entity
+        status:
+          type: string
+          description: The HTTP status code, as a string.
+          examples:
+          - '422'
+        title:
+          type: string
+          description: Short human-readable summary of the error type.
+          examples:
+          - Validation Error
+        detail:
+          type: string
+          description: Human-readable explanation specific to this failure.
+          examples:
+          - Email 'not-an-email' should look like an email address
+        source:
+          type: object
+          properties:
+            pointer:
+              type: string
+              description: JSON Pointer to the request document member the error relates to.
+              examples:
+              - /data/attributes/email
+        meta:
+          type: object
+          description: The underlying model validation error, including the attribute name, message, and code. Errors on sideposted resources nest these members under a relationship key.
+          properties:
+            attribute:
+              type: string
+              description: The attribute that failed validation.
+            message:
+              type: string
+              description: The validation failure message.
+            code:
+              type: string
+              description: The validation failure code.
+    event_response_data:
+      description: The JSON:API resource object representing a event.
+      allOf:
+      - $ref: '#/components/schemas/resource_identifier'
+      - type: object
+        properties:
+          type:
+            const: events
+            examples:
+            - events
+          attributes:
+            allOf:
+            - $ref: '#/components/schemas/event_read_write_attributes'
+            - $ref: '#/components/schemas/event_read_only_attributes'
+    event_field_values:
+      description: Readable event attribute names selectable with sparse fieldsets (fields[events]).
+      type: string
+      enum:
+      - accept_rsvps
+      - additional_rsvps_count
+      - allow_guests
+      - attending_count
+      - auto_response_broadcaster_id
+      - auto_response_content
+      - auto_response_subject
+      - capacity_count
+      - contact_email
+      - contact_email_private
+      - contact_name
+      - contact_phone_number
+      - contact_phone_private
+      - content
+      - donation_tracking_code_id
+      - duration
+      - event_form_address
+      - event_form_phone
+      - gather_volunteers
+      - page_id
+      - point_person_id
+      - private
+      - sends_auto_response
+      - show_guests
+      - start_at
+      - time_zone
+      - user_ticket_currency
+      - user_ticket_price_in_cents
+      - user_ticket_purchase_url
+      - uses_shifts
+      - uses_tickets
+      - venue_name
+    delete_document:
+      examples:
+      - meta: {}
+      description: The successful destroy response, an empty JSON:API meta-only document returned with status 200 (rather than JSON:API's commonly used 204 No Content).
+      type: object
+      required:
+      - meta
+      additionalProperties: false
+      properties:
+        meta:
+          examples:
+          - {}
+          type: object
+          properties: {}
+    rate_limited_response:
+      description: The body returned by the rate limiter when an access token exceeds its request quota.
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          description: Human-readable explanation of the rate limit.
+          examples:
+          - You have made too many requests. Please try again later.
+    event_create_request:
+      description: The request body for creating a new event.
+      allOf:
+      - $ref: '#/components/schemas/create_request_document'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              type:
+                const: events
+                examples:
+                - events
+              attributes:
+                allOf:
+                - $ref: '#/components/schemas/event_read_write_attributes'
+                - $ref: '#/components/schemas/event_write_only_attributes'
+              relationships:
+                type: object
+                properties:
+                  page:
+                    type: object
+                    properties:
+                      data:
+                        allOf:
+                        - $ref: '#/components/schemas/sidepost_relationship_data'
+                        - type: object
+                          properties:
+                            type:
+                              const: pages
+                              examples:
+                              - pages
+          included:
+            examples:
+            - - type: pages
+                temp-id: new-id
+                attributes:
+                  site_id: '1'
+                  parent_id: '1'
+                  author_id: '1'
+                  external_id: abc
+                  slug: your-slug
+                  status: unlisted
+                  name: Page Name
+                  headline: Page headline
+                  title: Page Title
+                  excerpt: Page excerpt...
+                  page_type_name: Event
+                  permission_level: anyone
+            type: array
+            items:
+              type: object
+              properties:
+                type:
+                  type: string
+                  const: pages
+                  examples:
+                  - pages
+                temp-id:
+                  type: string
+                  examples:
+                  - new-id
+                attributes:
+                  allOf:
+                  - $ref: '#/components/schemas/page_sidepost_attributes'
+                  - type: object
+                    properties:
+                      page_type_name:
+                        type: string
+                        examples:
+                        - Event
+                        description: Must be 'Event' for this endpoint.
+                        enum:
+                        - Event
+    event_index_response:
+      description: A paginated JSON:API response containing a list of events.
+      allOf:
+      - $ref: '#/components/schemas/index_document'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/event_response_data'
+    validation_error_document:
+      description: The JSON:API errors document returned with status 422 when model validations fail on create or update. Unlike this API's flat 4xx error bodies, validation failures follow the JSON:API errors format.
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/validation_error'
+    update_request_document:
+      description: The JSON:API top-level document shape for update requests, whose data member identifies the resource by type and id and carries the changed attributes.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          properties:
+            id:
+              type: string
+              description: The ID of the resource being updated.
+            type:
+              type: string
+              description: The JSON:API resource type of the resource being updated.
+    create_request_document:
+      description: The JSON:API top-level document shape for create requests, whose data member carries the new resource's type and attributes.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          properties:
+            type:
+              type: string
+              description: The JSON:API resource type of the resource being created.
+    event_write_only_attributes:
+      description: The write-only attributes of a event.
+      type: object
+      properties:
+        venue_address_attributes:
+          type:
+          - object
+          - 'null'
+          examples:
+          - address1: 20 W 34th St.
+            address2: Suite 100
+            address3: null
+            city: New York
+            state: NY
+            zip: '10001'
+            county: New York County
+            country_code: US
+            lat: '40.7484'
+            lng: '73.9857'
+            fips: '04'
+            submitted_address: 20 W 34th St. Suite 100, New York, NY 10001
+            distance: 0
+            import_id: '2'
+            work_phone: '5555555555'
+            phone_number: '5555555555'
+            phone_country_code: '1'
+            work_phone_number: '5555555555'
+            delete: true
+          description: "        Attribute used to write data to the given event's Venue address.\n        When an address already exists, provided values will be used to patch the existing address data,\n        only overwriting values provided in the payload.\n        When no address exists, the existing data will be used to persist a new address.\n"
+    event_update_request:
+      description: The request body for updating an existing event.
+      allOf:
+      - $ref: '#/components/schemas/update_request_document'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              id:
+                type: string
+                examples:
+                - '1'
+              type:
+                const: events
+                examples:
+                - events
+              attributes:
+                allOf:
+                - $ref: '#/components/schemas/event_read_write_attributes'
+                - $ref: '#/components/schemas/event_write_only_attributes'
+    resource:
+      description: A generic JSON:API resource object. Resources sideloaded in a document's included member use this shape; their attributes are those of the resource type named in the type member.
+      allOf:
+      - $ref: '#/components/schemas/resource_identifier'
+      - type: object
+        properties:
+          attributes:
+            type: object
+            description: The attributes of the resource, as documented for its resource type.
+          relationships:
+            type: object
+            description: References from this resource to other resources in the document.
+    included:
+      description: Sideloaded resources requested via the include query parameter. Each entry is a full resource object whose shape is documented under its own resource type.
+      type: array
+      items:
+        $ref: '#/components/schemas/resource'
+  parameters:
+    event_extra_fields:
+      name: extra_fields[events]
+      in: query
+      description: Comma-delimited list of extra event attributes, which are only returned in the response if requested.
+      required: false
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/event_extra_field_values'
+      style: form
+      explode: false
+    pagination_size:
+      name: page[size]
+      description: 'Number of results to display per page (default: 20, max: 100, min: 1)'
+      in: query
+      required: false
+      schema:
+        type: string
+        default: '20'
+    event_sparse_fields:
+      name: fields[events]
+      in: query
+      required: false
+      description: Comma-delimited list of event attributes to only return in the response
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/event_field_values'
+      style: form
+      explode: false
+    id:
+      name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    event_index_include:
+      name: include
+      in: query
+      description: 'Comma-delimited list of sideloaded resources to include as part of the event index response.
+
+        See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
+
+        sideloading large numbers of resources and pagination.
+
+        '
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/event_sideload_values'
+      required: false
+      style: form
+      explode: false
+    event_show_include:
+      name: include
+      in: query
+      description: 'Comma-delimited list of sideloaded resources to include as part of the event response.
+
+        See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
+
+        sideloading large numbers of resources and pagination.
+
+        '
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/event_sideload_values'
+      required: false
+      style: form
+      explode: false
+    pagination_number:
+      name: page[number]
+      description: Page number to list (starting at 1)
+      in: query
+      required: false
+      schema:
+        type: string
+        default: '1'
+  requestBodies:
+    event_update_request_body:
+      description: The attributes to update on the existing event.
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/event_update_request'
+        application/json:
+          schema:
+            $ref: '#/components/schemas/event_update_request'
+  headers:
+    RateLimit-Remaining:
+      description: Number of requests remaining for the current access token in the current rate-limit window.
+      schema:
+        type: string
+        examples:
+        - '249'
+      examples: {}
+    Retry-After:
+      description: Number of seconds to wait before retrying. Sent with 429 responses.
+      schema:
+        type: string
+        examples:
+        - '10'
+      examples: {}
+    RateLimit-Limit:
+      description: Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).
+      schema:
+        type: string
+        examples:
+        - '250'
+      examples: {}
+    RateLimit-Reset:
+      description: Unix timestamp (in seconds) at which the current rate-limit window resets.
+      schema:
+        type: string
+        examples:
+        - '1719964810'
+      examples: {}
+  responses:
+    bad_request:
+      description: The request body or query parameters are invalid, such as an unknown attribute, filter, filter operator, sort field, or sideload.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/json:
+          example:
+            code: bad_request
+            message: Tried to filter on attribute :bogus, but could not find an attribute with that name.
+          schema:
+            $ref: '#/components/schemas/error_response'
+    unauthorized:
+      description: The access token is missing, expired, or not authorized to access this resource.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/json:
+          example:
+            code: unauthorized
+            message: You are not authorized to access this content. Your access token may be missing. The resource owner also may not have a permission level sufficient to grant access.
+          schema:
+            $ref: '#/components/schemas/error_response'
+    unprocessable:
+      description: Model validations failed for the resource being created or updated. Unlike this API's other errors, validation failures are returned as a JSON:API errors document locating each invalid field.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/vnd.api+json:
+          example:
+            errors:
+            - code: unprocessable_entity
+              status: '422'
+              title: Validation Error
+              detail: Email 'not-an-email' should look like an email address
+              source:
+                pointer: /data/attributes/email
+              meta:
+                attribute: email
+                message: '''not-an-email'' should look like an email address'
+          schema:
+            $ref: '#/components/schemas/validation_error_document'
+    rate_limited:
+      description: The access token has exceeded its request quota for the current rate-limit window.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+        Retry-After:
+          $ref: '#/components/headers/Retry-After'
+      content:
+        application/json:
+          example:
+            message: You have made too many requests. Please try again later.
+          schema:
+            $ref: '#/components/schemas/rate_limited_response'
+    not_found:
+      description: No resource exists with the provided ID.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/json:
+          example:
+            code: not_found
+            message: Record not found
+          schema:
+            $ref: '#/components/schemas/error_response'
+  securitySchemes:
+    BearerAuth:
+      description: Authentication using a bearer token (JWT) issued via OAuth.
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+externalDocs:
+  description: Get started with the NationBuilder API
+  url: https://nationbuilder.com/api_quickstart

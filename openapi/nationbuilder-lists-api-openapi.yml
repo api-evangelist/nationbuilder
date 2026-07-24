@@ -1,0 +1,2624 @@
+openapi: 3.1.2
+info:
+  title: NationBuilder V2 Async Processes Lists API
+  version: '2.0'
+  description: 'The NationBuilder V2 API is a JSON:API-compliant API for managing NationBuilder
+
+    resources such as people, donations, events, and lists. It layers a few
+
+    conventions on top of the JSON:API standard, described below. For a broader
+
+    introduction, see the
+
+    [NationBuilder v2 API core concepts](https://support.nationbuilder.com/en/articles/9757369-nationbuilder-v2-api-core-concepts)
+
+    guide.
+
+
+    ### Request and response format
+
+
+    Requests and responses follow the [JSON:API](https://jsonapi.org/) document
+
+    structure: single resources are returned under a top-level `data` member, and
+
+    collections are paginated arrays of resource objects with `links` for the
+
+    current, previous, and next pages. Related resources can be sideloaded into a
+
+    top-level `included` array with the `include` query parameter, and responses
+
+    can be trimmed to specific attributes with `fields[resource_type]` sparse
+
+    fieldsets (plus opt-in `extra_fields[resource_type]` attributes where noted).
+
+    Responses are served as `application/vnd.api+json`; request bodies may be
+
+    sent as `application/vnd.api+json` or `application/json`.
+
+
+    Filtering uses an operator syntax: `filter[attribute]=value` for
+
+    equality (comma-separated values act as OR), and
+
+    `filter[attribute][operator]=value` for other comparisons. String attributes
+
+    support `eq`, `not_eq`, `eql`, `not_eql`, `prefix`, `not_prefix`, `suffix`,
+
+    `not_suffix`, `match`, and `not_match`; numeric and date attributes support
+
+    `eq`, `not_eq`, `gt`, `gte`, `lt`, and `lte`. Note that JSON:API relationship
+
+    routes (`/resource/{id}/relationships/other`) are not provided; related
+
+    resources are reachable through the filtered index URLs given in each
+
+    resource''s `relationships` links.
+
+
+    ### Errors
+
+
+    Error responses use a flat JSON body with a machine-readable `code` and a
+
+    human-readable `message`. Some errors carry additional detail members (for
+
+    example `validation_errors`). The exception is 422 validation failures,
+
+    which return a JSON:API `errors` array locating each invalid field via
+
+    `source.pointer`.
+
+
+    ### Rate limiting
+
+
+    Requests are limited per access token (250 requests per 10-second window).
+
+    Every response includes `RateLimit-Limit`, `RateLimit-Remaining`, and
+
+    `RateLimit-Reset` headers; exceeding the limit returns a 429 with a
+
+    `Retry-After` header.
+
+    '
+servers:
+- url: https://{subdomain}.nationbuilder.com
+  variables:
+    subdomain:
+      default: yournation
+      description: Your NationBuilder nation slug
+security:
+- BearerAuth: []
+tags:
+- name: Lists
+  x-tag-expanded: false
+  description: Lists are collections of signups. Often created from filters they are useful for grouping signups together by common attributes. They can be used to perform batch updates on signups or as a list of recipients for a mailing blast. Read more on what you can do with lists [here](https://support.nationbuilder.com/en/articles/2305947-create-a-list).
+paths:
+  /api/v2/lists:
+    parameters:
+    - $ref: '#/components/parameters/list_index_include'
+    - $ref: '#/components/parameters/list_sparse_fields'
+    post:
+      summary: Create a list
+      tags:
+      - Lists
+      description: Creates a list from given data
+      operationId: createList
+      responses:
+        '201':
+          description: The newly created list.
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/list_show_response'
+        '400':
+          $ref: '#/components/responses/bad_request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '422':
+          $ref: '#/components/responses/unprocessable'
+        '429':
+          $ref: '#/components/responses/rate_limited'
+      requestBody:
+        $ref: '#/components/requestBodies/list_create_request_body'
+    get:
+      summary: List all lists in a nation
+      tags:
+      - Lists
+      description: Lists all lists
+      operationId: listLists
+      parameters:
+      - $ref: '#/components/parameters/pagination_number'
+      - $ref: '#/components/parameters/pagination_size'
+      responses:
+        '200':
+          description: A page of matching lists.
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/list_index_response'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '429':
+          $ref: '#/components/responses/rate_limited'
+  /api/v2/lists/{id}:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/list_show_include'
+    - $ref: '#/components/parameters/list_sparse_fields'
+    get:
+      summary: Show list with provided ID
+      tags:
+      - Lists
+      description: Returns the list that matches the given ID.
+      operationId: showList
+      responses:
+        '200':
+          description: The requested list.
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/list_show_response'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/not_found'
+        '429':
+          $ref: '#/components/responses/rate_limited'
+    patch:
+      summary: Update an existing list
+      tags:
+      - Lists
+      description: Updates an existing list
+      operationId: updateList
+      responses:
+        '200':
+          description: The updated list.
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/list_show_response'
+        '400':
+          $ref: '#/components/responses/bad_request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/not_found'
+        '422':
+          $ref: '#/components/responses/unprocessable'
+        '429':
+          $ref: '#/components/responses/rate_limited'
+      requestBody:
+        $ref: '#/components/requestBodies/list_update_request_body'
+    delete:
+      summary: Delete list with provided ID
+      tags:
+      - Lists
+      description: Permanently removes the list that matches the given ID.
+      operationId: deleteList
+      responses:
+        '200':
+          description: Confirmation that the list was deleted.
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/delete_document'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/not_found'
+        '429':
+          $ref: '#/components/responses/rate_limited'
+  /api/v2/lists/{id}/add_signups:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    patch:
+      summary: Add signups
+      tags:
+      - Lists
+      description: 'Add Signup IDs to list via an asynchronous process.
+
+        Returns the token of an asynchronous process that can be queried using another endpoint.
+
+        Accepts up to 10,000 signup IDs in a single payload.
+
+        '
+      operationId: addSignups
+      responses:
+        '202':
+          description: A token for tracking the asynchronous add-signups process.
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    examples:
+                    - '1234'
+        '400':
+          description: The add-signups request exceeded the maximum of 10,000 signup IDs.
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+          content:
+            application/json:
+              example:
+                code: bad_request
+                message: A maximum of 10000 signup ids are allowed
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/not_found'
+        '429':
+          $ref: '#/components/responses/rate_limited'
+      requestBody:
+        description: The signups to add to the list.
+        content:
+          application/vnd.api+json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: The ID of the list to add signups to.
+                      examples:
+                      - '1'
+                    type:
+                      type: string
+                      const: lists
+                      description: Resource type. Must always be lists.
+                      examples:
+                      - lists
+                    signup_ids:
+                      type: array
+                      description: IDs of the signups to add to custom list.
+                      examples:
+                      - - '1'
+                        - '2'
+                  required:
+                  - id
+                  - type
+                  - signup_ids
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: The ID of the list to add signups to.
+                      examples:
+                      - '1'
+                    type:
+                      type: string
+                      const: lists
+                      description: Resource type. Must always be lists.
+                      examples:
+                      - lists
+                    signup_ids:
+                      type: array
+                      description: IDs of the signups to add to custom list.
+                      examples:
+                      - - '1'
+                        - '2'
+                  required:
+                  - id
+                  - type
+                  - signup_ids
+        required: true
+  /api/v2/lists/{id}/remove_signups:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    patch:
+      summary: Remove signups
+      tags:
+      - Lists
+      description: 'Remove Signup IDs from a list via an asynchronous process.
+
+        Returns the token of an asynchronous process that can be queried using another endpoint.
+
+        Accepts up to 10,000 signup IDs in a single payload.
+
+        '
+      operationId: removeSignups
+      responses:
+        '202':
+          description: A token for tracking the asynchronous remove-signups process.
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    examples:
+                    - '1234'
+        '400':
+          description: The remove-signups request exceeded the maximum of 10,000 signup IDs.
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+          content:
+            application/json:
+              example:
+                code: bad_request
+                message: A maximum of 10000 signup ids are allowed
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/not_found'
+        '429':
+          $ref: '#/components/responses/rate_limited'
+      requestBody:
+        description: The signups to remove from the list.
+        content:
+          application/vnd.api+json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: The ID of the list to remove signups from.
+                      examples:
+                      - '1'
+                    type:
+                      type: string
+                      const: lists
+                      description: Resource type. Must always be lists.
+                      examples:
+                      - lists
+                    signup_ids:
+                      type: array
+                      description: IDs of the signups to remove from custom list
+                      examples:
+                      - - '1'
+                        - '2'
+                  required:
+                  - id
+                  - type
+                  - signup_ids
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: The ID of the list to remove signups from.
+                      examples:
+                      - '1'
+                    type:
+                      type: string
+                      const: lists
+                      description: Resource type. Must always be lists.
+                      examples:
+                      - lists
+                    signup_ids:
+                      type: array
+                      description: IDs of the signups to remove from custom list
+                      examples:
+                      - - '1'
+                        - '2'
+                  required:
+                  - id
+                  - type
+                  - signup_ids
+        required: true
+  /api/v2/lists/{id}/signups:
+    parameters:
+    - name: id
+      in: path
+      description: List id
+      required: true
+      schema:
+        type: string
+    - $ref: '#/components/parameters/signup_show_include'
+    - $ref: '#/components/parameters/signup_sparse_fields'
+    get:
+      summary: List all signups on the list for provided ID
+      tags:
+      - Lists
+      description: Lists all signups for a given list
+      operationId: listSignupListings
+      parameters:
+      - $ref: '#/components/parameters/pagination_number'
+      - $ref: '#/components/parameters/pagination_size'
+      responses:
+        '200':
+          description: A page of matching signups on this list.
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/signup_index_response'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/not_found'
+        '429':
+          $ref: '#/components/responses/rate_limited'
+  /api/v2/lists/{id}/tag:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    patch:
+      summary: Add a tag to signups
+      tags:
+      - Lists
+      description: 'Tag signups in list via an asynchronous process. If the tag does not exist it is created.
+
+        Returns the token of an asyncrhronously process that can be queried using another endpoint.
+
+        '
+      operationId: tagSignups
+      responses:
+        '202':
+          description: A token for tracking the asynchronous tag-signups process.
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    examples:
+                    - '1234'
+        '400':
+          $ref: '#/components/responses/bad_request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/not_found'
+        '429':
+          $ref: '#/components/responses/rate_limited'
+      requestBody:
+        description: The tags to apply to the list.
+        content:
+          application/vnd.api+json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: The ID of the list whose signups will be tagged.
+                      examples:
+                      - '1'
+                    type:
+                      type: string
+                      const: lists
+                      description: Resource type. Must always be lists.
+                      examples:
+                      - lists
+                    tag:
+                      type: string
+                      description: Tag name used to tag signups
+                      examples:
+                      - supporter
+                  required:
+                  - id
+                  - type
+                  - tag
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: The ID of the list whose signups will be tagged.
+                      examples:
+                      - '1'
+                    type:
+                      type: string
+                      const: lists
+                      description: Resource type. Must always be lists.
+                      examples:
+                      - lists
+                    tag:
+                      type: string
+                      description: Tag name used to tag signups
+                      examples:
+                      - supporter
+                  required:
+                  - id
+                  - type
+                  - tag
+        required: true
+  /api/v2/lists/{id}/untag:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    patch:
+      summary: Remove a tag from signups
+      tags:
+      - Lists
+      description: 'Remove tag from signups in list via an asynchronous process.
+
+        Returns the token of an asyncrhronously process that can be queried using another endpoint.
+
+        '
+      operationId: untagSignups
+      responses:
+        '202':
+          description: A token for tracking the asynchronous untag-signups process.
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    examples:
+                    - '1234'
+        '400':
+          $ref: '#/components/responses/bad_request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/not_found'
+        '429':
+          $ref: '#/components/responses/rate_limited'
+      requestBody:
+        description: The tags to remove from the list.
+        content:
+          application/vnd.api+json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: The ID of the list whose signups will be untagged.
+                      examples:
+                      - '1'
+                    type:
+                      type: string
+                      const: lists
+                      description: Resource type. Must always be lists.
+                      examples:
+                      - lists
+                    tag:
+                      type: string
+                      description: Tag to remove from signups
+                      examples:
+                      - supporter
+                  required:
+                  - id
+                  - type
+                  - tag
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: The ID of the list whose signups will be untagged.
+                      examples:
+                      - '1'
+                    type:
+                      type: string
+                      const: lists
+                      description: Resource type. Must always be lists.
+                      examples:
+                      - lists
+                    tag:
+                      type: string
+                      description: Tag to remove from signups
+                      examples:
+                      - supporter
+                  required:
+                  - id
+                  - type
+                  - tag
+        required: true
+components:
+  schemas:
+    error_response:
+      description: The error body returned for 4xx and 5xx responses, with a machine-readable code and a human-readable message. Some errors include additional detail members alongside these two. The exception is 422 validation failures, which are returned as JSON:API errors documents instead.
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code identifying the failure.
+          examples:
+          - not_found
+        message:
+          type: string
+          description: Human-readable explanation of the failure.
+          examples:
+          - Record not found
+    show_document:
+      description: The JSON:API top-level document shape for responses returning a single resource under the data member.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: object
+          description: The primary resource object; each resource binds its concrete schema here via allOf composition.
+        included:
+          $ref: '#/components/schemas/included'
+        meta:
+          type: object
+          description: Non-standard information about the document. Empty unless the endpoint has metadata to convey.
+    list_read_write_attributes:
+      description: The attributes of a list that can be both read and written.
+      type: object
+      properties:
+        author_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: The ID of the list's author.
+        description:
+          type:
+          - string
+          - 'null'
+          examples:
+          - All supporters that have been contacted by us
+          description: Describes what the list is for.
+        is_sharing_writable:
+          type:
+          - boolean
+          - 'null'
+          default: false
+          examples:
+          - false
+          description: Gives edit permission to people who the list is shared.
+        name:
+          type:
+          - string
+          - 'null'
+          examples:
+          - Contacted Supporters
+          description: The name of the custom list.
+        parent_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: The id of the original list this was split off from.
+        signup_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: The person who this list is assigned to, not the author.
+        slug:
+          type:
+          - string
+          - 'null'
+          examples:
+          - contacted_supporters
+          description: A unique identifier for the list. Not required for groups.
+    resource_identifier:
+      description: A JSON:API resource identifier object, the type/id pair that uniquely identifies a single resource.
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the resource.
+          examples:
+          - '1'
+        type:
+          type: string
+          description: The JSON:API resource type.
+    signup_response_data:
+      description: The JSON:API resource object representing a signup.
+      allOf:
+      - $ref: '#/components/schemas/resource_identifier'
+      - type: object
+        properties:
+          type:
+            const: signups
+            examples:
+            - signups
+          attributes:
+            allOf:
+            - $ref: '#/components/schemas/signup_read_write_attributes'
+            - $ref: '#/components/schemas/signup_read_only_attributes'
+    signup_sideload_values:
+      description: Relationship names that can be sideloaded with the include query parameter on signup endpoints.
+      type: string
+      enum:
+      - author
+      - last_contacted_by
+      - memberships
+      - page
+      - parent
+      - path_journeys
+      - petition_signatures
+      - precinct
+      - recruiter
+      - signup_profile
+      - signup_tags
+      - taggings
+      - voter
+    signup_read_only_attributes:
+      description: The read-only attributes of a signup.
+      type: object
+      properties:
+        created_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+        email1_is_bouncing:
+          type:
+          - boolean
+          - 'null'
+          examples:
+          - false
+          description: Whether email address 1 is marked as bounced.
+        email2_is_bouncing:
+          type:
+          - boolean
+          - 'null'
+          examples:
+          - false
+          description: Whether email address 2 is marked as bounced.
+        email3_is_bouncing:
+          type:
+          - boolean
+          - 'null'
+          examples:
+          - false
+          description: Whether email address 3 is marked as bounced.
+        email4_is_bouncing:
+          type:
+          - boolean
+          - 'null'
+          examples:
+          - false
+          description: Whether email address 4 is marked as bounced.
+        full_name:
+          type:
+          - string
+          - 'null'
+          examples:
+          - Lucy Octavia Butler
+          description: Signup's full name.
+        is_cpu:
+          type:
+          - boolean
+          - 'null'
+          examples:
+          - false
+          description: Is the signup a control panel user
+        is_donor:
+          type:
+          - boolean
+          - 'null'
+          examples:
+          - false
+          description: The signup is a donor.
+        note_updated_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+          description: Last time the note was updated.
+        priority_level_changed_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+          description: The last time the priority level changed.
+        profile_content_html:
+          type:
+          - string
+          - 'null'
+          examples:
+          - <h1>My Profile</h1>
+          description: HTML formatted version of the signup's profile contents.
+        support_level_changed_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+          description: When the signups support level changed.
+        updated_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+    list_create_request:
+      description: The request body for creating a new list.
+      allOf:
+      - $ref: '#/components/schemas/create_request_document'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              type:
+                const: lists
+                examples:
+                - lists
+              attributes:
+                $ref: '#/components/schemas/list_read_write_attributes'
+    pagination_links:
+      description: JSON:API pagination links for the pages of a collection. A key whose page is unavailable, or that the server's pagination strategy does not provide, is omitted or null.
+      type: object
+      properties:
+        self:
+          type: string
+          description: Link to the current page.
+          examples:
+          - /articles?page[number]=2
+        first:
+          type:
+          - string
+          - 'null'
+          description: Link to the first page.
+          examples:
+          - /articles?page[number]=1
+        last:
+          type:
+          - string
+          - 'null'
+          description: Link to the last page.
+          examples:
+          - /articles?page[number]=5
+        prev:
+          type:
+          - string
+          - 'null'
+          description: Link to the previous page.
+          examples:
+          - /articles?page[number]=1
+        next:
+          type:
+          - string
+          - 'null'
+          description: Link to the next page.
+          examples:
+          - /articles?page[number]=3
+    list_field_values:
+      description: Readable list attribute names selectable with sparse fieldsets (fields[lists]).
+      type: string
+      enum:
+      - author_id
+      - created_at
+      - description
+      - is_sharing_writable
+      - name
+      - parent_id
+      - signup_id
+      - signups_count
+      - slug
+      - updated_at
+    signup_read_write_attributes:
+      description: The attributes of a signup that can be both read and written.
+      type: object
+      properties:
+        author_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: ID of the person interacting with the signup in the control panel.
+        availability:
+          type:
+          - string
+          - 'null'
+          examples:
+          - Saturday morning
+          description: When can this signup be contacted?
+        banned_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+          description: When the signup was banned.
+        born_at:
+          type:
+          - string
+          - 'null'
+          format: date
+          examples:
+          - '1990-08-06'
+          description: The date the signup was born.
+        capital_amount_in_cents:
+          type:
+          - integer
+          - 'null'
+          default: 0
+          examples:
+          - 500
+          description: The amount of political capital this signup has accrued
+        church:
+          type:
+          - string
+          - 'null'
+          examples:
+          - Unity Church
+          description: The name of the church the signup belongs to.
+        city_district:
+          type:
+          - string
+          - 'null'
+          examples:
+          - Trinity-Spadina (19)
+          description: The city district code the signup belongs to.
+        city_sub_district:
+          type:
+          - string
+          - 'null'
+          examples:
+          - DOWNTOWN LOS ANGELES
+          description: Political district.
+        civicrm_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: The ID of the CiviCRM account the signup is associated with.
+        contact_status:
+          type:
+          - string
+          - 'null'
+          enum:
+          - other
+          - answered
+          - bad_info
+          - left_message
+          - meaningful_interaction
+          - send_information
+          - not_interested
+          - no_answer
+          - refused
+          - inaccessible
+          - null
+          examples:
+          - answered
+          description: Name of the associated contact status.
+        could_vote_status:
+          type:
+          - integer
+          - 'null'
+          examples:
+          - 1
+          description: Integer representing if the signup can vote. 1=can vote, -1=can't vote.
+        county_district:
+          type:
+          - string
+          - 'null'
+          examples:
+          - City of Portsmouth (B)
+          description: The county district the signup belongs to.
+        county_file_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: The ID of the county voter file belonging to the signup.
+        custom_values:
+          type:
+          - object
+          - 'null'
+          examples:
+          - custom_text: Text Value
+            custom_number: '22'
+            custom_checkbox: true
+            custom_multi: Some multiple choice option
+          description: Values for nation-defined fields on signup
+        datatrust_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: The ID of the associated Datatrust account.
+        demo:
+          type:
+          - string
+          - 'null'
+          examples:
+          - H
+          description: Single letter representation of demographic.
+        do_not_call:
+          type:
+          - boolean
+          - 'null'
+          default: false
+          examples:
+          - false
+          description: Signup has asked not to be contacted via phone call.
+        do_not_contact:
+          type:
+          - boolean
+          - 'null'
+          default: false
+          examples:
+          - false
+          description: Signup has asked not to be contacted.
+        donations_amount_in_cents:
+          type:
+          - integer
+          - 'null'
+          default: 0
+          examples:
+          - 500
+          description: Sum of donations made by the signup.
+        donations_amount_this_cycle_in_cents:
+          type:
+          - integer
+          - 'null'
+          default: 0
+          examples:
+          - 500
+          description: Sum of donations made by the signup in the current cycle.
+        donations_count:
+          type:
+          - integer
+          - 'null'
+          default: 0
+          examples:
+          - 5
+          description: Number of donations made by the signup.
+        donations_count_this_cycle:
+          type:
+          - integer
+          - 'null'
+          default: 0
+          examples:
+          - 5
+          description: Number of donations made by the signup in the current cycle.
+        donations_pledged_amount_in_cents:
+          type:
+          - integer
+          - 'null'
+          default: 0
+          examples:
+          - 500
+          description: Sum of pledges made by the signup.
+        donations_raised_amount_in_cents:
+          type:
+          - integer
+          - 'null'
+          default: 0
+          examples:
+          - 500
+          description: Sum of donations raised by the signup.
+        donations_raised_amount_this_cycle_in_cents:
+          type:
+          - integer
+          - 'null'
+          default: 0
+          examples:
+          - 500
+          description: Sum of donations raised by the signup in the current cycle.
+        donations_raised_count:
+          type:
+          - integer
+          - 'null'
+          default: 0
+          examples:
+          - 5
+          description: Number of donations raised by this signup.
+        donations_raised_count_this_cycle:
+          type:
+          - integer
+          - 'null'
+          default: 0
+          examples:
+          - 5
+          description: Number of donations raised by this signup in the current cycle.
+        donations_to_raise_amount_in_cents:
+          type:
+          - integer
+          - 'null'
+          default: 0
+          examples:
+          - 500
+          description: Sum of donations that need to be raised.
+        dw_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: The Catalist ID associated with the signup.
+        email:
+          type:
+          - string
+          - 'null'
+          examples:
+          - test@example.com
+          description: The signup's email address.
+        email1:
+          type:
+          - string
+          - 'null'
+          examples:
+          - example@example.com
+          description: Email address 1 for the signup.
+        email1_is_bad:
+          type:
+          - boolean
+          - 'null'
+          default: false
+          examples:
+          - false
+          description: Email address 1 is not emailable.
+        email2:
+          type:
+          - string
+          - 'null'
+          examples:
+          - example@example.com
+          description: Email address 2 for the signup.
+        email2_is_bad:
+          type:
+          - boolean
+          - 'null'
+          default: false
+          examples:
+          - false
+          description: Email address 2 is not emailable.
+        email3:
+          type:
+          - string
+          - 'null'
+          examples:
+          - example@example.com
+          description: Email address 3 for the signup.
+        email3_is_bad:
+          type:
+          - boolean
+          - 'null'
+          default: false
+          examples:
+          - false
+          description: Email address 3 is not emailable.
+        email4:
+          type:
+          - string
+          - 'null'
+          examples:
+          - example@example.com
+          description: Email address 4 for the signup.
+        email4_is_bad:
+          type:
+          - boolean
+          - 'null'
+          default: false
+          examples:
+          - false
+          description: Email address 4 is not emailable.
+        email_opt_in:
+          type:
+          - boolean
+          - 'null'
+          default: true
+          examples:
+          - false
+          description: The signup has opted in to receive emails.
+        employer:
+          type:
+          - string
+          - 'null'
+          examples:
+          - NationBuilder
+          description: The signup's employer.
+        ethnicity:
+          type:
+          - string
+          - 'null'
+          examples:
+          - Hawaiian
+          description: Signup's ethnicity.
+        external_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: A unique identifier from a third party.
+        fax_number:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1234567890'
+          description: Signup's fax number.
+        federal_district:
+          type:
+          - string
+          - 'null'
+          examples:
+          - Congressional District 40
+          description: Federal voting district the signup belongs to.
+        federal_donotcall:
+          type:
+          - boolean
+          - 'null'
+          default: false
+          examples:
+          - false
+          description: Is the signup on the federal do not call list?
+        fire_district:
+          type:
+          - string
+          - 'null'
+          examples:
+          - Jackson
+          description: Fire district, only available in a voter file import.
+        first_donated_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+          description: The first time the signup made a donation.
+        first_fundraised_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+          description: The first time the signup fundraised.
+        first_name:
+          type:
+          - string
+          - 'null'
+          examples:
+          - Lucy
+          description: Signup's first name.
+        first_prospect_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+          description: The first time the signup was marked as a prospect.
+        first_recruited_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+          description: The first time the signup recruited another signup.
+        first_supporter_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+          description: The first time the signup was marked as a supporter.
+        first_volunteer_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+          description: The first time the signup volunteered.
+        import_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: The id of the import that added the signup.
+        inferred_party:
+          type:
+          - string
+          - 'null'
+          examples:
+          - P
+          description: Single letter representation of the signup's inferred political party.
+        inferred_support_level:
+          type:
+          - integer
+          - 'null'
+          examples:
+          - 1
+          description: The signup's inferred support level. 1=very strong support and 5=very strong opposition.
+        is_deceased:
+          type:
+          - boolean
+          - 'null'
+          default: false
+          examples:
+          - false
+          description: The signup is deceased.
+        is_fundraiser:
+          type:
+          - boolean
+          - 'null'
+          default: false
+          examples:
+          - false
+          description: The signup is a fundraiser.
+        is_ignore_donation_limits:
+          type:
+          - boolean
+          - 'null'
+          default: false
+          examples:
+          - false
+          description: Ignore donation limits for this signup.
+        is_leaderboardable:
+          type:
+          - boolean
+          - 'null'
+          default: true
+          examples:
+          - false
+          description: The signup can appear on leaderboards.
+        is_mobile_bad:
+          type:
+          - boolean
+          - 'null'
+          default: false
+          examples:
+          - false
+          description: The signup's mobile number is bad.
+        is_possible_duplicate:
+          type:
+          - boolean
+          - 'null'
+          default: false
+          examples:
+          - false
+          description: The signup could be a duplicate.
+        is_profile_private:
+          type:
+          - boolean
+          - 'null'
+          default: false
+          examples:
+          - false
+          description: The signup's profile is private.
+        is_profile_searchable:
+          type:
+          - boolean
+          - 'null'
+          default: true
+          examples:
+          - false
+          description: The profile is searchable.
+        is_prospect:
+          type:
+          - boolean
+          - 'null'
+          default: false
+          examples:
+          - false
+          description: The signup is a prospect.
+        is_supporter:
+          type:
+          - boolean
+          - 'null'
+          default: true
+          examples:
+          - false
+          description: The signup is a supporter.
+        is_survey_question_private:
+          type:
+          - boolean
+          - 'null'
+          default: false
+          examples:
+          - false
+          description: Survey questions are private for this signup.
+        is_volunteer:
+          type:
+          - boolean
+          - 'null'
+          default: false
+          examples:
+          - false
+          description: The signup is a volunteer in your nation.
+        judicial_district:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: Judicial district, only available in a voter file import.
+        labour_region:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: British voting district.
+        language:
+          type:
+          - string
+          - 'null'
+          examples:
+          - EN
+          description: The primary language of the signup.
+        last_call_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: ID of the last call made to the signup.
+        last_contacted_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+          description: The last time the signup was contacted.
+        last_contacted_by_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: The ID of the user that last contacted the signup.
+        last_donated_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+          description: The last time the signup donated.
+        last_fundraised_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+          description: The last time the signup fundraised.
+        last_name:
+          type:
+          - string
+          - 'null'
+          examples:
+          - Butler
+          description: The signup's last name.
+        last_rule_violation_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+          description: The last time the signup violated a rule.
+        legal_name:
+          type:
+          - string
+          - 'null'
+          examples:
+          - Lucy Octavia Butler
+          description: The signup's legal name.
+        locale:
+          type:
+          - string
+          - 'null'
+          examples:
+          - en
+          description: Letter code representing the signup\s language.
+        marital_status:
+          type:
+          - string
+          - 'null'
+          examples:
+          - S
+          description: Single letter representation of the signup's marital status.
+        middle_name:
+          type:
+          - string
+          - 'null'
+          examples:
+          - Octavia
+          description: Signup's middle name.
+        mobile_number:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1234567890'
+          description: The signup's cell phone number.
+        mobile_opt_in:
+          type:
+          - boolean
+          - 'null'
+          default: true
+          examples:
+          - false
+          description: The signup has opted in to mobile phone contact.
+        ngp_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: ID from associated NGP account.
+        note:
+          type:
+          - string
+          - 'null'
+          examples:
+          - Good talk
+          description: Important information to remember about the signup.
+        occupation:
+          type:
+          - string
+          - 'null'
+          examples:
+          - Software engineer
+          description: The signup's occupation.
+        parent_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: Signup's parent ID.
+        party:
+          type:
+          - string
+          - 'null'
+          examples:
+          - P
+          description: Single letter abbreviation for political party.
+        party_member:
+          type:
+          - boolean
+          - 'null'
+          examples:
+          - false
+          description: Political party membership.
+        pf_strat_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: PoliticalFORCE ID.
+        phone_number:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1234567890'
+          description: Signup's phone number.
+        phone_time:
+          type:
+          - string
+          - 'null'
+          examples:
+          - 7:00pm
+          description: Best time to contact the signup.
+        precinct_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: Voting precinct the signup belongs to.
+        prefix:
+          type:
+          - string
+          - 'null'
+          examples:
+          - Dr.
+          description: Signup's prefix.
+        previous_party:
+          type:
+          - string
+          - 'null'
+          examples:
+          - D
+          description: Single letter representing the signup's previous political party affiliation.
+        primary_email_id:
+          type:
+          - integer
+          - 'null'
+          enum:
+          - null
+          - 1
+          - 2
+          - 3
+          - 4
+          default: 1
+          examples:
+          - 1
+          description: The email column containing the primary email of the signup.
+        priority_level:
+          type:
+          - integer
+          - 'null'
+          examples:
+          - 1
+          description: Priority level of the signup.
+        profile_content:
+          type:
+          - string
+          - 'null'
+          examples:
+          - Profile content
+          description: The contents of the signup's profile.
+        profile_headline:
+          type:
+          - string
+          - 'null'
+          examples:
+          - My Profile
+          description: Headline of the signup's profile.
+        received_capital_amount_in_cents:
+          type:
+          - integer
+          - 'null'
+          default: 0
+          examples:
+          - 500
+          description: Amount of social capital received.
+        recruiter_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: ID of the signup's recruiter (also a signup).
+        registered_at:
+          type:
+          - string
+          - 'null'
+          format: date
+          examples:
+          - '2022-06-01'
+          description: When was the signup registered.
+        religion:
+          type:
+          - string
+          - 'null'
+          examples:
+          - Internet
+          description: Signup's religion.
+        rnc_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: RNC ID.
+        rnc_regid:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: RNC registration ID.
+        rule_violations_count:
+          type:
+          - integer
+          - 'null'
+          default: 0
+          examples:
+          - 5
+          description: Number of rules the signup has violated.
+        salesforce_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: ID of the associated Salesforce account.
+        school_district:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: School district the signup belongs to.
+        school_sub_district:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: School sub-district the signup belongs to.
+        sex:
+          type:
+          - string
+          - 'null'
+          examples:
+          - F
+          description: 'Must be a single letter: M, F, or O (male, female, or other).'
+        signup_type:
+          type: integer
+          default: 0
+          examples:
+          - 1
+          description: 'Indicates whether the record represents a person or an organization. Must be a single digit: 0 or 1 (0=person, 1=organization).'
+        spent_capital_amount_in_cents:
+          type:
+          - integer
+          - 'null'
+          default: 0
+          examples:
+          - 500
+          description: Amount of social capital spent.
+        state_file_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: Unique identifier if mapped with the registered state field. May be zero filled to number of digits defined by state.
+        state_lower_district:
+          type:
+          - string
+          - 'null'
+          examples:
+          - Assembly District 35
+          description: The state lower voting district.
+        state_upper_district:
+          type:
+          - string
+          - 'null'
+          examples:
+          - State Senate District 19
+          description: The state upper voting district.
+        submitted_address:
+          type:
+          - string
+          - 'null'
+          examples:
+          - 123 Test Drive, Los Angeles, CA
+          description: The address submitted by the signup.
+        suffix:
+          type:
+          - string
+          - 'null'
+          examples:
+          - Jr.
+          description: Signup's suffix.
+        support_level:
+          type:
+          - integer
+          - 'null'
+          examples:
+          - 1
+          description: A number from 1-5. 1=very strong support and 5=very strong opposition.
+        supranational_district:
+          type:
+          - string
+          - 'null'
+          examples:
+          - London Euro Region
+          description: The supranational voting district.
+        township:
+          type:
+          - string
+          - 'null'
+          examples:
+          - Van Buren
+          description: Township, only available in a voter file import.
+        unsubscribed_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+          description: When the signup unsubscribed.
+        username:
+          type:
+          - string
+          - 'null'
+          examples:
+          - username
+          description: Signup's username.
+        van_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: ID of the associated VAN account.
+        village_district:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: Village district, only available in a voter file import.
+        ward:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: Ward, only available in a voter file import.
+        warnings_count:
+          type:
+          - integer
+          - 'null'
+          default: 0
+          examples:
+          - 5
+          description: Number of warnings given to the signup.
+        work_phone_number:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1234567890'
+          description: Signup's work phone number.
+    signup_index_response:
+      description: A paginated JSON:API response containing a list of signups.
+      allOf:
+      - $ref: '#/components/schemas/index_document'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/signup_response_data'
+    list_response_data:
+      description: The JSON:API resource object representing a list.
+      allOf:
+      - $ref: '#/components/schemas/resource_identifier'
+      - type: object
+        properties:
+          type:
+            const: lists
+            examples:
+            - lists
+          attributes:
+            allOf:
+            - $ref: '#/components/schemas/list_read_write_attributes'
+            - $ref: '#/components/schemas/list_read_only_attributes'
+    index_document:
+      description: The JSON:API top-level document shape for paginated collection responses, with resource objects under data and pagination links.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: array
+          description: The page of resource objects for this collection; each resource binds its concrete item schema here via allOf composition.
+        links:
+          $ref: '#/components/schemas/pagination_links'
+        included:
+          $ref: '#/components/schemas/included'
+        meta:
+          type: object
+          description: Non-standard information about the document, such as requested statistics. Empty unless the endpoint has metadata to convey.
+    validation_error:
+      description: A single JSON:API error object describing a validation failure, locating the invalid field via source.pointer and carrying the model-level attribute, message, and code under meta.
+      type: object
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code.
+          examples:
+          - unprocessable_entity
+        status:
+          type: string
+          description: The HTTP status code, as a string.
+          examples:
+          - '422'
+        title:
+          type: string
+          description: Short human-readable summary of the error type.
+          examples:
+          - Validation Error
+        detail:
+          type: string
+          description: Human-readable explanation specific to this failure.
+          examples:
+          - Email 'not-an-email' should look like an email address
+        source:
+          type: object
+          properties:
+            pointer:
+              type: string
+              description: JSON Pointer to the request document member the error relates to.
+              examples:
+              - /data/attributes/email
+        meta:
+          type: object
+          description: The underlying model validation error, including the attribute name, message, and code. Errors on sideposted resources nest these members under a relationship key.
+          properties:
+            attribute:
+              type: string
+              description: The attribute that failed validation.
+            message:
+              type: string
+              description: The validation failure message.
+            code:
+              type: string
+              description: The validation failure code.
+    list_update_request:
+      description: The request body for updating an existing list.
+      allOf:
+      - $ref: '#/components/schemas/update_request_document'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              id:
+                type: string
+                examples:
+                - '1'
+              type:
+                const: lists
+                examples:
+                - lists
+              attributes:
+                $ref: '#/components/schemas/list_read_write_attributes'
+    list_index_response:
+      description: A paginated JSON:API response containing a list of lists.
+      allOf:
+      - $ref: '#/components/schemas/index_document'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/list_response_data'
+    list_sideload_values:
+      description: Relationship names that can be sideloaded with the include query parameter on list endpoints.
+      type: string
+      enum:
+      - author
+      - lists
+      - mailings
+      - parent
+      - signup
+    delete_document:
+      examples:
+      - meta: {}
+      description: The successful destroy response, an empty JSON:API meta-only document returned with status 200 (rather than JSON:API's commonly used 204 No Content).
+      type: object
+      required:
+      - meta
+      additionalProperties: false
+      properties:
+        meta:
+          examples:
+          - {}
+          type: object
+          properties: {}
+    list_show_response:
+      description: A JSON:API response containing a single list.
+      allOf:
+      - $ref: '#/components/schemas/show_document'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/list_response_data'
+    rate_limited_response:
+      description: The body returned by the rate limiter when an access token exceeds its request quota.
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          description: Human-readable explanation of the rate limit.
+          examples:
+          - You have made too many requests. Please try again later.
+    list_read_only_attributes:
+      description: The read-only attributes of a list.
+      type: object
+      properties:
+        created_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+          description: When the list was created.
+        signups_count:
+          type:
+          - integer
+          - 'null'
+          examples:
+          - 372
+          description: The number of signups on the list.
+        updated_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+          description: The last time the list was updated.
+    validation_error_document:
+      description: The JSON:API errors document returned with status 422 when model validations fail on create or update. Unlike this API's flat 4xx error bodies, validation failures follow the JSON:API errors format.
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/validation_error'
+    update_request_document:
+      description: The JSON:API top-level document shape for update requests, whose data member identifies the resource by type and id and carries the changed attributes.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          properties:
+            id:
+              type: string
+              description: The ID of the resource being updated.
+            type:
+              type: string
+              description: The JSON:API resource type of the resource being updated.
+    create_request_document:
+      description: The JSON:API top-level document shape for create requests, whose data member carries the new resource's type and attributes.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          properties:
+            type:
+              type: string
+              description: The JSON:API resource type of the resource being created.
+    resource:
+      description: A generic JSON:API resource object. Resources sideloaded in a document's included member use this shape; their attributes are those of the resource type named in the type member.
+      allOf:
+      - $ref: '#/components/schemas/resource_identifier'
+      - type: object
+        properties:
+          attributes:
+            type: object
+            description: The attributes of the resource, as documented for its resource type.
+          relationships:
+            type: object
+            description: References from this resource to other resources in the document.
+    signup_field_values:
+      description: Readable signup attribute names selectable with sparse fieldsets (fields[signups]).
+      type: string
+      enum:
+      - author_id
+      - availability
+      - banned_at
+      - born_at
+      - capital_amount_in_cents
+      - church
+      - city_district
+      - city_sub_district
+      - civicrm_id
+      - contact_status
+      - could_vote_status
+      - county_district
+      - county_file_id
+      - created_at
+      - custom_values
+      - datatrust_id
+      - demo
+      - do_not_call
+      - do_not_contact
+      - donations_amount_in_cents
+      - donations_amount_this_cycle_in_cents
+      - donations_count
+      - donations_count_this_cycle
+      - donations_pledged_amount_in_cents
+      - donations_raised_amount_in_cents
+      - donations_raised_amount_this_cycle_in_cents
+      - donations_raised_count
+      - donations_raised_count_this_cycle
+      - donations_to_raise_amount_in_cents
+      - dw_id
+      - email
+      - email1
+      - email1_is_bad
+      - email1_is_bouncing
+      - email2
+      - email2_is_bad
+      - email2_is_bouncing
+      - email3
+      - email3_is_bad
+      - email3_is_bouncing
+      - email4
+      - email4_is_bad
+      - email4_is_bouncing
+      - email_opt_in
+      - employer
+      - ethnicity
+      - external_id
+      - fax_number
+      - federal_district
+      - federal_donotcall
+      - fire_district
+      - first_donated_at
+      - first_fundraised_at
+      - first_name
+      - first_prospect_at
+      - first_recruited_at
+      - first_supporter_at
+      - first_volunteer_at
+      - full_name
+      - import_id
+      - inferred_party
+      - inferred_support_level
+      - is_cpu
+      - is_deceased
+      - is_donor
+      - is_fundraiser
+      - is_ignore_donation_limits
+      - is_leaderboardable
+      - is_mobile_bad
+      - is_possible_duplicate
+      - is_profile_private
+      - is_profile_searchable
+      - is_prospect
+      - is_supporter
+      - is_survey_question_private
+      - is_volunteer
+      - judicial_district
+      - labour_region
+      - language
+      - last_call_id
+      - last_contacted_at
+      - last_contacted_by_id
+      - last_donated_at
+      - last_fundraised_at
+      - last_name
+      - last_rule_violation_at
+      - legal_name
+      - locale
+      - marital_status
+      - middle_name
+      - mobile_number
+      - mobile_opt_in
+      - ngp_id
+      - note
+      - note_updated_at
+      - occupation
+      - parent_id
+      - party
+      - party_member
+      - pf_strat_id
+      - phone_number
+      - phone_time
+      - precinct_id
+      - prefix
+      - previous_party
+      - primary_email_id
+      - priority_level
+      - priority_level_changed_at
+      - profile_content
+      - profile_content_html
+      - profile_headline
+      - received_capital_amount_in_cents
+      - recruiter_id
+      - registered_at
+      - religion
+      - rnc_id
+      - rnc_regid
+      - rule_violations_count
+      - salesforce_id
+      - school_district
+      - school_sub_district
+      - sex
+      - signup_type
+      - spent_capital_amount_in_cents
+      - state_file_id
+      - state_lower_district
+      - state_upper_district
+      - submitted_address
+      - suffix
+      - support_level
+      - support_level_changed_at
+      - supranational_district
+      - township
+      - unsubscribed_at
+      - updated_at
+      - username
+      - van_id
+      - village_district
+      - ward
+      - warnings_count
+      - work_phone_number
+    included:
+      description: Sideloaded resources requested via the include query parameter. Each entry is a full resource object whose shape is documented under its own resource type.
+      type: array
+      items:
+        $ref: '#/components/schemas/resource'
+  parameters:
+    pagination_size:
+      name: page[size]
+      description: 'Number of results to display per page (default: 20, max: 100, min: 1)'
+      in: query
+      required: false
+      schema:
+        type: string
+        default: '20'
+    signup_sparse_fields:
+      name: fields[signups]
+      in: query
+      required: false
+      style: form
+      explode: false
+      description: Comma-delimited list of signup attributes to only return in the response
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/signup_field_values'
+    signup_show_include:
+      name: include
+      in: query
+      required: false
+      style: form
+      explode: false
+      description: 'Comma-delimited list of sideloaded resources to include as part of the response.
+
+        See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
+
+        sideloading large numbers of resources and pagination.
+
+        '
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/signup_sideload_values'
+    list_index_include:
+      name: include
+      in: query
+      description: 'Comma-delimited list of sideloaded resources to include as part of the list index response.
+
+        See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
+
+        sideloading large numbers of resources and pagination.
+
+        '
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/list_sideload_values'
+      required: false
+      style: form
+      explode: false
+    id:
+      name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    list_show_include:
+      name: include
+      in: query
+      description: 'Comma-delimited list of sideloaded resources to include as part of the list response.
+
+        See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
+
+        sideloading large numbers of resources and pagination.
+
+        '
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/list_sideload_values'
+      required: false
+      style: form
+      explode: false
+    list_sparse_fields:
+      name: fields[lists]
+      in: query
+      required: false
+      description: Comma-delimited list of list attributes to only return in the response
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/list_field_values'
+      style: form
+      explode: false
+    pagination_number:
+      name: page[number]
+      description: Page number to list (starting at 1)
+      in: query
+      required: false
+      schema:
+        type: string
+        default: '1'
+  headers:
+    RateLimit-Remaining:
+      description: Number of requests remaining for the current access token in the current rate-limit window.
+      schema:
+        type: string
+        examples:
+        - '249'
+      examples: {}
+    RateLimit-Limit:
+      description: Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).
+      schema:
+        type: string
+        examples:
+        - '250'
+      examples: {}
+    Retry-After:
+      description: Number of seconds to wait before retrying. Sent with 429 responses.
+      schema:
+        type: string
+        examples:
+        - '10'
+      examples: {}
+    RateLimit-Reset:
+      description: Unix timestamp (in seconds) at which the current rate-limit window resets.
+      schema:
+        type: string
+        examples:
+        - '1719964810'
+      examples: {}
+  responses:
+    bad_request:
+      description: The request body or query parameters are invalid, such as an unknown attribute, filter, filter operator, sort field, or sideload.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/json:
+          example:
+            code: bad_request
+            message: Tried to filter on attribute :bogus, but could not find an attribute with that name.
+          schema:
+            $ref: '#/components/schemas/error_response'
+    unauthorized:
+      description: The access token is missing, expired, or not authorized to access this resource.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/json:
+          example:
+            code: unauthorized
+            message: You are not authorized to access this content. Your access token may be missing. The resource owner also may not have a permission level sufficient to grant access.
+          schema:
+            $ref: '#/components/schemas/error_response'
+    unprocessable:
+      description: Model validations failed for the resource being created or updated. Unlike this API's other errors, validation failures are returned as a JSON:API errors document locating each invalid field.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/vnd.api+json:
+          example:
+            errors:
+            - code: unprocessable_entity
+              status: '422'
+              title: Validation Error
+              detail: Email 'not-an-email' should look like an email address
+              source:
+                pointer: /data/attributes/email
+              meta:
+                attribute: email
+                message: '''not-an-email'' should look like an email address'
+          schema:
+            $ref: '#/components/schemas/validation_error_document'
+    rate_limited:
+      description: The access token has exceeded its request quota for the current rate-limit window.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+        Retry-After:
+          $ref: '#/components/headers/Retry-After'
+      content:
+        application/json:
+          example:
+            message: You have made too many requests. Please try again later.
+          schema:
+            $ref: '#/components/schemas/rate_limited_response'
+    not_found:
+      description: No resource exists with the provided ID.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/json:
+          example:
+            code: not_found
+            message: Record not found
+          schema:
+            $ref: '#/components/schemas/error_response'
+  requestBodies:
+    list_update_request_body:
+      description: The attributes to update on the existing list.
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/list_update_request'
+        application/json:
+          schema:
+            $ref: '#/components/schemas/list_update_request'
+    list_create_request_body:
+      description: The list to create.
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/list_create_request'
+        application/json:
+          schema:
+            $ref: '#/components/schemas/list_create_request'
+  securitySchemes:
+    BearerAuth:
+      description: Authentication using a bearer token (JWT) issued via OAuth.
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+externalDocs:
+  description: Get started with the NationBuilder API
+  url: https://nationbuilder.com/api_quickstart

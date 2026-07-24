@@ -1,0 +1,1047 @@
+openapi: 3.1.2
+info:
+  title: NationBuilder V2 Async Processes Suggestions API
+  version: '2.0'
+  description: 'The NationBuilder V2 API is a JSON:API-compliant API for managing NationBuilder
+
+    resources such as people, donations, events, and lists. It layers a few
+
+    conventions on top of the JSON:API standard, described below. For a broader
+
+    introduction, see the
+
+    [NationBuilder v2 API core concepts](https://support.nationbuilder.com/en/articles/9757369-nationbuilder-v2-api-core-concepts)
+
+    guide.
+
+
+    ### Request and response format
+
+
+    Requests and responses follow the [JSON:API](https://jsonapi.org/) document
+
+    structure: single resources are returned under a top-level `data` member, and
+
+    collections are paginated arrays of resource objects with `links` for the
+
+    current, previous, and next pages. Related resources can be sideloaded into a
+
+    top-level `included` array with the `include` query parameter, and responses
+
+    can be trimmed to specific attributes with `fields[resource_type]` sparse
+
+    fieldsets (plus opt-in `extra_fields[resource_type]` attributes where noted).
+
+    Responses are served as `application/vnd.api+json`; request bodies may be
+
+    sent as `application/vnd.api+json` or `application/json`.
+
+
+    Filtering uses an operator syntax: `filter[attribute]=value` for
+
+    equality (comma-separated values act as OR), and
+
+    `filter[attribute][operator]=value` for other comparisons. String attributes
+
+    support `eq`, `not_eq`, `eql`, `not_eql`, `prefix`, `not_prefix`, `suffix`,
+
+    `not_suffix`, `match`, and `not_match`; numeric and date attributes support
+
+    `eq`, `not_eq`, `gt`, `gte`, `lt`, and `lte`. Note that JSON:API relationship
+
+    routes (`/resource/{id}/relationships/other`) are not provided; related
+
+    resources are reachable through the filtered index URLs given in each
+
+    resource''s `relationships` links.
+
+
+    ### Errors
+
+
+    Error responses use a flat JSON body with a machine-readable `code` and a
+
+    human-readable `message`. Some errors carry additional detail members (for
+
+    example `validation_errors`). The exception is 422 validation failures,
+
+    which return a JSON:API `errors` array locating each invalid field via
+
+    `source.pointer`.
+
+
+    ### Rate limiting
+
+
+    Requests are limited per access token (250 requests per 10-second window).
+
+    Every response includes `RateLimit-Limit`, `RateLimit-Remaining`, and
+
+    `RateLimit-Reset` headers; exceeding the limit returns a 429 with a
+
+    `Retry-After` header.
+
+    '
+servers:
+- url: https://{subdomain}.nationbuilder.com
+  variables:
+    subdomain:
+      default: yournation
+      description: Your NationBuilder nation slug
+security:
+- BearerAuth: []
+tags:
+- name: Suggestions
+  x-tag-expanded: false
+  description: 'Suggestions are individual ideas or proposals submitted to suggestion boxes on your site.
+
+    They can be responded to, categorized, and managed by administrators.
+
+
+    **Responding to Suggestions:**
+
+    Responses consist of optional text `official_response` and/or status via `response_type_id`. You can provide just text, just status, or both combined to officially respond to a suggestion.
+
+
+    **Response Options:**
+
+    - `official_response` - Text response (optional)
+
+    - `response_type_id` - Status update (optional)
+
+    - `response_author_id` - Signup ID of person that provided the response (optional)
+
+    - `responded_at` - When the response was provided (optional)
+
+
+    **Response Type IDs:
+
+    - `0` - Not Planned
+
+    - `1` - Considering
+
+    - `2` - Planned
+
+    - `3` - Started
+
+    - `4` - Completed
+
+    - `5` - Incomplete
+
+    - `6` - Duplicate
+
+    - `7` - Submitted (default)
+
+    '
+paths:
+  /api/v2/suggestions:
+    parameters:
+    - $ref: '#/components/parameters/suggestion_index_include'
+    - $ref: '#/components/parameters/suggestion_sparse_fields'
+    post:
+      summary: Create a suggestion
+      tags:
+      - Suggestions
+      description: 'Creates a Suggestion.
+
+
+        **Required attributes:**
+
+        - `suggestion_box_id` - ID of the SuggestionBox to add this Suggestion to
+
+        - `headline` - Display name/title for the Suggestion
+
+
+        **Optional attributes:**
+
+        - `content` - Further explanation of the Suggestion beyond the headline
+
+        - `slug` - URL-friendly identifier (auto-generated from name if not provided)
+
+        - `status` - Publication status (defaults to ''published'' if not provided)
+
+        - `recruiter_id` - Signup ID for the person to assign as the recruiter when Suggestions are submitted (defaults to null)
+
+        - `official_response` - Official response to the Suggestion
+
+        - `response_type_id` - Status/stage of the Suggestion (defaults to 7 - ''Submitted'')
+
+        - `response_author_id` - Signup ID for the person that provided the official response. (Defaults null, auto-set to the owner of the API key if not provided when first response is provided)
+
+        - `responded_at` - When responded (defaults to null, auto-set when first responded)
+
+        - `notify_followers` - Send email to suggestion followers when adding an official response (boolean, write-only, defaults to false)
+
+        '
+      operationId: createSuggestion
+      responses:
+        '201':
+          description: The newly created suggestion.
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/suggestion_show_response'
+        '400':
+          description: A suggestion with this slug already exists, or a required field is missing.
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+          content:
+            application/json:
+              example:
+                code: validation_failed
+                message: Validation Failed.
+                validation_errors:
+                - suggestion_box_id is required when creating a suggestion
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '422':
+          description: The referenced suggestion box does not exist.
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+          content:
+            application/json:
+              example:
+                code: unprocessable_entity
+                message: The referenced resource 'SuggestionBox' with id '99999' could not be found.
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '429':
+          $ref: '#/components/responses/rate_limited'
+      requestBody:
+        $ref: '#/components/requestBodies/suggestion_create_request_body'
+    get:
+      summary: List all suggestions in a nation
+      tags:
+      - Suggestions
+      description: Returns a paginated list of all Suggestions across all SuggestionBoxes.
+      operationId: listSuggestions
+      parameters:
+      - $ref: '#/components/parameters/pagination_number'
+      - $ref: '#/components/parameters/pagination_size'
+      responses:
+        '200':
+          description: A page of matching suggestions.
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/suggestion_index_response'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '429':
+          $ref: '#/components/responses/rate_limited'
+  /api/v2/suggestions/{id}:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    get:
+      summary: Show suggestion with provided ID
+      tags:
+      - Suggestions
+      description: Retrieves a specific Suggestion by its ID.
+      operationId: showSuggestion
+      parameters:
+      - $ref: '#/components/parameters/suggestion_show_include'
+      - $ref: '#/components/parameters/suggestion_sparse_fields'
+      responses:
+        '200':
+          description: The requested suggestion.
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/suggestion_show_response'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/not_found'
+        '429':
+          $ref: '#/components/responses/rate_limited'
+    patch:
+      summary: Update a suggestion
+      tags:
+      - Suggestions
+      description: 'Updates a Suggestion.
+
+
+        **Required attributes:**
+
+        - `suggestion_box_id` - ID of the SuggestionBox to add this Suggestion to
+
+        - `headline` - Display name/title for the Suggestion
+
+
+        **Optional attributes:**
+
+        - `content` - Further explanation of the Suggestion beyond the headline
+
+        - `slug` - URL-friendly identifier (auto-generated from name if not provided)
+
+        - `status` - Publication status (defaults to ''published'' if not provided)
+
+        - `recruiter_id` - Signup ID for the person to assign as the recruiter when Suggestions are submitted (defaults to null)
+
+        - `official_response` - Official response to the Suggestion
+
+        - `response_type_id` - Status/stage of the Suggestion (defaults to 7 - ''Submitted'')
+
+        - `response_author_id` - Signup ID for the person that provided the official response. (Defaults null, auto-set to the owner of the API key if not provided when first response is provided)
+
+        - `responded_at` - When responded (defaults to null, auto-set when first responded)
+
+        - `notify_followers` - Send email to suggestion followers when adding an official response (boolean, write-only, defaults to false)
+
+
+        You can provide just text, just status, or both combined to officially respond to a suggestion.
+
+        '
+      operationId: updateSuggestion
+      responses:
+        '200':
+          description: move to different suggestion box
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/suggestion_show_response'
+        '400':
+          $ref: '#/components/responses/bad_request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/not_found'
+        '422':
+          $ref: '#/components/responses/unprocessable'
+        '429':
+          $ref: '#/components/responses/rate_limited'
+      requestBody:
+        $ref: '#/components/requestBodies/suggestion_update_request_body'
+    delete:
+      summary: Delete a suggestion
+      tags:
+      - Suggestions
+      description: 'Permanently deletes a Suggestion and its associated page.
+
+
+        **Warning:** This action cannot be undone. The Suggestion and all its data
+
+        will be permanently removed from the system.
+
+        '
+      operationId: deleteSuggestion
+      responses:
+        '200':
+          description: Confirmation that the suggestion was deleted.
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/not_found'
+        '429':
+          $ref: '#/components/responses/rate_limited'
+components:
+  schemas:
+    error_response:
+      description: The error body returned for 4xx and 5xx responses, with a machine-readable code and a human-readable message. Some errors include additional detail members alongside these two. The exception is 422 validation failures, which are returned as JSON:API errors documents instead.
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code identifying the failure.
+          examples:
+          - not_found
+        message:
+          type: string
+          description: Human-readable explanation of the failure.
+          examples:
+          - Record not found
+    show_document:
+      description: The JSON:API top-level document shape for responses returning a single resource under the data member.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: object
+          description: The primary resource object; each resource binds its concrete schema here via allOf composition.
+        included:
+          $ref: '#/components/schemas/included'
+        meta:
+          type: object
+          description: Non-standard information about the document. Empty unless the endpoint has metadata to convey.
+    suggestion_response_data:
+      description: The JSON:API resource object representing a suggestion.
+      allOf:
+      - $ref: '#/components/schemas/resource_identifier'
+      - type: object
+        properties:
+          type:
+            const: suggestions
+            examples:
+            - suggestions
+          attributes:
+            allOf:
+            - $ref: '#/components/schemas/suggestion_read_write_attributes'
+            - $ref: '#/components/schemas/suggestion_read_only_attributes'
+    resource_identifier:
+      description: A JSON:API resource identifier object, the type/id pair that uniquely identifies a single resource.
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the resource.
+          examples:
+          - '1'
+        type:
+          type: string
+          description: The JSON:API resource type.
+    suggestion_show_response:
+      description: A JSON:API response containing a single suggestion.
+      allOf:
+      - $ref: '#/components/schemas/show_document'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/suggestion_response_data'
+    pagination_links:
+      description: JSON:API pagination links for the pages of a collection. A key whose page is unavailable, or that the server's pagination strategy does not provide, is omitted or null.
+      type: object
+      properties:
+        self:
+          type: string
+          description: Link to the current page.
+          examples:
+          - /articles?page[number]=2
+        first:
+          type:
+          - string
+          - 'null'
+          description: Link to the first page.
+          examples:
+          - /articles?page[number]=1
+        last:
+          type:
+          - string
+          - 'null'
+          description: Link to the last page.
+          examples:
+          - /articles?page[number]=5
+        prev:
+          type:
+          - string
+          - 'null'
+          description: Link to the previous page.
+          examples:
+          - /articles?page[number]=1
+        next:
+          type:
+          - string
+          - 'null'
+          description: Link to the next page.
+          examples:
+          - /articles?page[number]=3
+    suggestion_create_request:
+      description: The request body for creating a new suggestion.
+      allOf:
+      - $ref: '#/components/schemas/create_request_document'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              type:
+                const: suggestions
+                examples:
+                - suggestions
+              attributes:
+                allOf:
+                - $ref: '#/components/schemas/suggestion_read_write_attributes'
+                - $ref: '#/components/schemas/suggestion_write_only_attributes'
+    suggestion_update_request:
+      description: The request body for updating an existing suggestion.
+      allOf:
+      - $ref: '#/components/schemas/update_request_document'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              id:
+                type: string
+                examples:
+                - '1'
+              type:
+                const: suggestions
+                examples:
+                - suggestions
+              attributes:
+                allOf:
+                - $ref: '#/components/schemas/suggestion_read_write_attributes'
+                - $ref: '#/components/schemas/suggestion_write_only_attributes'
+    index_document:
+      description: The JSON:API top-level document shape for paginated collection responses, with resource objects under data and pagination links.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: array
+          description: The page of resource objects for this collection; each resource binds its concrete item schema here via allOf composition.
+        links:
+          $ref: '#/components/schemas/pagination_links'
+        included:
+          $ref: '#/components/schemas/included'
+        meta:
+          type: object
+          description: Non-standard information about the document, such as requested statistics. Empty unless the endpoint has metadata to convey.
+    suggestion_sideload_values:
+      description: Relationship names that can be sideloaded with the include query parameter on suggestion endpoints.
+      type: string
+      enum:
+      - answer_author
+      - page
+      - recruiter
+    validation_error:
+      description: A single JSON:API error object describing a validation failure, locating the invalid field via source.pointer and carrying the model-level attribute, message, and code under meta.
+      type: object
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code.
+          examples:
+          - unprocessable_entity
+        status:
+          type: string
+          description: The HTTP status code, as a string.
+          examples:
+          - '422'
+        title:
+          type: string
+          description: Short human-readable summary of the error type.
+          examples:
+          - Validation Error
+        detail:
+          type: string
+          description: Human-readable explanation specific to this failure.
+          examples:
+          - Email 'not-an-email' should look like an email address
+        source:
+          type: object
+          properties:
+            pointer:
+              type: string
+              description: JSON Pointer to the request document member the error relates to.
+              examples:
+              - /data/attributes/email
+        meta:
+          type: object
+          description: The underlying model validation error, including the attribute name, message, and code. Errors on sideposted resources nest these members under a relationship key.
+          properties:
+            attribute:
+              type: string
+              description: The attribute that failed validation.
+            message:
+              type: string
+              description: The validation failure message.
+            code:
+              type: string
+              description: The validation failure code.
+    suggestion_read_only_attributes:
+      description: The read-only attributes of a suggestion.
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+        has_image:
+          type: boolean
+          examples:
+          - false
+          description: Whether this Suggestion includes an image
+        is_responded:
+          type: boolean
+          examples:
+          - false
+          description: Whether this Suggestion has been responded to. A suggestion is considered "responded to" if it has `response` text OR `response_type_id` is not 7 (Submitted).
+        page_id:
+          type: string
+          examples:
+          - '1'
+          description: Associated page ID (read-only)
+        site_id:
+          type: string
+          examples:
+          - '123'
+          description: Site where this Suggestion is published (inherited from SuggestionBox)
+        updated_at:
+          type: string
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+    suggestion_index_response:
+      description: A paginated JSON:API response containing a list of suggestions.
+      allOf:
+      - $ref: '#/components/schemas/index_document'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/suggestion_response_data'
+    suggestion_field_values:
+      description: Readable suggestion attribute names selectable with sparse fieldsets (fields[suggestions]).
+      type: string
+      enum:
+      - content
+      - created_at
+      - external_id
+      - has_image
+      - headline
+      - is_responded
+      - official_response
+      - page_id
+      - recruiter_id
+      - responded_at
+      - response_author_id
+      - response_type_id
+      - site_id
+      - slug
+      - status
+      - suggestion_box_id
+      - updated_at
+    rate_limited_response:
+      description: The body returned by the rate limiter when an access token exceeds its request quota.
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          description: Human-readable explanation of the rate limit.
+          examples:
+          - You have made too many requests. Please try again later.
+    suggestion_write_only_attributes:
+      description: The write-only attributes of a suggestion.
+      type: object
+      properties:
+        notify_followers:
+          type:
+          - boolean
+          - 'null'
+          examples:
+          - true
+          description: Whether to send email notification to the suggestion author when providing an official response. Only applies when the parent SuggestionBox has email notifications enabled (send_official_response_notifications is true). This is a write-only field used during updates when adding a response.
+    suggestion_read_write_attributes:
+      description: The attributes of a suggestion that can be both read and written.
+      type: object
+      properties:
+        content:
+          type:
+          - string
+          - 'null'
+          examples:
+          - We should add more parking spaces downtown
+          description: Text content of the Suggestion (labeled "Further explanation" in the UI)
+        external_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - ext-123
+          description: Client-provided idempotency key stored on the related Page (unique across pages).
+        headline:
+          type: string
+          examples:
+          - Downtown Parking Improvement
+          description: Page headline for this Suggestion
+        official_response:
+          type:
+          - string
+          - 'null'
+          examples:
+          - Thank you for this suggestion. We will consider it in our next planning session.
+          description: Official response to the suggestion. Can be used alone or combined with `response_type_id` to provide both a status update and detailed explanation.
+        recruiter_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: Signup ID of the person who recruited the Suggestion author
+        responded_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+          description: Timestamp when the suggestion was responded to. Automatically set when `response` or `response_type_id` is first added.
+        response_author_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: Signup ID of the person who provided the response
+        response_type_id:
+          type:
+          - integer
+          - 'null'
+          examples:
+          - 2
+          description: 'Status/stage of the suggestion in the review process. Response types: 0=Not Planned, 1=Considering, 2=Planned, 3=Started, 4=Completed, 5=Incomplete, 6=Duplicate, 7=Submitted (default/no response). A suggestion is considered "responded to" if it has `response` text OR a non-7 `response_type_id`.'
+        slug:
+          type: string
+          examples:
+          - my-page-slug
+          description: URL path for this content. Must be unique within the site. Auto-generated from name if not provided.
+        status:
+          type: string
+          enum:
+          - archived
+          - deleted
+          - expired
+          - hidden
+          - published
+          - rule_violated
+          - unlisted
+          examples:
+          - published
+          description: 'Publication status of the page. Must be one of: archived, deleted, expired, hidden, published, rule_violated, unlisted'
+        suggestion_box_id:
+          type: string
+          examples:
+          - '123'
+          description: SuggestionBox to which this Suggestion will be submitted
+    validation_error_document:
+      description: The JSON:API errors document returned with status 422 when model validations fail on create or update. Unlike this API's flat 4xx error bodies, validation failures follow the JSON:API errors format.
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/validation_error'
+    update_request_document:
+      description: The JSON:API top-level document shape for update requests, whose data member identifies the resource by type and id and carries the changed attributes.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          properties:
+            id:
+              type: string
+              description: The ID of the resource being updated.
+            type:
+              type: string
+              description: The JSON:API resource type of the resource being updated.
+    create_request_document:
+      description: The JSON:API top-level document shape for create requests, whose data member carries the new resource's type and attributes.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          properties:
+            type:
+              type: string
+              description: The JSON:API resource type of the resource being created.
+    resource:
+      description: A generic JSON:API resource object. Resources sideloaded in a document's included member use this shape; their attributes are those of the resource type named in the type member.
+      allOf:
+      - $ref: '#/components/schemas/resource_identifier'
+      - type: object
+        properties:
+          attributes:
+            type: object
+            description: The attributes of the resource, as documented for its resource type.
+          relationships:
+            type: object
+            description: References from this resource to other resources in the document.
+    included:
+      description: Sideloaded resources requested via the include query parameter. Each entry is a full resource object whose shape is documented under its own resource type.
+      type: array
+      items:
+        $ref: '#/components/schemas/resource'
+  parameters:
+    suggestion_sparse_fields:
+      name: fields[suggestions]
+      in: query
+      required: false
+      description: Comma-delimited list of suggestion attributes to only return in the response
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/suggestion_field_values'
+      style: form
+      explode: false
+    pagination_size:
+      name: page[size]
+      description: 'Number of results to display per page (default: 20, max: 100, min: 1)'
+      in: query
+      required: false
+      schema:
+        type: string
+        default: '20'
+    suggestion_index_include:
+      name: include
+      in: query
+      description: 'Comma-delimited list of sideloaded resources to include as part of the suggestion index response.
+
+        See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
+
+        sideloading large numbers of resources and pagination.
+
+        '
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/suggestion_sideload_values'
+      required: false
+      style: form
+      explode: false
+    id:
+      name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    suggestion_show_include:
+      name: include
+      in: query
+      description: 'Comma-delimited list of sideloaded resources to include as part of the suggestion response.
+
+        See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
+
+        sideloading large numbers of resources and pagination.
+
+        '
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/suggestion_sideload_values'
+      required: false
+      style: form
+      explode: false
+    pagination_number:
+      name: page[number]
+      description: Page number to list (starting at 1)
+      in: query
+      required: false
+      schema:
+        type: string
+        default: '1'
+  requestBodies:
+    suggestion_update_request_body:
+      description: The attributes to update on the existing suggestion.
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/suggestion_update_request'
+        application/json:
+          schema:
+            $ref: '#/components/schemas/suggestion_update_request'
+    suggestion_create_request_body:
+      description: The suggestion to create.
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/suggestion_create_request'
+        application/json:
+          schema:
+            $ref: '#/components/schemas/suggestion_create_request'
+  headers:
+    RateLimit-Remaining:
+      description: Number of requests remaining for the current access token in the current rate-limit window.
+      schema:
+        type: string
+        examples:
+        - '249'
+      examples: {}
+    Retry-After:
+      description: Number of seconds to wait before retrying. Sent with 429 responses.
+      schema:
+        type: string
+        examples:
+        - '10'
+      examples: {}
+    RateLimit-Limit:
+      description: Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).
+      schema:
+        type: string
+        examples:
+        - '250'
+      examples: {}
+    RateLimit-Reset:
+      description: Unix timestamp (in seconds) at which the current rate-limit window resets.
+      schema:
+        type: string
+        examples:
+        - '1719964810'
+      examples: {}
+  responses:
+    bad_request:
+      description: The request body or query parameters are invalid, such as an unknown attribute, filter, filter operator, sort field, or sideload.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/json:
+          example:
+            code: bad_request
+            message: Tried to filter on attribute :bogus, but could not find an attribute with that name.
+          schema:
+            $ref: '#/components/schemas/error_response'
+    unauthorized:
+      description: The access token is missing, expired, or not authorized to access this resource.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/json:
+          example:
+            code: unauthorized
+            message: You are not authorized to access this content. Your access token may be missing. The resource owner also may not have a permission level sufficient to grant access.
+          schema:
+            $ref: '#/components/schemas/error_response'
+    unprocessable:
+      description: Model validations failed for the resource being created or updated. Unlike this API's other errors, validation failures are returned as a JSON:API errors document locating each invalid field.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/vnd.api+json:
+          example:
+            errors:
+            - code: unprocessable_entity
+              status: '422'
+              title: Validation Error
+              detail: Email 'not-an-email' should look like an email address
+              source:
+                pointer: /data/attributes/email
+              meta:
+                attribute: email
+                message: '''not-an-email'' should look like an email address'
+          schema:
+            $ref: '#/components/schemas/validation_error_document'
+    rate_limited:
+      description: The access token has exceeded its request quota for the current rate-limit window.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+        Retry-After:
+          $ref: '#/components/headers/Retry-After'
+      content:
+        application/json:
+          example:
+            message: You have made too many requests. Please try again later.
+          schema:
+            $ref: '#/components/schemas/rate_limited_response'
+    not_found:
+      description: No resource exists with the provided ID.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/json:
+          example:
+            code: not_found
+            message: Record not found
+          schema:
+            $ref: '#/components/schemas/error_response'
+  securitySchemes:
+    BearerAuth:
+      description: Authentication using a bearer token (JWT) issued via OAuth.
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+externalDocs:
+  description: Get started with the NationBuilder API
+  url: https://nationbuilder.com/api_quickstart

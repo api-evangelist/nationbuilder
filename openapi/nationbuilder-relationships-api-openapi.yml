@@ -1,0 +1,829 @@
+openapi: 3.1.2
+info:
+  title: NationBuilder V2 Async Processes Relationships API
+  version: '2.0'
+  description: 'The NationBuilder V2 API is a JSON:API-compliant API for managing NationBuilder
+
+    resources such as people, donations, events, and lists. It layers a few
+
+    conventions on top of the JSON:API standard, described below. For a broader
+
+    introduction, see the
+
+    [NationBuilder v2 API core concepts](https://support.nationbuilder.com/en/articles/9757369-nationbuilder-v2-api-core-concepts)
+
+    guide.
+
+
+    ### Request and response format
+
+
+    Requests and responses follow the [JSON:API](https://jsonapi.org/) document
+
+    structure: single resources are returned under a top-level `data` member, and
+
+    collections are paginated arrays of resource objects with `links` for the
+
+    current, previous, and next pages. Related resources can be sideloaded into a
+
+    top-level `included` array with the `include` query parameter, and responses
+
+    can be trimmed to specific attributes with `fields[resource_type]` sparse
+
+    fieldsets (plus opt-in `extra_fields[resource_type]` attributes where noted).
+
+    Responses are served as `application/vnd.api+json`; request bodies may be
+
+    sent as `application/vnd.api+json` or `application/json`.
+
+
+    Filtering uses an operator syntax: `filter[attribute]=value` for
+
+    equality (comma-separated values act as OR), and
+
+    `filter[attribute][operator]=value` for other comparisons. String attributes
+
+    support `eq`, `not_eq`, `eql`, `not_eql`, `prefix`, `not_prefix`, `suffix`,
+
+    `not_suffix`, `match`, and `not_match`; numeric and date attributes support
+
+    `eq`, `not_eq`, `gt`, `gte`, `lt`, and `lte`. Note that JSON:API relationship
+
+    routes (`/resource/{id}/relationships/other`) are not provided; related
+
+    resources are reachable through the filtered index URLs given in each
+
+    resource''s `relationships` links.
+
+
+    ### Errors
+
+
+    Error responses use a flat JSON body with a machine-readable `code` and a
+
+    human-readable `message`. Some errors carry additional detail members (for
+
+    example `validation_errors`). The exception is 422 validation failures,
+
+    which return a JSON:API `errors` array locating each invalid field via
+
+    `source.pointer`.
+
+
+    ### Rate limiting
+
+
+    Requests are limited per access token (250 requests per 10-second window).
+
+    Every response includes `RateLimit-Limit`, `RateLimit-Remaining`, and
+
+    `RateLimit-Reset` headers; exceeding the limit returns a 429 with a
+
+    `Retry-After` header.
+
+    '
+servers:
+- url: https://{subdomain}.nationbuilder.com
+  variables:
+    subdomain:
+      default: yournation
+      description: Your NationBuilder nation slug
+security:
+- BearerAuth: []
+tags:
+- name: Relationships
+  x-tag-expanded: false
+  description: Valid relationship types are ["affiliate-affiliate", "alum-school", "assistant-assisted", "board_member-organization", "candidate-committee", "chapter-parent", "child-parent", "consultant-organization", "employee-employer", "family_partner-family_partner", "friend-friend", "member-organization", "mentee-mentor", "partner-partner", "primary_contact-organization", "relative-relative", "representative-constituent", "resident-organization", "sibling-sibling", "spouse-spouse", "student-school", "student-teacher", "subordinate-manager", "subsidiary-parent", "treasurer-committee"]. first_signup_id corresponds with the ID of the signup on the first role listed, and second_signup_id corresponds with the ID of the signup on the second role listed in the relationship type."
+paths:
+  /api/v2/relationships:
+    parameters:
+    - $ref: '#/components/parameters/relationship_index_include'
+    - $ref: '#/components/parameters/relationship_sparse_fields'
+    post:
+      summary: Create a relationship
+      tags:
+      - Relationships
+      description: "Creates a relationship from given data. Valid relationship types are affiliate-affiliate, alum-school, assistant-assisted, board_member-organization, candidate-committee, chapter-parent, child-parent, consultant-organization, employee-employer, family_partner-family_partner, friend-friend, member-organization, mentee-mentor, partner-partner, primary_contact-organization, relative-relative, representative-constituent, resident-organization, sibling-sibling, spouse-spouse, student-school, student-teacher, subordinate-manager, subsidiary-parent, treasurer-committee. first_signup_id\n      corresponds with the ID of the signup on the first role listed, and second_signup_id corresponds\n      with the ID of the signup on the second role listed in the relationship type."
+      operationId: createRelationship
+      responses:
+        '201':
+          description: The newly created relationship.
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/relationship_show_response'
+        '400':
+          $ref: '#/components/responses/bad_request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '422':
+          $ref: '#/components/responses/unprocessable'
+        '429':
+          $ref: '#/components/responses/rate_limited'
+      requestBody:
+        $ref: '#/components/requestBodies/relationship_create_request_body'
+    get:
+      summary: List all relationships in a nation
+      tags:
+      - Relationships
+      description: Lists all relationships
+      operationId: listRelationships
+      responses:
+        '200':
+          description: A page of matching relationships.
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/relationship_index_response'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '429':
+          $ref: '#/components/responses/rate_limited'
+  /api/v2/relationships/{id}:
+    parameters:
+    - $ref: '#/components/parameters/id'
+    - $ref: '#/components/parameters/relationship_show_include'
+    - $ref: '#/components/parameters/relationship_sparse_fields'
+    get:
+      summary: Show relationship with provided ID
+      tags:
+      - Relationships
+      description: Returns the relationship that matches the given ID.
+      operationId: showRelationship
+      responses:
+        '200':
+          description: The requested relationship.
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/relationship_show_response'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/not_found'
+        '429':
+          $ref: '#/components/responses/rate_limited'
+    patch:
+      summary: Update an existing relationship
+      tags:
+      - Relationships
+      description: "Updates an existing relationship. Valid relationship types are affiliate-affiliate, alum-school, assistant-assisted, board_member-organization, candidate-committee, chapter-parent, child-parent, consultant-organization, employee-employer, family_partner-family_partner, friend-friend, member-organization, mentee-mentor, partner-partner, primary_contact-organization, relative-relative, representative-constituent, resident-organization, sibling-sibling, spouse-spouse, student-school, student-teacher, subordinate-manager, subsidiary-parent, treasurer-committee. first_signup_id\n      corresponds with the ID of the signup on the first role listed, and second_signup_id corresponds\n      with the ID of the signup on the second role listed in the relationship type."
+      operationId: updateRelationship
+      responses:
+        '200':
+          description: The updated relationship.
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/relationship_show_response'
+        '400':
+          $ref: '#/components/responses/bad_request'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/not_found'
+        '422':
+          $ref: '#/components/responses/unprocessable'
+        '429':
+          $ref: '#/components/responses/rate_limited'
+      requestBody:
+        $ref: '#/components/requestBodies/relationship_update_request_body'
+    delete:
+      summary: Delete relationship with provided ID
+      tags:
+      - Relationships
+      description: Permanently removes the relationship that matches the given ID.
+      operationId: deleteRelationship
+      responses:
+        '200':
+          description: Confirmation that the relationship was deleted.
+          headers:
+            RateLimit-Limit:
+              $ref: '#/components/headers/RateLimit-Limit'
+            RateLimit-Remaining:
+              $ref: '#/components/headers/RateLimit-Remaining'
+            RateLimit-Reset:
+              $ref: '#/components/headers/RateLimit-Reset'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/delete_document'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/not_found'
+        '429':
+          $ref: '#/components/responses/rate_limited'
+components:
+  schemas:
+    error_response:
+      description: The error body returned for 4xx and 5xx responses, with a machine-readable code and a human-readable message. Some errors include additional detail members alongside these two. The exception is 422 validation failures, which are returned as JSON:API errors documents instead.
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code identifying the failure.
+          examples:
+          - not_found
+        message:
+          type: string
+          description: Human-readable explanation of the failure.
+          examples:
+          - Record not found
+    show_document:
+      description: The JSON:API top-level document shape for responses returning a single resource under the data member.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: object
+          description: The primary resource object; each resource binds its concrete schema here via allOf composition.
+        included:
+          $ref: '#/components/schemas/included'
+        meta:
+          type: object
+          description: Non-standard information about the document. Empty unless the endpoint has metadata to convey.
+    relationship_field_values:
+      description: Readable relationship attribute names selectable with sparse fieldsets (fields[relationships]).
+      type: string
+      enum:
+      - created_at
+      - first_signup_id
+      - relationship_type
+      - second_signup_id
+      - title
+      - updated_at
+    relationship_update_request:
+      description: The request body for updating an existing relationship.
+      allOf:
+      - $ref: '#/components/schemas/update_request_document'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              id:
+                type: string
+                examples:
+                - '1'
+              type:
+                const: relationships
+                examples:
+                - relationships
+              attributes:
+                $ref: '#/components/schemas/relationship_read_write_attributes'
+    resource_identifier:
+      description: A JSON:API resource identifier object, the type/id pair that uniquely identifies a single resource.
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the resource.
+          examples:
+          - '1'
+        type:
+          type: string
+          description: The JSON:API resource type.
+    relationship_response_data:
+      description: The JSON:API resource object representing a relationship.
+      allOf:
+      - $ref: '#/components/schemas/resource_identifier'
+      - type: object
+        properties:
+          type:
+            const: relationships
+            examples:
+            - relationships
+          attributes:
+            allOf:
+            - $ref: '#/components/schemas/relationship_read_write_attributes'
+            - $ref: '#/components/schemas/relationship_read_only_attributes'
+    relationship_read_only_attributes:
+      description: The read-only attributes of a relationship.
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+        updated_at:
+          type: string
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+    pagination_links:
+      description: JSON:API pagination links for the pages of a collection. A key whose page is unavailable, or that the server's pagination strategy does not provide, is omitted or null.
+      type: object
+      properties:
+        self:
+          type: string
+          description: Link to the current page.
+          examples:
+          - /articles?page[number]=2
+        first:
+          type:
+          - string
+          - 'null'
+          description: Link to the first page.
+          examples:
+          - /articles?page[number]=1
+        last:
+          type:
+          - string
+          - 'null'
+          description: Link to the last page.
+          examples:
+          - /articles?page[number]=5
+        prev:
+          type:
+          - string
+          - 'null'
+          description: Link to the previous page.
+          examples:
+          - /articles?page[number]=1
+        next:
+          type:
+          - string
+          - 'null'
+          description: Link to the next page.
+          examples:
+          - /articles?page[number]=3
+    index_document:
+      description: The JSON:API top-level document shape for paginated collection responses, with resource objects under data and pagination links.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: array
+          description: The page of resource objects for this collection; each resource binds its concrete item schema here via allOf composition.
+        links:
+          $ref: '#/components/schemas/pagination_links'
+        included:
+          $ref: '#/components/schemas/included'
+        meta:
+          type: object
+          description: Non-standard information about the document, such as requested statistics. Empty unless the endpoint has metadata to convey.
+    validation_error:
+      description: A single JSON:API error object describing a validation failure, locating the invalid field via source.pointer and carrying the model-level attribute, message, and code under meta.
+      type: object
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code.
+          examples:
+          - unprocessable_entity
+        status:
+          type: string
+          description: The HTTP status code, as a string.
+          examples:
+          - '422'
+        title:
+          type: string
+          description: Short human-readable summary of the error type.
+          examples:
+          - Validation Error
+        detail:
+          type: string
+          description: Human-readable explanation specific to this failure.
+          examples:
+          - Email 'not-an-email' should look like an email address
+        source:
+          type: object
+          properties:
+            pointer:
+              type: string
+              description: JSON Pointer to the request document member the error relates to.
+              examples:
+              - /data/attributes/email
+        meta:
+          type: object
+          description: The underlying model validation error, including the attribute name, message, and code. Errors on sideposted resources nest these members under a relationship key.
+          properties:
+            attribute:
+              type: string
+              description: The attribute that failed validation.
+            message:
+              type: string
+              description: The validation failure message.
+            code:
+              type: string
+              description: The validation failure code.
+    relationship_show_response:
+      description: A JSON:API response containing a single relationship.
+      allOf:
+      - $ref: '#/components/schemas/show_document'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/relationship_response_data'
+    delete_document:
+      examples:
+      - meta: {}
+      description: The successful destroy response, an empty JSON:API meta-only document returned with status 200 (rather than JSON:API's commonly used 204 No Content).
+      type: object
+      required:
+      - meta
+      additionalProperties: false
+      properties:
+        meta:
+          examples:
+          - {}
+          type: object
+          properties: {}
+    relationship_index_response:
+      description: A paginated JSON:API response containing a list of relationships.
+      allOf:
+      - $ref: '#/components/schemas/index_document'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/relationship_response_data'
+    rate_limited_response:
+      description: The body returned by the rate limiter when an access token exceeds its request quota.
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          description: Human-readable explanation of the rate limit.
+          examples:
+          - You have made too many requests. Please try again later.
+    relationship_create_request:
+      description: The request body for creating a new relationship.
+      allOf:
+      - $ref: '#/components/schemas/create_request_document'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              type:
+                const: relationships
+                examples:
+                - relationships
+              attributes:
+                $ref: '#/components/schemas/relationship_read_write_attributes'
+    validation_error_document:
+      description: The JSON:API errors document returned with status 422 when model validations fail on create or update. Unlike this API's flat 4xx error bodies, validation failures follow the JSON:API errors format.
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/validation_error'
+    update_request_document:
+      description: The JSON:API top-level document shape for update requests, whose data member identifies the resource by type and id and carries the changed attributes.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          properties:
+            id:
+              type: string
+              description: The ID of the resource being updated.
+            type:
+              type: string
+              description: The JSON:API resource type of the resource being updated.
+    create_request_document:
+      description: The JSON:API top-level document shape for create requests, whose data member carries the new resource's type and attributes.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          properties:
+            type:
+              type: string
+              description: The JSON:API resource type of the resource being created.
+    resource:
+      description: A generic JSON:API resource object. Resources sideloaded in a document's included member use this shape; their attributes are those of the resource type named in the type member.
+      allOf:
+      - $ref: '#/components/schemas/resource_identifier'
+      - type: object
+        properties:
+          attributes:
+            type: object
+            description: The attributes of the resource, as documented for its resource type.
+          relationships:
+            type: object
+            description: References from this resource to other resources in the document.
+    included:
+      description: Sideloaded resources requested via the include query parameter. Each entry is a full resource object whose shape is documented under its own resource type.
+      type: array
+      items:
+        $ref: '#/components/schemas/resource'
+    relationship_sideload_values:
+      description: Relationship names that can be sideloaded with the include query parameter on relationship endpoints.
+      type: string
+      enum:
+      - first_signup
+      - second_signup
+    relationship_read_write_attributes:
+      description: The attributes of a relationship that can be both read and written.
+      type: object
+      properties:
+        first_signup_id:
+          type: string
+          examples:
+          - '1'
+          description: The first signup listed in the relationship.
+        relationship_type:
+          type: string
+          enum:
+          - affiliate-affiliate
+          - alum-school
+          - assistant-assisted
+          - board_member-organization
+          - candidate-committee
+          - chapter-parent
+          - child-parent
+          - consultant-organization
+          - employee-employer
+          - family_partner-family_partner
+          - friend-friend
+          - member-organization
+          - mentee-mentor
+          - partner-partner
+          - primary_contact-organization
+          - relative-relative
+          - representative-constituent
+          - resident-organization
+          - sibling-sibling
+          - spouse-spouse
+          - student-school
+          - student-teacher
+          - subordinate-manager
+          - subsidiary-parent
+          - treasurer-committee
+          examples:
+          - member-organization
+          description: Describes the relationship as first_signup-second_signup.
+        second_signup_id:
+          type: string
+          examples:
+          - '2'
+          description: The second signup listed in the relationship.
+        title:
+          type:
+          - string
+          - 'null'
+          examples:
+          - Executive Assistant
+          description: Optional description to provide to the relationship.
+  parameters:
+    relationship_index_include:
+      name: include
+      in: query
+      description: 'Comma-delimited list of sideloaded resources to include as part of the relationship index response.
+
+        See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
+
+        sideloading large numbers of resources and pagination.
+
+        '
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/relationship_sideload_values'
+      required: false
+      style: form
+      explode: false
+    id:
+      name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    relationship_sparse_fields:
+      name: fields[relationships]
+      in: query
+      required: false
+      description: Comma-delimited list of relationship attributes to only return in the response
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/relationship_field_values'
+      style: form
+      explode: false
+    relationship_show_include:
+      name: include
+      in: query
+      description: 'Comma-delimited list of sideloaded resources to include as part of the relationship response.
+
+        See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
+
+        sideloading large numbers of resources and pagination.
+
+        '
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/relationship_sideload_values'
+      required: false
+      style: form
+      explode: false
+  headers:
+    RateLimit-Remaining:
+      description: Number of requests remaining for the current access token in the current rate-limit window.
+      schema:
+        type: string
+        examples:
+        - '249'
+      examples: {}
+    Retry-After:
+      description: Number of seconds to wait before retrying. Sent with 429 responses.
+      schema:
+        type: string
+        examples:
+        - '10'
+      examples: {}
+    RateLimit-Limit:
+      description: Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).
+      schema:
+        type: string
+        examples:
+        - '250'
+      examples: {}
+    RateLimit-Reset:
+      description: Unix timestamp (in seconds) at which the current rate-limit window resets.
+      schema:
+        type: string
+        examples:
+        - '1719964810'
+      examples: {}
+  responses:
+    bad_request:
+      description: The request body or query parameters are invalid, such as an unknown attribute, filter, filter operator, sort field, or sideload.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/json:
+          example:
+            code: bad_request
+            message: Tried to filter on attribute :bogus, but could not find an attribute with that name.
+          schema:
+            $ref: '#/components/schemas/error_response'
+    unauthorized:
+      description: The access token is missing, expired, or not authorized to access this resource.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/json:
+          example:
+            code: unauthorized
+            message: You are not authorized to access this content. Your access token may be missing. The resource owner also may not have a permission level sufficient to grant access.
+          schema:
+            $ref: '#/components/schemas/error_response'
+    unprocessable:
+      description: Model validations failed for the resource being created or updated. Unlike this API's other errors, validation failures are returned as a JSON:API errors document locating each invalid field.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/vnd.api+json:
+          example:
+            errors:
+            - code: unprocessable_entity
+              status: '422'
+              title: Validation Error
+              detail: Email 'not-an-email' should look like an email address
+              source:
+                pointer: /data/attributes/email
+              meta:
+                attribute: email
+                message: '''not-an-email'' should look like an email address'
+          schema:
+            $ref: '#/components/schemas/validation_error_document'
+    rate_limited:
+      description: The access token has exceeded its request quota for the current rate-limit window.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+        Retry-After:
+          $ref: '#/components/headers/Retry-After'
+      content:
+        application/json:
+          example:
+            message: You have made too many requests. Please try again later.
+          schema:
+            $ref: '#/components/schemas/rate_limited_response'
+    not_found:
+      description: No resource exists with the provided ID.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/json:
+          example:
+            code: not_found
+            message: Record not found
+          schema:
+            $ref: '#/components/schemas/error_response'
+  requestBodies:
+    relationship_create_request_body:
+      description: The relationship to create.
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/relationship_create_request'
+        application/json:
+          schema:
+            $ref: '#/components/schemas/relationship_create_request'
+    relationship_update_request_body:
+      description: The attributes to update on the existing relationship.
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/relationship_update_request'
+        application/json:
+          schema:
+            $ref: '#/components/schemas/relationship_update_request'
+  securitySchemes:
+    BearerAuth:
+      description: Authentication using a bearer token (JWT) issued via OAuth.
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+externalDocs:
+  description: Get started with the NationBuilder API
+  url: https://nationbuilder.com/api_quickstart
