@@ -1,0 +1,540 @@
+# NationBuilder HOWTOs
+
+> How can we help you?
+
+## English
+
+### FAQs
+
+- [NationBuilder theme documentation](https://support.nationbuilder.com/en/articles/4199460-nationbuilder-theme-documentation.md): Our detailed theme documentation is available on nationbuilder.com.
+- [Pricing FAQs](https://support.nationbuilder.com/en/articles/4143996-pricing-faqs.md): Our most common questions on NationBuilder plans, add-ons, and bundles.
+- [What is a slug?](https://support.nationbuilder.com/en/articles/2856125-what-is-a-slug.md): The readable part of a URL
+- [Why can’t I change my nation slug?](https://support.nationbuilder.com/en/articles/2856088-why-can-t-i-change-my-nation-slug.md): It actually makes things more complicated, so we advise against it.
+- [How can I reset my password?](https://support.nationbuilder.com/en/articles/2856127-how-can-i-reset-my-password.md): Locked out? Hit re-set your password to get back in and back to work.
+- [How do I add people to my nation?](https://support.nationbuilder.com/en/articles/2856144-how-do-i-add-people-to-my-nation.md): People are the heart of your organization! Add them one by one, or import from a spreadsheet.
+- [How do I cancel my trial/account?](https://support.nationbuilder.com/en/articles/2856141-how-do-i-cancel-my-trial-account.md): We are sad to see you go - but it's easy to choose to cancel or pause in your nation settings.
+- [How do I upgrade or downgrade my plan and change payment frequency?](https://support.nationbuilder.com/en/articles/2949402-how-do-i-upgrade-or-downgrade-my-plan-and-change-payment-frequency.md): Information on how you can change your NationBuilder plan.
+- [Where can I find out what's new or been updated/fixed in NationBuilder?](https://support.nationbuilder.com/en/articles/2869824-where-can-i-find-out-what-s-new-or-been-updated-fixed-in-nationbuilder.md): New features, updates, and bug fixes in our release notes.
+- [What does "emailable" mean?](https://support.nationbuilder.com/en/articles/3648982-what-does-emailable-mean.md)
+- [How do I connect Twitter/Email to my nation?](https://support.nationbuilder.com/en/articles/2856154-how-do-i-connect-twitter-email-to-my-nation.md): Connect with your supporters on social media and email to see where they are interacting with you.
+- [Why are emails landing in spam folders?](https://support.nationbuilder.com/en/articles/2848994-why-are-emails-landing-in-spam-folders.md): Sending to good lists, writing good clear emails, and asking your supporters to open and click will help.
+- [Integrating with Double the Donation](https://support.nationbuilder.com/en/articles/5757835-integrating-with-double-the-donation.md): Configure your NationBuilder donation page to discover employer matching donation opportunities using Double the Donation \(360MatchPro\)
+- [Understanding reCAPTCHA](https://support.nationbuilder.com/en/articles/4817255-understanding-recaptcha.md): Donation \(v2\) pages are equipped with reCAPTCHA to protect your account from fraud
+- [How do I change which page is my home page?](https://support.nationbuilder.com/en/articles/2861559-how-do-i-change-which-page-is-my-home-page.md): Your home page is the first page that people will land on when visiting your website.
+- [What is the file upload size limit?](https://support.nationbuilder.com/en/articles/2856099-what-is-the-file-upload-size-limit.md): Hint: it's 10mb on pages and 20mb in the theme!
+- [How can I make a page jump using an anchor?](https://support.nationbuilder.com/en/articles/2856102-how-can-i-make-a-page-jump-using-an-anchor.md): Click on key words to move around and organize a page with lots of text.
+- [How do I see the responses of a contact page?](https://support.nationbuilder.com/en/articles/2856105-how-do-i-see-the-responses-of-a-contact-page.md): Where to find the messages sent to you via your 'contact us' page.
+- [What fields can I write to from a signup form?](https://support.nationbuilder.com/en/articles/2856113-what-fields-can-i-write-to-from-a-signup-form.md)
+- [How do I add a tracking pixel to my site?](https://support.nationbuilder.com/en/articles/2856098-how-do-i-add-a-tracking-pixel-to-my-site.md): Track the behavior of your users using a tracking pixel.
+- [How do I implement double opt-in in my Nation?](https://support.nationbuilder.com/en/articles/2855487-how-do-i-implement-double-opt-in-in-my-nation.md): Improve your email deliverability and privacy by asking for an email confirmation from your new supporters.
+- [How can I change the order of my tickets on an event page?](https://support.nationbuilder.com/en/articles/2856068-how-can-i-change-the-order-of-my-tickets-on-an-event-page.md): You might want to make the least expensive first. Here's how.
+- [How do I set a maximum for number of tickets purchased?](https://support.nationbuilder.com/en/articles/2856065-how-do-i-set-a-maximum-for-number-of-tickets-purchased.md): If you are limiting the number of tickets per purchase there are a few theme tweaks needed.
+- [How to embed a widget or image between content text in a page or email blast](https://support.nationbuilder.com/en/articles/3774056-how-to-embed-a-widget-or-image-between-content-text-in-a-page-or-email-blast.md)
+- [Make your website your own](https://support.nationbuilder.com/en/articles/3008763-make-your-website-your-own.md): You know your purpose, now its time to design your site and tell the world.
+- [Build your first page](https://support.nationbuilder.com/en/articles/3021055-build-your-first-page.md): NationBuilder offers a large selection of page types that offer you rich features for developing your community!
+- [Curate your action settings](https://support.nationbuilder.com/en/articles/3050148-curate-your-action-settings.md): Every action page has settings that can be automated when a visitor takes action on your site. These can help make your team more efficient.
+- [Understanding the HandyNation Add-on](https://support.nationbuilder.com/en/articles/5181324-understanding-the-handynation-add-on.md)
+- [Close your nation - offboarding](https://support.nationbuilder.com/en/articles/9739281-close-your-nation-offboarding.md): We'll be sad to see you go, but want you to have what you need well ahead of your last billing date.
+
+### Intro to NationBuilder
+
+- [Log in to your nation and navigate your control panel](https://support.nationbuilder.com/en/articles/3009180-log-in-to-your-nation-and-navigate-your-control-panel.md): Welcome to NationBuilder! Let's get you oriented with your nation.
+- [Confirm nation contact information](https://support.nationbuilder.com/en/articles/3322826-confirm-nation-contact-information.md): Its imperative that contact information is correct and up-to-date because it will be used in financial receipts, email blasts, and more.
+- [Nation settings vs. site settings](https://support.nationbuilder.com/en/articles/3009367-nation-settings-vs-site-settings.md): Admins have access to setup features for your nation overall, as well as controls specifically for your website.
+- [Distribute leadership with permission settings](https://support.nationbuilder.com/en/articles/3055750-distribute-leadership-with-permission-settings.md): Adding control panel users allows you to distribute leadership and responsibilities to other members of your organization.
+- [Website section quick-start guide](https://support.nationbuilder.com/en/articles/9319755-website-section-quick-start-guide.md): Everything you need to know to get your site up and running.
+- [NationBuilder stock theme guidelines](https://support.nationbuilder.com/en/articles/2327610-nationbuilder-stock-theme-guidelines.md): Your nation comes pre-loaded with a selection of beautiful stock themes. You can choose one for your website & easily change the look/feel.
+- [Configure your site settings](https://support.nationbuilder.com/en/articles/2327564-configure-your-site-settings.md): Your website settings are where you can edit the overall controls for your website.
+- [Connect a custom domain](https://support.nationbuilder.com/en/articles/2343540-connect-a-custom-domain.md): Follow four easy steps to connect your customer domain to your nation \(NationBuilder managed DNS\).
+- [Create and edit webpages](https://support.nationbuilder.com/en/articles/2312329-create-and-edit-webpages.md): Learn the details behind your website’s functionality so you can take full advantage of every page and truly make the site your own.
+- [Setting up action pages for success: automating tags, paths, and more!](https://support.nationbuilder.com/en/articles/2363286-setting-up-action-pages-for-success-automating-tags-paths-and-more.md): Every action page has settings that can be activated when a visitor takes an action on your site, they can make your team more efficient!
+- [Create a donation page](https://support.nationbuilder.com/en/articles/2319624-create-a-donation-page.md): This guide is for the Donation \(v2\) page which uses NationBuilder's integrated payment processing to accept one-time or recurring donations.
+- [People section quick-start guide](https://support.nationbuilder.com/en/articles/9363050-people-section-quick-start-guide.md): Everything you need to get to know and organize your supporters and prospects.
+- [Import people](https://support.nationbuilder.com/en/articles/3021365-import-people.md): Start your nation with a solid foundation.
+- [Create, edit, or delete a permission set](https://support.nationbuilder.com/en/articles/2362659-create-edit-or-delete-a-permission-set.md): Permission sets are used to grant customized access to the information your control panel users can access.
+- [Create a tag library](https://support.nationbuilder.com/en/articles/2305849-create-a-tag-library.md): Setting up a library of tags is key to organizing your data effectively.
+- [Manage control panel users](https://support.nationbuilder.com/en/articles/2360435-manage-control-panel-users.md): A control panel user is a person with permission to access the people database, create webpages, send mass communication, etc.
+- [How to target people](https://support.nationbuilder.com/en/articles/2306492-how-to-target-people.md): Use filters to segment your people database, focus your outreach, and personalize your communications to key groups of supporters
+- [Communication section quick-start guide](https://support.nationbuilder.com/en/articles/9376640-communication-section-quick-start-guide.md): Everything you need to get to know to get started reaching out to your supporters.
+- [Set up your broadcaster](https://support.nationbuilder.com/en/articles/3055855-set-up-your-broadcaster.md): Broadcasters are the voice of your nation. Connect and email and phone number to communicate to your supporters at scale.
+- [Connect an email address to a broadcaster](https://support.nationbuilder.com/en/articles/2343575-connect-an-email-address-to-a-broadcaster.md): When you attach an email address to a broadcaster, you can send email blasts to your community!
+- [Sending a targeted email](https://support.nationbuilder.com/en/articles/2363138-sending-a-targeted-email.md): Learn how to identify a precise audience of recipients and then send them a personalized email blast - from start to finish
+- [Create an email blast](https://support.nationbuilder.com/en/articles/8077751-create-an-email-blast.md): Learn how to create an email blast with our email builder.
+- [Email your supporters](https://support.nationbuilder.com/en/articles/3055883-email-your-supporters.md): Email is a powerful tool to reach your supporters and get them to take action.
+- [Understand the results of your email blast](https://support.nationbuilder.com/en/articles/2344116-understand-the-results-of-your-email-blast.md): Learn how to read your email engagement metrics — open rate, bounce rate, etc. — so that you can improve your blasts' performance
+- [Finances section quick-start guide](https://support.nationbuilder.com/en/articles/9506633-finances-section-quick-start-guide.md): Everything you need to know to start receiving and tracking donations.
+- [How To: Set up NationBuilder Payments](https://support.nationbuilder.com/en/articles/2344217-how-to-set-up-nationbuilder-payments.md): Our integrated payment processing takes only a few minutes to set up and allows you to process donations using the Donation \(v2\) pages.
+- [Import donations](https://support.nationbuilder.com/en/articles/3296808-import-donations.md): Individual donation transactions can be imported. This HOWTO will walk you through that process.
+- [Understanding tracking codes](https://support.nationbuilder.com/en/articles/2344337-understanding-tracking-codes.md): Learn what tracking codes are and what they are used for.
+- [Create paths](https://support.nationbuilder.com/en/articles/3055899-create-paths.md): A path is step-by-step workflow to complete a chain of actions. Paths help to define reasons for engaging supporters.
+- [Set goals](https://support.nationbuilder.com/en/articles/3055897-set-goals.md): An organization's mission should be broken down into measurable goals. These goals can be tracked within a nation.
+- [Track your email engagement](https://support.nationbuilder.com/en/articles/3055900-track-your-email-engagement.md): Remember to check your stats and learn from the messages that were most successful with your audience.
+- [View finance information](https://support.nationbuilder.com/en/articles/3055903-view-finance-information.md): You can track donations, expenditures, and invoices within your nation. You can also target donors/customers based on transaction history.
+- [Guide: Build your campaign](https://support.nationbuilder.com/en/articles/2290973-guide-build-your-campaign.md): This document is designed to provide best practices and guidance on how to get your NB website up and running to support your campaign.
+- [Guide: Nonprofit](https://support.nationbuilder.com/en/articles/2291010-guide-nonprofit.md): This document is designed to provide best practices and guidance on how to get your NB website up and running to support your mission.
+- [Guide: Advocacy](https://support.nationbuilder.com/en/articles/7045785-guide-advocacy.md): This document is designed to provide best practices and guidance on how to use NationBuilder for your Advocacy efforts.
+- [API Authentication Quick Start guide](https://support.nationbuilder.com/en/articles/9180281-api-authentication-quick-start-guide.md): Get API access & set up your authentication.
+
+### Learn your Role
+
+- [What is a Point person?](https://support.nationbuilder.com/en/articles/9731222-what-is-a-point-person.md): Distribute responsibility among your control panel users.
+- [Field & Community organizing](https://support.nationbuilder.com/en/articles/4377332-field-community-organizing.md): Everything you need to know about being a field or community organizer for your organization
+- [Data management](https://support.nationbuilder.com/en/articles/2969082-data-management.md): Everything you need to know about managing your data and CRM in NationBuilder
+- [Marketing, communications, & digital](https://support.nationbuilder.com/en/articles/4377356-marketing-communications-digital.md): Everything you need to know about managing the communications and digital side of things for your organization
+- [Fundraising & Memberships](https://support.nationbuilder.com/en/articles/4301416-fundraising-memberships.md): Everything you need to know about managing your fundraising or membership program on NationBuilder
+- [Event planning](https://support.nationbuilder.com/en/articles/4377357-event-planning.md): Everything you need to know about planning your events on NationBuilder
+
+### People
+
+- [Create, edit and view profiles](https://support.nationbuilder.com/en/articles/3055514-create-edit-and-view-profiles.md): A person's profile serves as the central hub for all of their information. As they engage with your nation, it updates in real time.
+- [Find people with a specific email service provider in the People section](https://support.nationbuilder.com/en/articles/9459018-find-people-with-a-specific-email-service-provider-in-the-people-section.md)
+- [Clearing fields in bulk](https://support.nationbuilder.com/en/articles/13271099-clearing-fields-in-bulk.md): This HOWTO explains the different ways to remove existing data from multiple records in NationBuilder. The correct approach depends on the type of field you're trying to clear and how that field is...
+- [Managing relationships: paths, filters, and logging contacts](https://support.nationbuilder.com/en/articles/2363112-managing-relationships-paths-filters-and-logging-contacts.md): Communities are created through relationships, which is why we made it possible for you to track & manage relationships within your nation.
+- [Logging contact for an organization](https://support.nationbuilder.com/en/articles/2363308-logging-contact-for-an-organization.md): Its helpful to have a record not only of individual contacts, but a history of every time you have contacted a person at an organization.
+- [Prepping volunteers for a phone bank](https://support.nationbuilder.com/en/articles/2363278-prepping-volunteers-for-a-phone-bank.md): Setting up a phone bank run by volunteers and staffers can be a vital tool for getting your community to take action.
+- [Campaign: Cut turf and print walk sheets](https://support.nationbuilder.com/en/articles/2363270-campaign-cut-turf-and-print-walk-sheets.md): NationBuilder's turf cutter tool allows you to quickly save people from a map area to a list. These lists can be used to print walk sheets.
+- [Reengage your nation](https://support.nationbuilder.com/en/articles/2438011-reengage-your-nation.md): It’s important to keep in touch with people in your nation, while understanding who they are and the best way to communicate with them.
+- [How to use Groups](https://support.nationbuilder.com/en/articles/5587516-how-to-use-groups.md): Create Groups of Control Panel Users to distribute responsibilities and assign people, websites and broadcasters
+- [Understand the elements of a person's profile](https://support.nationbuilder.com/en/articles/2887313-understand-the-elements-of-a-person-s-profile.md): A person's profile serves as the central hub for all of their information and their relationship with your nation.  
+- [Create and edit a profile](https://support.nationbuilder.com/en/articles/2291066-create-and-edit-a-profile.md): A profile serves as the central hub for information on a person. As a person engages with your nation, their profile updates in real time.
+- [Viewing people in your nation](https://support.nationbuilder.com/en/articles/2291075-viewing-people-in-your-nation.md): You can view people in your nation in a variety of ways within the People section.
+- [Organization profiles](https://support.nationbuilder.com/en/articles/2291151-organization-profiles.md): ​In addition to individual profiles, your database can include profiles for organizations \(i.e. corporations, unions, non-profits, etc.\)
+- [How support status is determined](https://support.nationbuilder.com/en/articles/2291229-how-support-status-is-determined.md): Every profile in your database has a support status: supporter, non-supporter, or prospect, which can be edited as people interact with you.
+- [Understand default paths](https://support.nationbuilder.com/en/articles/2291388-understand-default-paths.md): When a feature is enabled within a nation, a corresponding path and goal are automatically created. These are the descriptions for each.
+- [View and edit default paths](https://support.nationbuilder.com/en/articles/2291668-view-and-edit-default-paths.md): When a feature is enabled within a nation, a corresponding path and goal are automatically created. These paths can be edited.
+- [Create a path](https://support.nationbuilder.com/en/articles/2291117-create-a-path.md): A path is step-by-step workflow to complete a chain of actions. Paths define reasons for engaging supporters.
+- [Manually move people along paths](https://support.nationbuilder.com/en/articles/2291255-manually-move-people-along-paths.md): A path is a step-by-step workflow in which a person completes \(moves along\) various steps toward completing a larger goal.
+- [How to use permission sets with paths](https://support.nationbuilder.com/en/articles/2291694-how-to-use-permission-sets-with-paths.md): Permission sets allow you to assign tasks to specific control panel users without giving them access to other sensitive areas of data.
+- [Batch update a path](https://support.nationbuilder.com/en/articles/2305416-batch-update-a-path.md): Paths can be updated, abandoned, or completed using batch update. This means that the same action will be taken for everyone on a list.
+- [Using NationBuilder to manage your data](https://support.nationbuilder.com/en/articles/2305580-using-nationbuilder-to-manage-your-data.md): Data is handled securely for each customer in their own private database.
+- [How records are added to the People database](https://support.nationbuilder.com/en/articles/8810042-how-records-are-added-to-the-people-database.md): The six ways profiles enter your nation
+- [Tracking relationships](https://support.nationbuilder.com/en/articles/2291107-tracking-relationships.md): Learn the key features designed to track relationships, grow your supporter base and achieve your mission!
+- [Tracking relationships between people and organizations](https://support.nationbuilder.com/en/articles/2305661-tracking-relationships-between-people-and-organizations.md): Communities are created through relationships, which is why we made it possible for you to track relationships within your nation.
+- [Filters vs. Lists vs. Tags](https://support.nationbuilder.com/en/articles/2305593-filters-vs-lists-vs-tags.md): There are many ways in which you can organize all of the people in your database using filters, lists, and tags.
+- [How to use tags](https://support.nationbuilder.com/en/articles/2305680-how-to-use-tags.md): Tags are virtual sticky notes added to profiles to describe a characteristic that can help you target people with what they care about most.
+- [Create a list](https://support.nationbuilder.com/en/articles/2305947-create-a-list.md): Lists are a static way of organizing people in your database.
+- [Remove people from your database](https://support.nationbuilder.com/en/articles/2305968-remove-people-from-your-database.md): Infrequently you may need to delete a large batch of people from your database. You can do this using a list.
+- [How to use lists and batch actions](https://support.nationbuilder.com/en/articles/2305972-how-to-use-lists-and-batch-actions.md): Once you've added people to a list, use it to batch update them \(e.g. add a tag to everyone\), create/print walk sheets, and more
+- [How to use householding](https://support.nationbuilder.com/en/articles/2306159-how-to-use-householding.md): Householding is the process of grouping people who live in the same house or apartment.
+- [How recruiters are tracked](https://support.nationbuilder.com/en/articles/2306276-how-recruiters-are-tracked.md): Every profile/donation in your nation can include a recruiter. These actions can be rewarded with social capital & tracked in Leaderboards.
+- [Create and publish leaderboards](https://support.nationbuilder.com/en/articles/2306220-create-and-publish-leaderboards.md): A leaderboard is a public ranking of the supporters who have taken actions towards achieving your nation’s goals.
+- [How to create a saved filter that auto-tags](https://support.nationbuilder.com/en/articles/13261009-how-to-create-a-saved-filter-that-auto-tags.md): Tags can be automatically added or removed from profiles based on criteria you define by using saved filters with auto-tagging.
+- [People filters listed by category](https://support.nationbuilder.com/en/articles/5802625-people-filters-listed-by-category.md): Browse our list of filter criteria to find the best way to target your people.
+- [Filter categories](https://support.nationbuilder.com/en/articles/2306530-filter-categories.md): When you click on Add criteria when creating a filter, you are provided with a dropdown list of categories to find specific people.
+- [How to use relative date ranges in filters](https://support.nationbuilder.com/en/articles/2306533-how-to-use-relative-date-ranges-in-filters.md): You can search your people database using relative date ranges to see when certain actions were taken.
+- [Find people and pages with quick search](https://support.nationbuilder.com/en/articles/2306501-find-people-and-pages-with-quick-search.md): The search bar at the top of your control panel allows you to quickly find people, organizations, and pages in your nation.
+- [How to use map view and turf cut](https://support.nationbuilder.com/en/articles/2306507-how-to-use-map-view-and-turf-cut.md): Map view helps with planning in-person activities. Using the turf cutter in map view, you can quickly save people from a map to a list.
+- [How to target households](https://support.nationbuilder.com/en/articles/2308644-how-to-target-households.md): With householding, you can filter for doors to knock based on the traits of multiple residents \(e.g. 1 active voter + 1 inactive voter\)
+- [Use filters to target your audience](https://support.nationbuilder.com/en/articles/3055676-use-filters-to-target-your-audience.md): Learn how to filter your people database to find a specific group of people. This allows you to get the right message to the right people.
+- [Logging contacts](https://support.nationbuilder.com/en/articles/2306309-logging-contacts.md): By logging all contact in your nation, transparency is enhanced & a historical record is built. This is a key factor in building community!
+- [Create a survey](https://support.nationbuilder.com/en/articles/2306373-create-a-survey.md): Surveys are a great way to gather information from prospects and supporters.
+- [Priority level](https://support.nationbuilder.com/en/articles/2306359-priority-level.md): Priority level is a way to rank the relative importance of individuals within your people database.
+- [How to use scannable sheets](https://support.nationbuilder.com/en/articles/2306398-how-to-use-scannable-sheets.md): Scannable sheets minimize the time needed to enter data collected during a phone bank or door knock. The sheet can be scanned and imported.
+- [Set up a phone bank](https://support.nationbuilder.com/en/articles/2306427-set-up-a-phone-bank.md): Setting up a phone bank run by volunteers and staffers can be a vital tool for getting your community to take action.
+- [Print a call or walk sheet](https://support.nationbuilder.com/en/articles/2306438-print-a-call-or-walk-sheet.md): You can print call/walk sheets for volunteers to record interactions and enter the results later.
+- [How to promote volunteer opportunities](https://support.nationbuilder.com/en/articles/2306475-how-to-promote-volunteer-opportunities.md): This will guide you through how to promote and set up volunteer opportunities on an event calendar for easy access. 
+- [Record your interactions](https://support.nationbuilder.com/en/articles/3055608-record-your-interactions.md): Logging contacts lets you record your communications with supporters. This will help you track the relationship over time.
+- [How following works](https://support.nationbuilder.com/en/articles/2308886-how-following-works.md): The follow feature allows you to listen to your nation to be aware, in real time, of what is happening with pressing issues or people.
+- [How to edit primary address](https://support.nationbuilder.com/en/articles/2308789-how-to-edit-primary-address.md): A person's primary address is the person's primary location. It is used to place the person on a map as well as define households.
+- [Geocoding addresses](https://support.nationbuilder.com/en/articles/2308835-geocoding-addresses.md): Geocoding is the process of connecting an address in your database to a location on a map.
+- [Find and delete Twitter/X followers](https://support.nationbuilder.com/en/articles/2308980-find-and-delete-twitter-x-followers.md): People who interact with a broadcaster's Twitter account are automatically imported into your nation, this functionality is editable.
+- [Reset auto-districting after boundary changes](https://support.nationbuilder.com/en/articles/6529758-reset-auto-districting-after-boundary-changes.md): Learn how to reset auto-districting in your nation after changes have been made to local boundaries
+- [Merge duplicate profiles](https://support.nationbuilder.com/en/articles/2309006-merge-duplicate-profiles.md): Sometimes duplicate profiles are created for the same person or organization. You can merge these in a couple of different ways.
+- [Remove a profile](https://support.nationbuilder.com/en/articles/2309057-remove-a-profile.md): There are several ways to deal with problematic people in your database.
+- [How to download a person's data from their profile](https://support.nationbuilder.com/en/articles/2309076-how-to-download-a-person-s-data-from-their-profile.md): NationBuilder provides the ability for a control panel user to download all of the personal data for a given person.
+- [Create and store a digital will](https://support.nationbuilder.com/en/articles/2309084-create-and-store-a-digital-will.md): A digital will is a statement about whom will take ownership of a person’s information should they be involved in a catastrophic event.
+- [How auto-districting works](https://support.nationbuilder.com/en/articles/3296866-how-auto-districting-works.md): When you have enabled voter features, you have the option of auto-districting each person's voting districts.
+- [Share data with other nations](https://support.nationbuilder.com/en/articles/2309157-share-data-with-other-nations.md): Sharing data with other nations can be a messy process. Tag sharing eliminates the hassle of exporting and importing data between nations.
+- [How to accept a shared tag](https://support.nationbuilder.com/en/articles/2309185-how-to-accept-a-shared-tag.md): Tag sharing eliminates the hassle of exporting and importing data between nations. You need to be aware that a tag share is coming.
+- [Reviewing changes to shared tags](https://support.nationbuilder.com/en/articles/2309447-reviewing-changes-to-shared-tags.md): You may want to view any changes the sharing nation has made to a tag as it will affect data in your nation.
+- [Edit or stop a tag share](https://support.nationbuilder.com/en/articles/2309474-edit-or-stop-a-tag-share.md): Tags shared between nation can be edited or stopped.
+
+### Website
+
+- [Supporter profile walkthrough](https://support.nationbuilder.com/en/articles/12543651-supporter-profile-walkthrough.md): Learn the parts of a supporter's profile page.
+- [Events: creation to completion](https://support.nationbuilder.com/en/articles/2363242-events-creation-to-completion.md): Among its many cool engagement-centric features, NationBuilder allows you to create events!
+- [Set up your team to write blog posts](https://support.nationbuilder.com/en/articles/2363318-set-up-your-team-to-write-blog-posts.md): You may have a team of volunteers who want to write blog posts, you can get them set up relatively quickly so they can get to posting!
+- [Sell tickets to an event using NationBuilder](https://support.nationbuilder.com/en/articles/9981557-sell-tickets-to-an-event-using-nationbuilder.md): Learn how to set up your nation to sell tickets to an event and collect payment.
+- [What is a custom domain and why do I need one?](https://support.nationbuilder.com/en/articles/8393672-what-is-a-custom-domain-and-why-do-i-need-one.md): Learn why a custom domain might be something you want to connect to your nation.
+- [Connect a custom domain to your nation while managing your own DNS](https://support.nationbuilder.com/en/articles/2886934-connect-a-custom-domain-to-your-nation-while-managing-your-own-dns.md): Four steps to connect a custom domain to your Nation while managing your own DNS records.
+- [Understand how custom domains work](https://support.nationbuilder.com/en/articles/2341059-understand-how-custom-domains-work.md): All you need to know about custom domains!
+- [Creating and attaching a subdomain](https://support.nationbuilder.com/en/articles/8681775-creating-and-attaching-a-subdomain.md)
+- [Who should manage my domain?](https://support.nationbuilder.com/en/articles/8388045-who-should-manage-my-domain.md): Easily determine if NationBuilder should manage your DNS settings or you should manage them yourself.
+- [Useful DNS tools](https://support.nationbuilder.com/en/articles/8802660-useful-dns-tools.md)
+- [All about DMARC](https://support.nationbuilder.com/en/articles/8868858-all-about-dmarc.md): Deep dive on DMARC for those that desire more detail.
+- [New Gmail and Yahoo sender requirements](https://support.nationbuilder.com/en/articles/8822448-new-gmail-and-yahoo-sender-requirements.md): Beginning Feb 1st, 2024, changes made by Gmail and Yahoo began affecting how your emails are delivered. Find out how to maintain compliance.
+- [How to check for DMARC records](https://support.nationbuilder.com/en/articles/8823552-how-to-check-for-dmarc-records.md): Ensure that email blasts sent from your custom domain are delivered to your supporters' inboxes.
+- [Redirecting ‘https’ traffic from your root domain to your NationBuilder website](https://support.nationbuilder.com/en/articles/9273409-redirecting-https-traffic-from-your-root-domain-to-your-nationbuilder-website.md)
+- [Edit GoDaddy nameservers to point to your NationBuilder website](https://support.nationbuilder.com/en/articles/9756234-edit-godaddy-nameservers-to-point-to-your-nationbuilder-website.md): This HOWTO is about updating NS records in GoDaddy to point to your NationBuilder website.
+- [Clone a page](https://support.nationbuilder.com/en/articles/2319336-clone-a-page.md): Page cloning will create and edit a complete copy of an existing page, this includes settings, attachments, images, text, etc.
+- [Edit content on your webpages](https://support.nationbuilder.com/en/articles/2319347-edit-content-on-your-webpages.md): NationBuilder houses a variety of tools to help you build rich, interesting, interactive content on your site.
+- [Include files and images on a page](https://support.nationbuilder.com/en/articles/2319376-include-files-and-images-on-a-page.md): You can add images/videos to your NationBuilder pages in a few different ways, this HOWTO will outline each of your options.
+- [Configure featured content sliders](https://support.nationbuilder.com/en/articles/2319387-configure-featured-content-sliders.md): Featured content sliders are moving image displays you can add to pages. They can help entice visitors to other sections of your site.
+- [Schedule content](https://support.nationbuilder.com/en/articles/2319384-schedule-content.md): The scheduling feature in NationBuilder allows you to schedule any type of content, including blog posts, email blasts, and more.
+- [How to use social sliders](https://support.nationbuilder.com/en/articles/2319408-how-to-use-social-sliders.md): The social sliders feature makes your pages come alive by displaying an animated slider of the names and faces of everyone taking action.
+- [Embed Instagram on your website](https://support.nationbuilder.com/en/articles/3322942-embed-instagram-on-your-website.md): You can embed a feed of photos from an Instagram handle or hashtag onto your nation's website.
+- [Configure email and text message opt-ins](https://support.nationbuilder.com/en/articles/2319526-configure-email-and-text-message-opt-ins.md): When a person provides an email address or mobile phone number on your website, they can choose whether to receive updates from you.
+- [Remove email and text opt-in checkboxes from a page](https://support.nationbuilder.com/en/articles/2319581-remove-email-and-text-opt-in-checkboxes-from-a-page.md): Many of NationBuilder's page types provide default settings for email and text opt in checkboxes.
+- [How to use consent forms on your website](https://support.nationbuilder.com/en/articles/2319583-how-to-use-consent-forms-on-your-website.md): We've made it easy to clearly place your consent opt-ins on a webpage.
+- [Sharing your site on social media](https://support.nationbuilder.com/en/articles/2319532-sharing-your-site-on-social-media.md): Every page on your website has social media settings, which allow you to prompt supporters to share on Twitter, Facebook, WhatsApp or email!
+- [Delete a page](https://support.nationbuilder.com/en/articles/2319530-delete-a-page.md): There may be circumstances in which you'd like to delete a page from your NationBuilder site, and there are a couple of ways to do so.
+- [Embed a PDF on a page](https://support.nationbuilder.com/en/articles/3308097-embed-a-pdf-on-a-page.md): If you're looking to embed a PDF within one of your NationBuilder website pages, this can be accomplished in a few simple steps.
+- [Types of NationBuilder pages](https://support.nationbuilder.com/en/articles/2319593-types-of-nationbuilder-pages.md): NationBuilder offers a growing selection of page types that offer you rich features for developing your community!
+- [Setting up an event](https://support.nationbuilder.com/en/articles/2319673-setting-up-an-event.md): Create event pages for community events, parties, etc. You can accept RSVPs, fill volunteer shifts, sell tickets, track attendance and more!
+- [Organize events with the calendar](https://support.nationbuilder.com/en/articles/2319699-organize-events-with-the-calendar.md): Calendars can display all events in your nation, events with a specific tag, or only events created within the calendar.
+- [Start a blog](https://support.nationbuilder.com/en/articles/2319719-start-a-blog.md): You can host as many blogs as you want on your NationBuilder website without any third-party software.
+- [Create a suggestion box page](https://support.nationbuilder.com/en/articles/2319746-create-a-suggestion-box-page.md): A suggestion box page can be used to receive and respond to recommendations from your community.
+- [Create a signup page](https://support.nationbuilder.com/en/articles/2319649-create-a-signup-page.md): Signup pages help visitors engage with your website and opt in to receive communication on both mass and one-on-one levels.
+- [Create a feedback page](https://support.nationbuilder.com/en/articles/2322961-create-a-feedback-page.md): A feedback page allows you to solicit feedback from your supporters.
+- [Create a petition](https://support.nationbuilder.com/en/articles/2327303-create-a-petition.md): A petition is a great way to spur your supporters into action and encourage them to invite other people to join your cause.
+- [How to create a custom volunteer signup page on your website](https://support.nationbuilder.com/en/articles/2323016-how-to-create-a-custom-volunteer-signup-page-on-your-website.md): Empower supporters to volunteer to help your organization in different roles using the Volunteer Signup page type.
+- [Create a survey page](https://support.nationbuilder.com/en/articles/2306391-create-a-survey-page.md): You'll use this page type to display a survey on your website. You can then collect responses to the survey online.
+- [Create a custom recruiting page](https://support.nationbuilder.com/en/articles/6526421-create-a-custom-recruiting-page.md): Allow supporters to "tell a friend" via email or social, and then see who ultimately signed-up through their personal tracking link.
+- [Create a directory page](https://support.nationbuilder.com/en/articles/2322976-create-a-directory-page.md): A directory page is a sortable listing of supporters with customizable display preferences.
+- [How to use a redirect page](https://support.nationbuilder.com/en/articles/2322978-how-to-use-a-redirect-page.md): The purpose of the redirect page is to direct your visitors to an external website from a tab on your NationBuilder site.
+- [Create an endorsement page](https://support.nationbuilder.com/en/articles/2327350-create-an-endorsement-page.md): Individuals and/or organizations can make endorsements. You can set a goal and feature important endorsements.
+- [Set up a vote pledge page](https://support.nationbuilder.com/en/articles/2327458-set-up-a-vote-pledge-page.md): A vote pledge page gives website visitors and supporters on social media an easy way to express their support and share it with friends.
+- [Create an FAQ page](https://support.nationbuilder.com/en/articles/2327373-create-an-faq-page.md): Frequently Asked Questions \(FAQ\) pages are useful in order to answer a variety of supporter questions directly on your website.
+- [Create a moneybomb page](https://support.nationbuilder.com/en/articles/2327441-create-a-moneybomb-page.md): A moneybomb page collects commitments to donate \(aka pledges\).
+- [Create a press release page](https://support.nationbuilder.com/en/articles/3344124-create-a-press-release-page.md): A press release page allows you to house all of your organization's press releases in one place on your website.
+- [Set up a splash page](https://support.nationbuilder.com/en/articles/2327517-set-up-a-splash-page.md): Any page in NationBuilder can be easily turned into a splash \(landing\) page.
+- [Make a forum](https://support.nationbuilder.com/en/articles/3383375-make-a-forum.md): Forums are a great way to engage with your supporters and get their feedback on the issues that matter to them.
+- [Set up automatic event reminders](https://support.nationbuilder.com/en/articles/14817485-set-up-automatic-event-reminders.md): Automatically send email or text reminders to everyone who has RSVP'd to your event.
+- [NationBuilder's Cookiebot cookie banner FAQ](https://support.nationbuilder.com/en/articles/5325475-nationbuilder-s-cookiebot-cookie-banner-faq.md): Frequently Asked Questions about NationBuilder's integration with Cookiebot
+- [How to configure a Cookiebot cookie banner](https://support.nationbuilder.com/en/articles/5322110-how-to-configure-a-cookiebot-cookie-banner.md): Set up a cookie banner and cookie declaration page using Cookiebot to offer your site visitors privacy controls
+- [Managing cookie consents with Cookiebot](https://support.nationbuilder.com/en/articles/5325385-managing-cookie-consents-with-cookiebot.md): Once you've setup a Cookiebot cookie banner, you will have access to a comprehensive log of cookie consents
+- [How public profile pages work](https://support.nationbuilder.com/en/articles/2327657-how-public-profile-pages-work.md): Public profiles equip supporters to customize how they show up on your website, track their peer-to-peer fundraising efforts, and more
+- [Set up SEO in your nation](https://support.nationbuilder.com/en/articles/2327719-set-up-seo-in-your-nation.md): Take advantage of your nation’s website features to optimize your site’s search rankings on search engines such as Google and Bing.
+- [Set up your nation's rules](https://support.nationbuilder.com/en/articles/2327806-set-up-your-nation-s-rules.md): One of the steps in the setup process asks you to review the default rules for your nation. These rules live on a webpage on your site.
+- [Change the name of your website](https://support.nationbuilder.com/en/articles/2327826-change-the-name-of-your-website.md): You can change the organization name displayed on your NationBuilder site at any time.
+- [Remove parent pages from the top nav](https://support.nationbuilder.com/en/articles/2330714-remove-parent-pages-from-the-top-nav.md): "Show parent in nav dropdown" is a global setting that will add or remove the "parent" page from the dropdown.
+- [How the supporter navigation works](https://support.nationbuilder.com/en/articles/2330729-how-the-supporter-navigation-works.md): You can include an additional navigation bar on your website pages, aka supporter nav. It can house your logo, additional links, and more!
+- [Include or exclude a site from search results](https://support.nationbuilder.com/en/articles/2330944-include-or-exclude-a-site-from-search-results.md): By default, any site created on NationBuilder will be crawled by search engines and included in results, however, this can be changed.
+- [How to use Google Analytics with NationBuilder](https://support.nationbuilder.com/en/articles/2330950-how-to-use-google-analytics-with-nationbuilder.md): Here's a quick list of important first steps and strategies to get the most out of your tracking.
+- [How to verify your site with Google Apps](https://support.nationbuilder.com/en/articles/2330975-how-to-verify-your-site-with-google-apps.md): If you've connected a domain to NationBuilder, you can take an extra step to verify that you own your own domain with Google.
+- [Add a favicon, header image and logo to your NationBuilder site](https://support.nationbuilder.com/en/articles/2330987-add-a-favicon-header-image-and-logo-to-your-nationbuilder-site.md): You have the option to add images to customize your website. At a basic level, these take the form of favicons, logos, and header images.
+- [How to manage multiple sites within a nation](https://support.nationbuilder.com/en/articles/2331205-how-to-manage-multiple-sites-within-a-nation.md): NationBuilder supports the creation of separate websites within a nation. Find out how to easily create/access all of your sites.
+- [How to share a website](https://support.nationbuilder.com/en/articles/2471369-how-to-share-a-website.md): You can share a site with another nation, allowing that nation to use the site.
+- [Integrating grassroots advocacy with your nation](https://support.nationbuilder.com/en/articles/2331235-integrating-grassroots-advocacy-with-your-nation.md): There are a variety of ways to campaign against the status quo.
+- [Integration with other CMS platforms](https://support.nationbuilder.com/en/articles/2331246-integration-with-other-cms-platforms.md): We highly recommend using NationBuilder for your CMS needs, but we understand that is not always possible.
+- [How to deal with spam content](https://support.nationbuilder.com/en/articles/2331285-how-to-deal-with-spam-content.md): NationBuilder does a lot to prevent spam from getting into your nation, but if you notice spam getting in, use our report spam feature.
+- [Set up your website for success](https://support.nationbuilder.com/en/articles/2363313-set-up-your-website-for-success.md): Setting up your website to display important information a visitor needs within a single click is the key to generating interest & support!
+- [How to embed voting forms on your NationBuilder site](https://support.nationbuilder.com/en/articles/9211140-how-to-embed-voting-forms-on-your-nationbuilder-site.md): Help your US-based supporters get registered, find their polling place, and more directly from your website.
+- [The differences between page tags and people tags](https://support.nationbuilder.com/en/articles/9537166-the-differences-between-page-tags-and-people-tags.md): Page tags vs. people tags explained
+- [How to add social media icons to your website footer](https://support.nationbuilder.com/en/articles/14625080-how-to-add-social-media-icons-to-your-website-footer.md): If you'd like to display social media icons on your website, you can add them to your footer using the built-in content editor, no coding required.
+- [AI site indexing](https://support.nationbuilder.com/en/articles/15234300-ai-site-indexing.md): Allow AI crawlers to index your website to allow your content to be referenced by searches across LLMs.
+- [How can I get help with the design of my NationBuilder website?](https://support.nationbuilder.com/en/articles/4315657-how-can-i-get-help-with-the-design-of-my-nationbuilder-website.md): Some organizations have specific websites needs and seek professional help to design their theme. This guide lays out the options.
+- [Support provided for themes](https://support.nationbuilder.com/en/articles/2340421-support-provided-for-themes.md): NationBuilder provides some specific support for themes.
+- [Website theme options](https://support.nationbuilder.com/en/articles/9180402-website-theme-options.md): Find the perfect look and functionality for your site.
+- [Clone your theme](https://support.nationbuilder.com/en/articles/9927077-clone-your-theme.md): Clone your stock theme for edits
+
+### Communication
+
+- [A more focused way to send email blasts](https://support.nationbuilder.com/en/articles/4123795-a-more-focused-way-to-send-email-blasts.md): Introducing a new layout for sending email
+- [Understanding autoresponse emails](https://support.nationbuilder.com/en/articles/10051110-understanding-autoresponse-emails.md): In this article, autoresponse emails will be explained along with their functionality, how to edit them, and when they are used.
+- [Email Personalization 101: Liquid, smart fields and more](https://support.nationbuilder.com/en/articles/10203310-email-personalization-101-liquid-smart-fields-and-more.md): A thorough overview of using NationBuilder tools to send 1:1-style emails at scale.
+- [Create an email blast with our email builder](https://support.nationbuilder.com/en/articles/6785770-create-an-email-blast-with-our-email-builder.md): Drag and drop content blocks and create complex email layouts without code with our new email builder.
+- [Getting started guide texting](https://support.nationbuilder.com/en/articles/11547926-getting-started-guide-texting.md): Follow these five steps to start sending text blasts from your nation. Text blasts available for USA and Canada only.
+- [Set up an inbox and view incoming emails](https://support.nationbuilder.com/en/articles/2363297-set-up-an-inbox-and-view-incoming-emails.md): You've probably noticed NationBuilder doesn't have a traditional "inbox," instead we recommend creating an email path.
+- [Build interest in your nation](https://support.nationbuilder.com/en/articles/2441656-build-interest-in-your-nation.md): Using techniques to engage people both inside and outside your network is key to building long lasting relationships with your community.
+- [Understanding broadcasters](https://support.nationbuilder.com/en/articles/2343568-understanding-broadcasters.md): Broadcasters are the voices who speak publicly on behalf of your nation. All external communications are organized around broadcasters.
+- [Authenticate your email](https://support.nationbuilder.com/en/articles/2344166-authenticate-your-email.md): If the custom domain you send email blasts from isn't hosted by NationBuilder — authenticate it to protect your email deliverability
+- [Benefits of receiving email in your nation](https://support.nationbuilder.com/en/articles/2343720-benefits-of-receiving-email-in-your-nation.md): We recommend receiving incoming email. By accepting incoming email for a broadcaster, people will be able to reply to your email blasts.
+- [Forward email to a broadcaster](https://support.nationbuilder.com/en/articles/2343596-forward-email-to-a-broadcaster.md): After connecting a third-party email address to a broadcaster, you may want to forward your email to that broadcaster.
+- [Create a phone number and access voicemail](https://support.nationbuilder.com/en/articles/2343653-create-a-phone-number-and-access-voicemail.md): Create a phone number to start texting. Your nation’s phone number is also a great place to track incoming calls to your organization.
+- [Set up a broadcaster in a new nation](https://support.nationbuilder.com/en/articles/8418503-set-up-a-broadcaster-in-a-new-nation.md)
+- [How to optimize your email deliverability](https://support.nationbuilder.com/en/articles/2344088-how-to-optimize-your-email-deliverability.md): Email blasting is a key tool for any organization. This HOWTO will outline ways in which you can optimize your email deliverability.
+- [Understanding email open rates](https://support.nationbuilder.com/en/articles/6116502-understanding-email-open-rates.md): We calculate the open rate of an email blast using only verified opens so that the results you see are accurate and actionable.
+- [Understanding email opt-ins and unsubscribe links](https://support.nationbuilder.com/en/articles/2344102-understanding-email-opt-ins-and-unsubscribe-links.md): Learn about communication consent, and how to collect and manage subscription preferences from subscribers
+- [How to maintain a healthy email list](https://support.nationbuilder.com/en/articles/2344114-how-to-maintain-a-healthy-email-list.md): Learn the basic steps to restore and maintain the health of your email list.
+- [Emailable status](https://support.nationbuilder.com/en/articles/2344124-emailable-status.md): When you send an email blast your email list will immediately be updated with what email addresses were bad, or caused bounces.
+- [A/B test your email blasts](https://support.nationbuilder.com/en/articles/2344147-a-b-test-your-email-blasts.md): A/B testing sends two versions of your email blast to measure which version receives the most engagement from your recipients.
+- [Understanding spam](https://support.nationbuilder.com/en/articles/2344129-understanding-spam.md): Learn about email block lists, spam filters, spam traps, and other hard obstacles to email delivery
+- [Use split lists to test your emails](https://support.nationbuilder.com/en/articles/2344162-use-split-lists-to-test-your-emails.md): This outlines how to manually split test your emails. Automatic email A/B testing is available to those on the Team plan or above.
+
+### Workflows - automations
+
+- [Create an automation](https://support.nationbuilder.com/en/articles/6680735-create-an-automation.md): Learn to set up and run an automation, and add your audience from multiple sources
+- [See who's in an automation](https://support.nationbuilder.com/en/articles/6679409-see-who-s-in-an-automation.md): Easily find out who's been enrolled in a specific automation
+- [Running an automation](https://support.nationbuilder.com/en/articles/4029814-running-an-automation.md): The ins and outs of running, pausing, or ending an automation.
+- [Pause, resume, and end an automation](https://support.nationbuilder.com/en/articles/6679432-pause-resume-and-end-an-automation.md): When you automation is running, you can pause, resume or end it. Read this article to find out more.
+- [Tracking Conversions in automations](https://support.nationbuilder.com/en/articles/4404431-tracking-conversions-in-automations.md): Track the success of a call-to-action for your automation
+- [View the automation history of a profile](https://support.nationbuilder.com/en/articles/6179699-view-the-automation-history-of-a-profile.md): Where to see which automations a person or organization has been enrolled in and the details of their engagement
+- [Manage access to workflows](https://support.nationbuilder.com/en/articles/6679458-manage-access-to-workflows.md)
+- [How to stop specific profiles from being added to an automation](https://support.nationbuilder.com/en/articles/10695074-how-to-stop-specific-profiles-from-being-added-to-an-automation.md): Learn how to limit enrollments
+
+### Fundraising
+
+- [Create a QR Code for your donation page](https://support.nationbuilder.com/en/articles/10324410-create-a-qr-code-for-your-donation-page.md): Help your supporters donate to you quickly and easily.
+- [Third-party payment processor deprecation](https://support.nationbuilder.com/en/articles/11930513-third-party-payment-processor-deprecation.md): NationBuilder will end support for third-party payment processors, requiring a switch to NationBuilder Payments for donation processing.
+- [Attribute soft credits](https://support.nationbuilder.com/en/articles/12875396-attribute-soft-credits.md): Learn about how to use soft credits to track financial giving influence
+- [Understanding donation statuses](https://support.nationbuilder.com/en/articles/14096230-understanding-donation-statuses.md): Read through the definition of donation statuses in this document.
+- [Understanding Finances statistics](https://support.nationbuilder.com/en/articles/14114563-understanding-finances-statistics.md)
+- [Fundraising with NationBuilder](https://support.nationbuilder.com/en/articles/2344197-fundraising-with-nationbuilder.md): You can keep track of all donations received by your organization using your NationBuilder database.
+- [Create or record an individual donation](https://support.nationbuilder.com/en/articles/2344242-create-or-record-an-individual-donation.md): Learn how to manually enter and track offline or credit card contributions through the control panel
+- [How payouts work with integrated payment processing](https://support.nationbuilder.com/en/articles/2344267-how-payouts-work-with-integrated-payment-processing.md): Payouts to your bank account are extremely important. Learn when you can expect to receive them, change the payout schedule, and more!
+- [Charge for memberships](https://support.nationbuilder.com/en/articles/2344354-charge-for-memberships.md): Paid membership is a powerful way to create community ownership of an organization.
+- [Create invoices](https://support.nationbuilder.com/en/articles/2344376-create-invoices.md): Save time and reduce paperwork by invoicing online!
+- [Edit, refund or delete invoices](https://support.nationbuilder.com/en/articles/2344380-edit-refund-or-delete-invoices.md): Once an invoice is created, you can add items, print the invoice, enter a payment, or send the invoice to your customer. 
+- [Finalizing invoices and viewing invoice history](https://support.nationbuilder.com/en/articles/2344394-finalizing-invoices-and-viewing-invoice-history.md): By finalizing invoices, you prevent your historical financial data from changing.
+- [Create an expenditure](https://support.nationbuilder.com/en/articles/2344403-create-an-expenditure.md): An expenditure is a payment or disbursement. There are a couple of different ways to add an expenditure in NationBuilder.
+- [Finance filter terms listed by category](https://support.nationbuilder.com/en/articles/2351017-finance-filter-terms-listed-by-category.md): You have the ability to filter for transactions in the Finances area of your control panel. 
+- [Payment processors for recurring donations](https://support.nationbuilder.com/en/articles/2351030-payment-processors-for-recurring-donations.md): Overview of donor experience with native and third-party payment processors that support recurring donations.
+- [Recurring donation processing](https://support.nationbuilder.com/en/articles/2351041-recurring-donation-processing.md): Understand the nuts-and-bolts of how recurring payment plans are processed-by and managed-in NationBuilder
+- [Enable annual donations](https://support.nationbuilder.com/en/articles/2905671-enable-annual-donations.md): This HOWTO will walk you through how to accept annual donations.
+- [Accepting installment payments](https://support.nationbuilder.com/en/articles/2351055-accepting-installment-payments.md): Installment payments allow donors to give your nation a finite amount of money during a finite period of time.
+- [Recurring Donation Migration Support Guide](https://support.nationbuilder.com/en/articles/9355679-recurring-donation-migration-support-guide.md): Explore how to seamlessly transition your recurring donations from third-party payment processors to NationBuilder Payments.
+- [Donation processing](https://support.nationbuilder.com/en/articles/2359897-donation-processing.md): Understand the lifecycle of a payment transaction in NationBuilder — what happens after a donor enters their payment details and hits "submit"?
+- [Viewing donations within a profile](https://support.nationbuilder.com/en/articles/2359892-viewing-donations-within-a-profile.md): Every time a donor's credit card is charged, a payment transaction is created. In your nation, each charge creates a donation listing.
+- [Donation receipts](https://support.nationbuilder.com/en/articles/2359914-donation-receipts.md): When a supporter makes a donation, a donation receipt is created. You can access these receipts from a supporter's profile.
+- [PCI compliance](https://support.nationbuilder.com/en/articles/2359917-pci-compliance.md): Learn more about NationBuilder's PCI compliance.
+- [Donation page upgrade instructions](https://support.nationbuilder.com/en/articles/12278788-donation-page-upgrade-instructions.md): Upgrade your Donation \(v2\) pages to support all available payment methods, donation frequencies, and more.
+- [Donation v2 page upgrade kit | Bootstrap v4](https://support.nationbuilder.com/en/articles/11883493-donation-v2-page-upgrade-kit-bootstrap-v4.md): Use this upgrade kit to modernize your Bootstrap v4 donation page
+- [What will the supporter portal look like to my supporters?](https://support.nationbuilder.com/en/articles/6526260-what-will-the-supporter-portal-look-like-to-my-supporters.md): See what your supporters will see when they visit your portal and what information you have control over displaying
+- [What email notifications are available with the supporter portal?](https://support.nationbuilder.com/en/articles/6860305-what-email-notifications-are-available-with-the-supporter-portal.md): Create a transparent experience for your donors and members with email notifications reminding them of their upcoming and failed payments
+- [How will my donors and members find the supporter portal?](https://support.nationbuilder.com/en/articles/6517093-how-will-my-donors-and-members-find-the-supporter-portal.md): Find out where the portal is visible to your supporters by default, and how to make it easier for more people to discover it.
+- [How can I let my members cancel their membership themselves?](https://support.nationbuilder.com/en/articles/6860113-how-can-i-let-my-members-cancel-their-membership-themselves.md): With our supporter portal members can update their memberships themselves without your team having to change anything for them.
+- [How can I let my donors change their recurring donations themselves?](https://support.nationbuilder.com/en/articles/6857645-how-can-i-let-my-donors-change-their-recurring-donations-themselves.md): Give your donors the power to change their recurring donation with our supporter portal
+- [Express payment options](https://support.nationbuilder.com/en/articles/5628862-express-payment-options.md): Allow donors to pay via Apple Pay, Google Pay, and more on Donation \(v2\) pages
+- [How to update a customized theme to support express payment options](https://support.nationbuilder.com/en/articles/5648599-how-to-update-a-customized-theme-to-support-express-payment-options.md): Update your custom theme or customized Donation \(v2\) page to support express payment options
+
+### Settings
+
+- [View engagement metrics over time with the Growth trends dashboard](https://support.nationbuilder.com/en/articles/6226868-view-engagement-metrics-over-time-with-the-growth-trends-dashboard.md)
+- [Log in to your control panel](https://support.nationbuilder.com/en/articles/2360362-log-in-to-your-control-panel.md): The first skill necessary to become a NationBuilder superstar is to log in to your control panel.
+- [Understanding goals](https://support.nationbuilder.com/en/articles/2360401-understanding-goals.md): An organization's mission should be broken down into measurable goals. These goals can be tracked within a nation.
+- [Notification emails](https://support.nationbuilder.com/en/articles/2362681-notification-emails.md): Notification emails are sent automatically when someone takes action.
+- [Information about your account](https://support.nationbuilder.com/en/articles/2362690-information-about-your-account.md): Your billing info, where your invoice receipts are sent and more!
+- [Pause or shut down your nation](https://support.nationbuilder.com/en/articles/2855082-pause-or-shut-down-your-nation.md): There are two methods for canceling your account from your control panel. You can either pause or shut down your nation.
+- [Request tax exemption](https://support.nationbuilder.com/en/articles/3185363-request-tax-exemption.md): NationBuilder collects sales tax for customers in certain states. If you are an exempt entity, you can file an exemption certificate.
+- [How to find your billing area](https://support.nationbuilder.com/en/articles/10160016-how-to-find-your-billing-area.md): Find the area of your control panel where you can see your plan and manage your subscription.
+- [The control panel](https://support.nationbuilder.com/en/articles/2362701-the-control-panel.md): Your NationBuilder control panel is where you manage your nation.
+- [How to use the unsubscribe page](https://support.nationbuilder.com/en/articles/2362704-how-to-use-the-unsubscribe-page.md): Every time you send an email blast from your nation, it includes a link that allows the recipient to unsubscribe from email communication.
+- [Using browser shortcuts](https://support.nationbuilder.com/en/articles/2362724-using-browser-shortcuts.md): We use a lot of cool browser shortcuts to save us time and keystrokes. Below are a few of our favorites.
+- [Set up your election](https://support.nationbuilder.com/en/articles/2362732-set-up-your-election.md): Robust campaign tools are built into your nation. To take full advantage of these features, you'll want to first set up your election.
+- [Change the name of your nation](https://support.nationbuilder.com/en/articles/2362760-change-the-name-of-your-nation.md): Learn how to change the name of your nation and understand the limitations associated with changing your slug.
+- [Set up memberships](https://support.nationbuilder.com/en/articles/2362753-set-up-memberships.md): Membership is a way to organize supporters and provide additional benefits based on actions they’ve taken or money donated.
+- [Glossary](https://support.nationbuilder.com/en/articles/3393055-glossary.md): Familiarize yourself with a variety of NationBuilder terms.
+- [Setting up the supporter portal](https://support.nationbuilder.com/en/articles/6512100-setting-up-the-supporter-portal.md): Configure self-serve donation and membership management for your supporters
+- [How activity streams work](https://support.nationbuilder.com/en/articles/2362762-how-activity-streams-work.md): You'll find activity streams throughout NationBuilder. These are real-time logs of all activities happening in your nation.
+- [How to track gender identity in your nation](https://support.nationbuilder.com/en/articles/5485820-how-to-track-gender-identity-in-your-nation.md): In this HOWTO, you'll find instructions on creating a multiple-choice custom field to track gender-identity.
+- [Understanding social capital](https://support.nationbuilder.com/en/articles/2362765-understanding-social-capital.md): Social capital \(AKA virtual currency\) can be used to measure the effort a supporter devotes to achieving your goals.
+- [Currency in profiles and filters](https://support.nationbuilder.com/en/articles/2362773-currency-in-profiles-and-filters.md): Social capital allows you to create a gamified economy around the activities required to accomplish your goals.
+- [How to back up your nation](https://support.nationbuilder.com/en/articles/2362780-how-to-back-up-your-nation.md): You can back up your nation by taking a snapshot of your entire database.
+- [How to open your NationBuilder snapshot on a Mac](https://support.nationbuilder.com/en/articles/2362788-how-to-open-your-nationbuilder-snapshot-on-a-mac.md): This HOWTO will teach you how to open a NationBuilder snapshot on your Mac, so that you can work with your data outside of NationBuilder.
+- [Create custom people fields](https://support.nationbuilder.com/en/articles/2362823-create-custom-people-fields.md): Custom fields support the collection of key data points not available in standard NationBuilder fields.
+- [Create custom donation fields](https://support.nationbuilder.com/en/articles/2362856-create-custom-donation-fields.md): Custom donation fields support the collection of key data points not available in standard NationBuilder fields.
+- [Creating and viewing political precincts](https://support.nationbuilder.com/en/articles/2471652-creating-and-viewing-political-precincts.md): A precinct is a geographical unit of a city or town. You must enable voter features in order to view precincts.
+- [How to run a re-permissioning campaign](https://support.nationbuilder.com/en/articles/2363000-how-to-run-a-re-permissioning-campaign.md): Using advanced privacy tools, you have the ability to apply consents and manage how you build relationships with your supporters.
+- [Advanced privacy tools](https://support.nationbuilder.com/en/articles/2362974-advanced-privacy-tools.md): NationBuilder has advanced privacy tools so you can ensure you've gained the consent you need to build relationships with your supporters.
+- [Set up consent subjects](https://support.nationbuilder.com/en/articles/2363024-set-up-consent-subjects.md): Consents are what specific kinds of data processing and communication you'd like your supporters to opt into.
+- [Create a consent form](https://support.nationbuilder.com/en/articles/2363027-create-a-consent-form.md): Once you've decided what information you want to collect from people, you need to create a form to collect that information.
+- [Change consent answers to a different language](https://support.nationbuilder.com/en/articles/2363032-change-consent-answers-to-a-different-language.md): You have the ability to bypass English defaults to allow users to click yes/no answer options in your language.
+- [Set up an analytics consent banner for your website](https://support.nationbuilder.com/en/articles/2363034-set-up-an-analytics-consent-banner-for-your-website.md): This will guide you through the process of setting up an analytics/cookie consent banner if you're using analytics tools on your site.
+- [Use advanced privacy to effectively target supporters](https://support.nationbuilder.com/en/articles/2363040-use-advanced-privacy-to-effectively-target-supporters.md): This provides a comprehensive workflow on how to use advanced privacy to better target your supporters.
+- [Integrate single sign-on \(SSO\) 🆕](https://support.nationbuilder.com/en/articles/10732604-integrate-single-sign-on-sso.md): Integrating Single sign-on \(SSO\) in NB allows you to give team members one account to sign into all of the systems your organization uses.
+
+### Data
+
+- [Prepare for your first import](https://support.nationbuilder.com/en/articles/2309831-prepare-for-your-first-import.md): Transferring information from one system to another can be tricky. This provides information on ensuring your import is successful.
+- [Types of imports](https://support.nationbuilder.com/en/articles/2309526-types-of-imports.md): You can import a large variety of data into your nation, get the scoop on all things importing right here.
+- [How to import](https://support.nationbuilder.com/en/articles/2953149-how-to-import.md): This HOWTO provides information on how to run imports, understanding the options when importing, and reading import status information.
+- [Fields available for import](https://support.nationbuilder.com/en/articles/2895987-fields-available-for-import.md): All fields available for import in NationBuilder.
+- [How to avoid the 10 most common import mistakes](https://support.nationbuilder.com/en/articles/2309910-how-to-avoid-the-10-most-common-import-mistakes.md): The 10 most important things to check in data files before they are imported.
+- [Import codes](https://support.nationbuilder.com/en/articles/2471613-import-codes.md): A listing of all import codes for NationBuilder.
+- [Unique identifier](https://support.nationbuilder.com/en/articles/2308827-unique-identifier.md): A unique identifier \(ID\) is data that exists in only one profile within a nation.
+- [Political party codes](https://support.nationbuilder.com/en/articles/2895927-political-party-codes.md): NationBuilder strives to provide strong support for political organizing wherever you are.
+- [When imports overwrite existing data](https://support.nationbuilder.com/en/articles/2309892-when-imports-overwrite-existing-data.md): When a unique ID connects an imported record to an existing record, decisions need to be set as to whether to retain or overwrite data.
+- [National voter file fields](https://support.nationbuilder.com/en/articles/2471295-national-voter-file-fields.md): The fields in this document are provided in a voter file export.
+- [Import vote history](https://support.nationbuilder.com/en/articles/2471330-import-vote-history.md): Ballots are imported as a historical record of when elections occurred and how an individual voted in that election.
+- [Import a voter file](https://support.nationbuilder.com/en/articles/3296511-import-a-voter-file.md): Using a voter file import, it is possible to include many political fields not available in a one-time import, including voting districts.
+- [Import memberships](https://support.nationbuilder.com/en/articles/3296637-import-memberships.md): A membership is a separate object from a profile or donation within NationBuilder, and have more accurate data than what exists in a nation.
+- [How to split a CSV or Excel file](https://support.nationbuilder.com/en/articles/2309128-how-to-split-a-csv-or-excel-file.md): Sometimes its necessary to split large import files, and we have a tool to help you do just that!
+- [Migrate data from NGP VAN to NationBuilder](https://support.nationbuilder.com/en/articles/3296597-migrate-data-from-ngp-van-to-nationbuilder.md): This article covers how to migrate donors, contributions, email opt-ins, and volunteers from an existing NGP database to your nation.
+- [How to export](https://support.nationbuilder.com/en/articles/2308695-how-to-export.md): You can export people, financial, and supporter data from your control panel.
+
+### Apps and Integrations
+
+- [Connecting Zapier to NationBuilder](https://support.nationbuilder.com/en/articles/10128896-connecting-zapier-to-nationbuilder.md): Your guide to getting started setting up Zapier with NationBuilder.
+- [How to connect with ActBlue](https://support.nationbuilder.com/en/articles/2327406-how-to-connect-with-actblue.md): Integrate your ActBlue account with NationBuilder
+- [How does the Qomon integration work?](https://support.nationbuilder.com/en/articles/4362558-how-does-the-qomon-integration-work.md): Nationbuilder and Qomon allow you to organise your community digitally, on the ground, and coordinate your volunteers.
+
+### NationBuilder Network
+
+- [Set up your network](https://support.nationbuilder.com/en/articles/2363103-set-up-your-network.md): Is your organization ready for NationBuilder Network? Before you get started, think about your goals, audiences, and resources.
+- [Share a custom email theme](https://support.nationbuilder.com/en/articles/2363093-share-a-custom-email-theme.md): A custom email theme streamlines the look and feel of your communications, ensuring that you maintain your brand across the network.
+- [Set up networked nations](https://support.nationbuilder.com/en/articles/2363084-set-up-networked-nations.md): A networked nation is a separate nation from Network HQ, with its own website, broadcasters, database, etc.
+- [Updating consent on profiles of your subnations](https://support.nationbuilder.com/en/articles/2363077-updating-consent-on-profiles-of-your-subnations.md): You can use the data present in the parent nation to batch update consent on profiles in subnations by following the steps below.
+- [Network custom field settings](https://support.nationbuilder.com/en/articles/2363073-network-custom-field-settings.md): When setting up a Network headquarters, you can decide to share custom field settings with all networked nations.
+- [How to set up network headquarters](https://support.nationbuilder.com/en/articles/2363053-how-to-set-up-network-headquarters.md): Network HQ is a unique nation, both in terms of the functionality available and its role within a network.
+
+### Tips, tricks, and best practices
+
+- [How to make a newsletter email blast](https://support.nationbuilder.com/en/articles/3854566-how-to-make-a-newsletter-email-blast.md): Learn how to make your own engaging email newsletter, using one of our mobile-responsive email themes, and a simple one column layout.
+- [How to implement Text to Donate](https://support.nationbuilder.com/en/articles/10064958-how-to-implement-text-to-donate.md): Customers can create a seamless "Text to Donate" experience by leveraging keywords, autoresponses, and mobile-friendly donation pages.
+- [Text message strategies - Building conversation trees](https://support.nationbuilder.com/en/articles/5021115-text-message-strategies-building-conversation-trees.md): Conversation trees in NationBuilder allow having fully automatic conversations with your community via text.
+- [Hosting a digital event](https://support.nationbuilder.com/en/articles/4216935-hosting-a-digital-event.md): Can't meet in person? We have tips to help you set up a successful virtual event on NationBuilder.
+- [Improve your website accessibility](https://support.nationbuilder.com/en/articles/2886900-improve-your-website-accessibility.md): Here are some tips you can use to make your website more accessible.
+- [Create a PDF version of your email blast](https://support.nationbuilder.com/en/articles/2865758-create-a-pdf-version-of-your-email-blast.md): Create a place on your website to store .pdfs of past newsletters for download.
+- [Use recruiter ID links to advance your fundraising goals](https://support.nationbuilder.com/en/articles/2962000-use-recruiter-id-links-to-advance-your-fundraising-goals.md): Peer to peer \(P2P\) fundraising is one of the most powerful ways to engage a community in helping to achieve your organization’s goal.
+- [Use social capital points to find and reach out to your most engaged supporters](https://support.nationbuilder.com/en/articles/2962585-use-social-capital-points-to-find-and-reach-out-to-your-most-engaged-supporters.md): Social Capital allows you to track, rank, and follow your supporters' engagement through an automated point system.
+- [Assign people or due dates to your paths to create clarity amongst your team](https://support.nationbuilder.com/en/articles/2962597-assign-people-or-due-dates-to-your-paths-to-create-clarity-amongst-your-team.md): Using paths will allow you to track the engagement between your control panel users and your supporters over time.
+- [Use path values to analyze your fundraising pipeline in path view](https://support.nationbuilder.com/en/articles/3416438-use-path-values-to-analyze-your-fundraising-pipeline-in-path-view.md): To help teams and volunteers stay on target, turn on path values in path settings to add a monetary value field to a given path.
+- [Clean up your tag library to keep your database organized](https://support.nationbuilder.com/en/articles/3416443-clean-up-your-tag-library-to-keep-your-database-organized.md): A tag is only useful if you and your staff remember it and use it periodically on multiple profiles.
+- [Gauge how effective your events are with tracking codes](https://support.nationbuilder.com/en/articles/3416446-gauge-how-effective-your-events-are-with-tracking-codes.md): Events and tracking codes may not seem to be connected when looked at from afar, but up close you’ll realize how linked the two truly are.
+- [Create dynamic 'Add to Google Calendar' links on your website](https://support.nationbuilder.com/en/articles/10052995-create-dynamic-add-to-google-calendar-links-on-your-website.md): Create dynamic links for websites that will enable users to add your events to Google Calendar in one click.
+- [How to ask for larger donations in email campaigns](https://support.nationbuilder.com/en/articles/10055534-how-to-ask-for-larger-donations-in-email-campaigns.md): Calculate a suggested donation based on the recipient’s last donation or average gift amount.
+- [What paths should I set up in my nation?](https://support.nationbuilder.com/en/articles/5017591-what-paths-should-i-set-up-in-my-nation.md): The possibilities with paths are endless and here are the most common paths used by our customers, to get you inspired!
+
+### Documentation in other languages
+
+- [Champs disponibles pour l'import](https://support.nationbuilder.com/en/articles/5384968-champs-disponibles-pour-l-import.md): Tous les champs disponibles pour l'import dans NationBuilder.
+- [Créer une automatisation \(ou série d'emails automatisée\)](https://support.nationbuilder.com/en/articles/6737483-creer-une-automatisation-ou-serie-d-emails-automatisee.md): Configurez et lancez une automatisation puis ajoutez votre audience depuis différentes sources
+- [Configurer NationBuilder Payment](https://support.nationbuilder.com/en/articles/7969569-configurer-nationbuilder-payment.md): Notre système de paiement intégré ne prend que quelques minutes à installer et vous permet de traiter les dons à l'aide des pages Don \(v2\).
+- [Connecter un domaine personnalisé](https://support.nationbuilder.com/en/articles/8009863-connecter-un-domaine-personnalise.md): Dans ce guide, vous trouverez des instructions pour configurer l'URL personnalisée de votre site Web NationBuilder.
+- [Comment utiliser Google Analytics avec NationBuilder](https://support.nationbuilder.com/en/articles/8053002-comment-utiliser-google-analytics-avec-nationbuilder.md): Voici une liste des premières étapes et tactiques importantes pour tirer le meilleur parti de votre suivi Google Analytics.
+- [Connectez un domaine personnalisé à votre nation tout en gérant vos propres enregistrements DNS](https://support.nationbuilder.com/en/articles/8075550-connectez-un-domaine-personnalise-a-votre-nation-tout-en-gerant-vos-propres-enregistrements-dns.md): Si vous n'utilisez pas NationBuilder pour héberger/gérer votre DNS, voici comment envoyer des emails et/ou le connecter à un site web.
+- [Concepts clefs en français](https://support.nationbuilder.com/en/articles/2471445-concepts-clefs-en-francais.md)
+- [Guide de démarrage rapide sur NationBuilder : lancez votre campagne](https://support.nationbuilder.com/en/articles/4427439-guide-de-demarrage-rapide-sur-nationbuilder-lancez-votre-campagne.md): Ce document expose les meilleures pratiques et conseils pour la mise en place de votre site sur NationBuilder pour votre campagne
+- [Guide de démarrage rapide sur NationBuilder : Associations et ONG](https://support.nationbuilder.com/en/articles/4444953-guide-de-demarrage-rapide-sur-nationbuilder-associations-et-ong.md): Ce document expose les meilleures pratiques et conseils pour la mise en place de votre site sur NationBuilder pour soutenir votre mission
+- [Index des ressources stratégiques en langue française](https://support.nationbuilder.com/en/articles/4458968-index-des-ressources-strategiques-en-langue-francaise.md): Voici la liste des ressources disponibles en français
+- [Comment fonctionne l'intégration avec Qomon ?](https://support.nationbuilder.com/en/articles/4362960-comment-fonctionne-l-integration-avec-qomon.md): Qomon permet d'organiser votre communauté en ligne comme sur le terrain, et de coordonner vos bénévoles.
+- [Importer des profils](https://support.nationbuilder.com/en/articles/8117138-importer-des-profils.md): Découvrez comment importer avec succès des fichiers contenant des profils dans votre nation.
+- [Gérer le consentement, la désinsciption et les préférences de communication par email](https://support.nationbuilder.com/en/articles/8344446-gerer-le-consentement-la-desinsciption-et-les-preferences-de-communication-par-email.md): En savoir plus sur le consentement lié aux communications et sur la manière de recueillir et de gérer les préférences des abonnés.
+- [Créer, modifier ou supprimer un ensemble de permissions](https://support.nationbuilder.com/en/articles/8360482-creer-modifier-ou-supprimer-un-ensemble-de-permissions.md): Les ensembles de permissions sont utilisés pour accorder un accès personnalisé au panneau de configuration de votre nation.
+- [Fusionner les doublons](https://support.nationbuilder.com/en/articles/8389425-fusionner-les-doublons.md): Il arrive que des profils en double soient créés pour une même personne ou organisation. Vous pouvez les fusionner de différentes manières.
+- [Créez une campagne email](https://support.nationbuilder.com/en/articles/8443188-creez-une-campagne-email.md): Découvrez comment créer une campagne email avec notre éditeur glisser-déposer
+- [Guía: Organizaciones sin fines de lucro](https://support.nationbuilder.com/en/articles/4473668-guia-organizaciones-sin-fines-de-lucro.md): Este documento está diseñado para proveer las mejores prácticas y orientación sobre cómo poner en marcha tu sitio web para apoyar tu misión.
+- [Conceptos claves en español](https://support.nationbuilder.com/en/articles/2471384-conceptos-claves-en-espanol.md)
+
+### Advocate for your cause
+
+- [Encourage social media shares on your site](https://support.nationbuilder.com/en/articles/3055890-encourage-social-media-shares-on-your-site.md): Every page on your website has social media settings which allow you to prompt supporters to share a page on Twitter.
+
+### ActionButton
+
+- [Create and manage buttons](https://support.nationbuilder.com/en/articles/5640312-create-and-manage-buttons.md): Learn how to build your first button, set up sequenced actions, or delete ones you no longer use.
+- [ActionButton add-ons explained](https://support.nationbuilder.com/en/articles/8486756-actionbutton-add-ons-explained.md): Try out ActionButton Plus's powerful advocacy features.
+- [Understanding action types](https://support.nationbuilder.com/en/articles/7185390-understanding-action-types.md): Learn about the ten action types, how to set them up, and see what gets displayed to users as they take action.
+- [Share or embed your buttons](https://support.nationbuilder.com/en/articles/5747748-share-or-embed-your-buttons.md): Embedding buttons on an existing site is a breeze, and each button type is optimized for display across social media feeds.
+- [Share ActionButton via email](https://support.nationbuilder.com/en/articles/7437970-share-actionbutton-via-email.md): Drive supporters to take action on a button through an email blast in NationBuilder.
+- [Creating a Contact Your Lawmakers button](https://support.nationbuilder.com/en/articles/6526319-creating-a-contact-your-lawmakers-button.md): Make it easy for your community to contact elected officials on important issues.
+- [ActionButton data and analytics](https://support.nationbuilder.com/en/articles/5747761-actionbutton-data-and-analytics.md): Keep track of your interaction and user data.
+- [Understanding ActionButton](https://support.nationbuilder.com/en/articles/7039851-understanding-actionbutton.md): Discover what ActionButton is and how it can connect to your nation.
+- [Integrate NationBuilder with ActionButton](https://support.nationbuilder.com/en/articles/7880266-integrate-nationbuilder-with-actionbutton.md): Leverage combined power with the ActionButton add-on!
+- [Enroll your signups in an automation](https://support.nationbuilder.com/en/articles/6749351-enroll-your-signups-in-an-automation.md): Actions from the several buttons can trigger a multiple source automation. Learn how to set this up.
+- [Customize the style of your buttons](https://support.nationbuilder.com/en/articles/5748093-customize-the-style-of-your-buttons.md): Learn how to upload your logo, and change buttons' color palette to match your existing brand design.
+- [How to enable the ActionButton advocacy page template in NationBuilder - Stock theme users](https://support.nationbuilder.com/en/articles/8483463-how-to-enable-the-actionbutton-advocacy-page-template-in-nationbuilder-stock-theme-users.md): Learn how to apply the advocacy template to a Momentum website.
+- [How to enable the ActionButton advocacy page template in NationBuilder - Custom theme users](https://support.nationbuilder.com/en/articles/8482863-how-to-enable-the-actionbutton-advocacy-page-template-in-nationbuilder-custom-theme-users.md): How to apply the Advocacy template to a Momentum website.
+- [Check Registration button](https://support.nationbuilder.com/en/articles/9201338-check-registration-button.md): Learn about the ActionButton that allows supporters to see if they're registered to vote and complete optional follow-up actions.
+- [Manage your ActionButton account settings](https://support.nationbuilder.com/en/articles/9290190-manage-your-actionbutton-account-settings.md): Learn where to go to update your personal details, invite users, and more
+- [Sequenced actions](https://support.nationbuilder.com/en/articles/11049856-sequenced-actions.md): Learn how and when to use Sequenced actions.
+
+### 10DLC Registration for sending text messages
+
+- [What is 10DLC registration?](https://support.nationbuilder.com/en/articles/6643352-what-is-10dlc-registration.md)
+- [How do I know if I am affected by this?](https://support.nationbuilder.com/en/articles/6643394-how-do-i-know-if-i-am-affected-by-this.md): Find out whether your organization needs to register for 10DLC registration.
+- [10DLC Registration Errors](https://support.nationbuilder.com/en/articles/7838070-10dlc-registration-errors.md): Understand the common errors that can prevent A2P 10DLC texting registration submissions from succeeding
+- [How to register for 10DLC](https://support.nationbuilder.com/en/articles/6643357-how-to-register-for-10dlc.md): In this article you'll find information on how to register your organization with 10DLC
+- [10DLC Frequently Asked Questions FAQ](https://support.nationbuilder.com/en/articles/6637140-10dlc-frequently-asked-questions-faq.md): Find answers to the most commonly asked questions about 10DLC registration and how it affects your organization.
+- [My texts are being blocked! What now?](https://support.nationbuilder.com/en/articles/8319267-my-texts-are-being-blocked-what-now.md): Find out what you need to get registered for 10DLC and how long the process might take.
+
+### Login and Security
+
+- [Multi-factor authentication FAQs](https://support.nationbuilder.com/en/articles/9747999-multi-factor-authentication-faqs.md): FAQs for the login experience.
+- [Customize your nation's login page \(logo & colors\)](https://support.nationbuilder.com/en/articles/9938797-customize-your-nation-s-login-page-logo-colors.md): Maintaining a consistent and professional image for your nation starts with a branded login experience.
+- [Multi-factor authentication \(MFA\) and language support](https://support.nationbuilder.com/en/articles/9938811-multi-factor-authentication-mfa-and-language-support.md): NationBuilder’s login flow supports multiple languages to ensure a seamless and consistent experience for users across different regions.
+- [Customize your theme with supporter portal links](https://support.nationbuilder.com/en/articles/10026492-customize-your-theme-with-supporter-portal-links.md): This theme upgrade kit outlines how to include links to the supporter portal in various parts of your theme
+- [Trouble Shooting Guide: Clean up the login screen for blog and Suggestion Box type pages after migration](https://support.nationbuilder.com/en/articles/10212603-trouble-shooting-guide-clean-up-the-login-screen-for-blog-and-suggestion-box-type-pages-after-migration.md): Figure out where you can get rid of unwanted fields on blog pages and suggestions box type pages.
+- [Log into your nation with social login](https://support.nationbuilder.com/en/articles/10257371-log-into-your-nation-with-social-login.md): Social login provides a convenient way for users to access their accounts by linking them with trusted third-party providers such as Google or Microsoft.
+- [Configure multi-factor authentication \(MFA\) for your nation](https://support.nationbuilder.com/en/articles/9789620-configure-multi-factor-authentication-mfa-for-your-nation.md): Decide which types of MFA to offer and whether or not to enforce MFA for your supporters
+- [Migrate from legacy SAML SSO to NationBuilder's new SSO](https://support.nationbuilder.com/en/articles/11014548-migrate-from-legacy-saml-sso-to-nationbuilder-s-new-sso.md): Easily move off of the legacy SAML single sign-on \(SSO\) integration to NationBuilder's brand new SSO and login system.
+
+### API
+
+- [NationBuilder API QuickStart Guide](https://support.nationbuilder.com/en/articles/9869274-nationbuilder-api-quickstart-guide.md)
+- [NationBuilder v2 API Core Concepts](https://support.nationbuilder.com/en/articles/9757369-nationbuilder-v2-api-core-concepts.md): Capabilities overview of the essential features of the v2 API
+- [API Authentication Guide](https://support.nationbuilder.com/en/articles/9903805-api-authentication-guide.md): Authenticate with NationBuilder API using OAuth 2.0
+- [Generating API Tokens](https://support.nationbuilder.com/en/articles/9559128-generating-api-tokens.md): Use the latest API to give your application access to NationBuilder's core features
+- [Using parameters to interact with the NationBuilder API](https://support.nationbuilder.com/en/articles/9917278-using-parameters-to-interact-with-the-nationbuilder-api.md): Learn how to get the data you need from the NationBuilder API by appending URL parameters to your requests
+- [API Rate Limit Policy](https://support.nationbuilder.com/en/articles/9868960-api-rate-limit-policy.md): Rate limits are enforced on a per-interval basis of 250 requests every 10 seconds per IP and per API token.
+- [Access Token Migration Guide](https://support.nationbuilder.com/en/articles/9869235-access-token-migration-guide.md): Migrate your legacy access tokens to our current token model to use our most up to date API features
+- [Relationships between Resources in v2 API](https://support.nationbuilder.com/en/articles/9912495-relationships-between-resources-in-v2-api.md): Complete list of connected resources in NationBuilder's v2 API
+- [API v2 walkthrough](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough.md): Read through an example of a series of API calls that illustrate the use of API v2 capabilities.
+- [Legacy API \(v1\) documentation](https://support.nationbuilder.com/en/articles/10091070-legacy-api-v1-documentation.md): Documentation relating to the original \(v1\) NationBuilder API
+- [Interactive API Documentation | Endpoint Explorer](https://support.nationbuilder.com/en/articles/10857983-interactive-api-documentation-endpoint-explorer.md): Explore our Swagger-generated interactive API documentation
+
+### Insights
+
+- [Introduction to Insights and Tableau](https://support.nationbuilder.com/en/articles/10022131-introduction-to-insights-and-tableau.md): Equip your team to make more strategic decisions by turning raw data into actionable insights.
+- [Understanding the Email Performance dashboard](https://support.nationbuilder.com/en/articles/10723686-understanding-the-email-performance-dashboard.md): Learn how to use the Email Performance dashboard to track engagement metrics, analyze campaign effectiveness, and optimize your email strategy.
+- [Understanding the Email Audiences dashboard](https://support.nationbuilder.com/en/articles/10723797-understanding-the-email-audiences-dashboard.md): Discover how to use the Email Audiences dashboard to analyze recipient engagement, segment audiences, and improve email marketing performance.
+- [NationBuilder Insights: Finances section quick-start guide](https://support.nationbuilder.com/en/articles/10732712-nationbuilder-insights-finances-section-quick-start-guide.md): Learn the basics of the Finances section of NationBuilder Insights.
+- [NationBuilder Insights: Email section quick-start guide](https://support.nationbuilder.com/en/articles/10732737-nationbuilder-insights-email-section-quick-start-guide.md): Learn how to use the Email section of NationBuilder Insights.
+- [Building dashboards in Tableau: A step-by-step guide using NationBuilder Insights](https://support.nationbuilder.com/en/articles/10022190-building-dashboards-in-tableau-a-step-by-step-guide-using-nationbuilder-insights.md): A comprehensive step-by-step guide on how to create a dashboard in NationBuilder Insights.
+- [Understanding the Transactions dashboard](https://support.nationbuilder.com/en/articles/10723566-understanding-the-transactions-dashboard.md): Learn how to use the Transactions dashboard to analyze financial data, track revenue patterns, and improve your fundraising strategy.
+- [Understanding the Contributors dashboard](https://support.nationbuilder.com/en/articles/10723647-understanding-the-contributors-dashboard.md): Explore how to use the Contributors dashboard to analyze your supporter base, track demographic patterns, and enhance donor engagement strategies.
+- [Understanding the Donors dashboard](https://support.nationbuilder.com/en/articles/10723673-understanding-the-donors-dashboard.md): Use the Donors dashboard to track fundraising, analyze donor cohorts, and identify opportunities for donor retention and reactivation.
+- [Insights data source reference list](https://support.nationbuilder.com/en/articles/10735944-insights-data-source-reference-list.md): All the potential data sources usable in NationBuilder Insights.
+- [Understanding the People Growth Dashboard](https://support.nationbuilder.com/en/articles/13226737-understanding-the-people-growth-dashboard.md): Explore how to use the Growth dashboard to understand changes in your people database.
+
+### ConnectionsHub
+
+- [What is ConnectionsHub?](https://support.nationbuilder.com/en/articles/15460712-what-is-connectionshub.md)
+- [Donor Wealth Screening with Kindsight's iWave](https://support.nationbuilder.com/en/articles/15465713-donor-wealth-screening-with-kindsight-s-iwave.md)
+
+## Français
+
+### Introduction à NationBuilder
+
+- [Connecter un domaine personnalisé](https://support.nationbuilder.com/fr/articles/2343540-connecter-un-domaine-personnalise.md): Dans ce guide, vous trouverez des instructions pour configurer l'URL personnalisée de votre site Web NationBuilder.
+- [Importer des profils](https://support.nationbuilder.com/fr/articles/3021365-importer-des-profils.md): Découvrez comment importer avec succès des fichiers contenant des profils dans votre nation.
+- [Créer, modifier ou supprimer un ensemble de permissions](https://support.nationbuilder.com/fr/articles/2362659-creer-modifier-ou-supprimer-un-ensemble-de-permissions.md): Les ensembles de permissions sont utilisés pour accorder un accès personnalisé au panneau de configuration de votre nation.
+- [Configurer NationBuilder Payment](https://support.nationbuilder.com/fr/articles/2344217-configurer-nationbuilder-payment.md): Notre système de paiement intégré ne prend que quelques minutes à installer et vous permet de traiter les dons à l'aide des pages Don \(v2\).
+- [Guide de démarrage rapide sur NationBuilder : lancez votre campagne](https://support.nationbuilder.com/fr/articles/2290973-guide-de-demarrage-rapide-sur-nationbuilder-lancez-votre-campagne.md): Ce document expose les meilleures pratiques et conseils pour la mise en place de votre site sur NationBuilder pour votre campagne
+- [Guide de démarrage rapide sur NationBuilder : Associations et ONG](https://support.nationbuilder.com/fr/articles/2291010-guide-de-demarrage-rapide-sur-nationbuilder-associations-et-ong.md): Ce document expose les meilleures pratiques et conseils pour la mise en place de votre site sur NationBuilder pour soutenir votre mission.
+
+### Communauté
+
+- [Fusionner les doublons](https://support.nationbuilder.com/fr/articles/2309006-fusionner-les-doublons.md): Il arrive que des profils en double soient créés pour une même personne ou organisation. Vous pouvez les fusionner de différentes manières.
+
+### Siteweb
+
+- [Connectez un domaine personnalisé à votre nation tout en gérant vos propres enregistrements DNS](https://support.nationbuilder.com/fr/articles/2886934-connectez-un-domaine-personnalise-a-votre-nation-tout-en-gerant-vos-propres-enregistrements-dns.md): Si vous n'utilisez pas NationBuilder pour héberger/gérer votre DNS, voici comment envoyer des emails et/ou le connecter à un site web.
+- [Comment utiliser Google Analytics avec NationBuilder](https://support.nationbuilder.com/fr/articles/2330950-comment-utiliser-google-analytics-avec-nationbuilder.md): Voici une liste des premières étapes et tactiques importantes pour tirer le meilleur parti de votre suivi Google Analytics.
+
+### Communication
+
+- [Créez une campagne email](https://support.nationbuilder.com/fr/articles/6785770-creez-une-campagne-email.md): Découvrez comment créer une campagne email avec notre éditeur glisser-déposer.
+
+### Automatisations
+
+- [Créer une automatisation à sources multiples](https://support.nationbuilder.com/fr/articles/6680735-creer-une-automatisation-a-sources-multiples.md): Configurez et lancez une automatisation à sources multiples et ajoutez votre audience après son démarrage !
+
+### Paramètres
+
+- [Concepts clefs en français](https://support.nationbuilder.com/fr/articles/3393055-concepts-clefs-en-francais.md)
+
+### Données
+
+- [Champs disponibles pour l'import](https://support.nationbuilder.com/fr/articles/2895987-champs-disponibles-pour-l-import.md): Tous les champs disponibles pour l'import dans NationBuilder.
+
+### Applications et intégrations
+
+- [Comment fonctionne l'intégration avec Qomon ?](https://support.nationbuilder.com/fr/articles/4362558-comment-fonctionne-l-integration-avec-qomon.md): Qomon permet d'organiser votre communauté en ligne comme sur le terrain, et de coordonner vos bénévoles.
+
+### Documentation en d'autres langues
+
+- [Index des ressources stratégiques en langue française](https://support.nationbuilder.com/fr/articles/4458968-index-des-ressources-strategiques-en-langue-francaise.md): Voici la liste des ressources disponibles en français
+- [Comment fonctionne l'intégration avec Qomon ?](https://support.nationbuilder.com/fr/articles/4362960-comment-fonctionne-l-integration-avec-qomon.md): Qomon permet d'organiser votre communauté en ligne comme sur le terrain, et de coordonner vos bénévoles.
+- [Gérer le consentement, la désinsciption et les préférences de communication par email](https://support.nationbuilder.com/fr/articles/8344446-gerer-le-consentement-la-desinsciption-et-les-preferences-de-communication-par-email.md): En savoir plus sur le consentement lié aux communications et sur la manière de recueillir et de gérer les préférences des abonnés.
+
+## Español
+
+### Intro to NationBuilder
+
+- [Guía: Organizaciones sin fines de lucro](https://support.nationbuilder.com/es/articles/2291010-guia-organizaciones-sin-fines-de-lucro.md): Este documento está diseñado para proveer las mejores prácticas y orientación sobre cómo poner en marcha tu sitio web para apoyar tu misión.
+
+### Settings
+
+- [Conceptos claves en español](https://support.nationbuilder.com/es/articles/3393055-conceptos-claves-en-espanol.md)

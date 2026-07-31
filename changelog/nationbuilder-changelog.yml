@@ -1,0 +1,51 @@
+generated: '2026-07-20'
+method: searched
+source: https://www.nationbuilder.design/release_notes
+docs: https://www.nationbuilder.design/release_notes
+note: >-
+  NationBuilder publishes a dated product release-notes feed. Entries below are the
+  recent window captured on 2026-07-20 (product-wide release notes, not an API-only
+  changelog). Scheme is dated posts rather than semantic versions.
+scheme: dated-release-notes
+current: null
+entries:
+  - date: '2026-07-14'
+    category: Feature update
+    title: Smart fields in text blasts are here!
+    highlights: Personalize text blasts with supporter data; suggested next-donation smart field (1.25x last gift).
+  - date: '2026-05-22'
+    category: Product update
+    title: 'Your site and AI search: a new setting'
+    highlights: Toggle whether AI tools (Claude, ChatGPT, Gemini) may read/index your site's content; on by default.
+  - date: '2026-05-14'
+    category: New feature
+    title: Link by Stripe now available
+    highlights: Stripe Link supported for faster donor checkout.
+  - date: '2026-05-07'
+    category: Feature update
+    title: Send event reminders by text
+    highlights: Text-message event reminders.
+  - date: '2026-03-18'
+    category: New feature
+    title: Improvements to donation reporting and filters
+    highlights: Expanded donation reporting and filtering.
+  - date: '2026-03-11'
+    category: New feature
+    title: Event reminders are here
+    highlights: Automated event reminders.
+  - date: '2026-01-26'
+    category: Feature update
+    title: Add to calendar links now in event autoresponses
+    highlights: Calendar links embedded in event autoresponse emails.
+  - date: '2026-01-07'
+    category: Product update
+    title: A simpler way to build and manage your NationBuilder site
+    highlights: Revamped site builder/management experience.
+  - date: '2025-12-10'
+    category: Product update
+    title: Take full control of your button's design
+    highlights: Button design customization.
+  - date: '2025-12-04'
+    category: Product update
+    title: 'Give credit where it''s due: Introducing soft credits'
+    highlights: Soft-credit attribution for donations.

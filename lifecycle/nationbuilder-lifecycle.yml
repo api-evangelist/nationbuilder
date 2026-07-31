@@ -1,0 +1,18 @@
+generated: '2026-07-20'
+method: searched
+source: https://support.nationbuilder.com/en/collections/10408291-api
+versioning:
+  scheme: uri-path
+  current: v2
+  legacy: v1
+  docs: https://support.nationbuilder.com/en/articles/9757369-nationbuilder-v2-api-core-concepts
+deprecation:
+  policy: >-
+    The v1 API is designated "Legacy" and superseded by v2. NationBuilder
+    publishes an Access Token Migration Guide to move v1 integrations to v2
+    OAuth. No dated sunset for v1 is published.
+  legacy_docs: https://support.nationbuilder.com/en/articles/10091070-legacy-api-v1-documentation
+  migration_docs: https://support.nationbuilder.com/en/articles/9869235-access-token-migration-guide
+  sunset_header: null
+status_page: https://status.nationbuilder.com/
+deprecated_operations: []

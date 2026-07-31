@@ -1,0 +1,20 @@
+generated: '2026-07-20'
+method: generated
+source: openapi/nationbuilder-v2-openapi-original.yml
+skills:
+  - file: nationbuilder-sync-supporter.md
+    name: Sync a supporter into a NationBuilder nation
+    api: openapi/nationbuilder-v2-openapi-original.yml
+    operations: [listSignups, createSignup, showSignup, updateSignup, createSignupTag, createSignupTagging]
+  - file: nationbuilder-record-donation.md
+    name: Record a donation for a supporter
+    api: openapi/nationbuilder-v2-openapi-original.yml
+    operations: [listSignups, createSignup, createDonation, showDonation, listDonations]
+  - file: nationbuilder-run-petition.md
+    name: Run a petition and collect signatures
+    api: openapi/nationbuilder-v2-openapi-original.yml
+    operations: [createPetition, listPetitions, showPetition, createPetitionSignature, listPetitionSignatures]
+  - file: nationbuilder-manage-event.md
+    name: Create an event and manage RSVPs
+    api: openapi/nationbuilder-v2-openapi-original.yml
+    operations: [createEvent, listEvents, showEvent, createEventRsvp, listEventRsvps]

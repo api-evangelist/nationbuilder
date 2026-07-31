@@ -1,0 +1,33 @@
+generated: '2026-07-20'
+method: searched
+source: https://support.nationbuilder.com/en/articles/9757369-nationbuilder-v2-api-core-concepts
+format: json:api
+envelope:
+  validation: '`errors` array (each with detail/source), returned on 422'
+  non_validation: object with `code` and `message`
+problems:
+  - status: 400
+    title: Bad Request
+    detail: Malformed request or invalid JSON:API document.
+  - status: 401
+    title: Unauthorized
+    detail: Missing or invalid OAuth bearer token / legacy API token.
+  - status: 403
+    title: Forbidden
+    detail: Token lacks permission for the requested resource or nation.
+  - status: 404
+    title: Not Found
+    detail: Requested resource does not exist in this nation.
+  - status: 422
+    title: Unprocessable Entity
+    detail: Validation error; body contains a JSON:API `errors` array with per-field details.
+  - status: 429
+    title: Too Many Requests
+    detail: API rate limit exceeded. See the API Rate Limit Policy.
+    ref: https://support.nationbuilder.com/en/articles/9868960-api-rate-limit-policy
+  - status: 500
+    title: Internal Server Error
+    detail: Unexpected server error.
+  - status: 503
+    title: Service Unavailable
+    detail: Service temporarily unavailable.

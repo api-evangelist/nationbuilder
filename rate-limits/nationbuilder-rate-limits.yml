@@ -1,0 +1,22 @@
+generated: '2026-07-20'
+method: searched
+source: https://support.nationbuilder.com/en/articles/9868960-api-rate-limit-policy
+docs: https://support.nationbuilder.com/en/articles/9868960-api-rate-limit-policy
+scope: per IP and per API token (enforced independently)
+rate_limits:
+  - window: 10s
+    limit_count: 250
+    unit: requests
+    per: [ip, token]
+    equivalent: 1500 requests/minute
+exceeded_status: 429
+headers:
+  - name: RateLimit-Limit
+    description: Maximum requests allowed in the current interval.
+  - name: RateLimit-Remaining
+    description: Requests remaining in the current interval.
+  - name: RateLimit-Reset
+    description: Timestamp when the current window resets.
+  - name: Retry-After
+    description: Seconds to wait before retrying (added on 429 responses).
+note: RateLimit-* headers appear on every API response; Retry-After is added on 429.

@@ -1,0 +1,68 @@
+generated: '2026-07-20'
+method: searched
+source: https://support.nationbuilder.com/en/articles/9757369-nationbuilder-v2-api-core-concepts
+docs: https://support.nationbuilder.com/en/articles/9912495-relationships-between-resources-in-v2-api
+note: >-
+  Entity graph captured from the v2 API core-concepts and relationships docs.
+  NationBuilder publishes no downloadable OpenAPI, so relationships below are the
+  documented JSON:API resources and their described associations, not a $ref-derived
+  graph. Relationship traversal uses the JSON:API `include` parameter.
+entities:
+  - name: signup
+    aka: person
+    description: A person record in the nation (supporters, members, contacts).
+  - name: donation
+    description: A financial contribution.
+  - name: petition
+    description: A petition supporters can sign.
+  - name: petition_signature
+    description: A single signature on a petition.
+  - name: address
+    description: A postal address associated with a signup.
+  - name: event
+    description: An event with tickets/RSVPs.
+  - name: membership
+    description: A membership held by a signup.
+  - name: list
+    description: A saved list of signups.
+  - name: tag
+    description: A label applied to signups.
+  - name: contact
+    description: A logged contact/interaction with a signup.
+  - name: survey
+    description: A survey with questions.
+  - name: survey_response
+    description: A signup's response to a survey.
+relationships:
+  - from: donation
+    type: belongs_to
+    to: signup
+    via: signup
+  - from: petition_signature
+    type: belongs_to
+    to: petition
+    via: petition
+  - from: petition_signature
+    type: belongs_to
+    to: signup
+    via: signup
+  - from: membership
+    type: belongs_to
+    to: signup
+    via: signup
+  - from: address
+    type: belongs_to
+    to: signup
+    via: signup
+  - from: signup
+    type: has_many
+    to: donation
+    via: donations
+  - from: signup
+    type: has_many
+    to: address
+    via: addresses
+  - from: survey_response
+    type: belongs_to
+    to: survey
+    via: survey

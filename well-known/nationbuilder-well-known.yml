@@ -1,0 +1,19 @@
+generated: '2026-07-20'
+method: searched
+host: https://nationbuilder.com
+note: >-
+  No /.well-known/ discovery documents are published on the primary host.
+  All standard discovery paths probed 404 on 2026-07-20. Recorded for
+  auditability; no WellKnown/SecurityTxt pointer is wired because nothing
+  is present.
+documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404

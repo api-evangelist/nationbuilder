@@ -1,0 +1,581 @@
+generated: '2026-07-20'
+method: derived
+source: openapi/nationbuilder-v2-openapi-original.yml
+status: candidate
+note: No official NationBuilder-hosted MCP server was found (2026-07-20). This is a candidate tool list
+  derived one-to-one from the 190 operations of the NationBuilder V2 OpenAPI, provided as a starting point
+  for an MCP wrapper.
+server:
+  name: nationbuilder
+  transport: http
+tools:
+- name: showAsyncProcess
+  description: Show async process with provided token ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showAsyncProcess
+- name: createAutomationEnrollments
+  description: Create an automation enrollment
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createAutomationEnrollments
+- name: listAutomationEnrollments
+  description: List all automation enrollments in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listAutomationEnrollments
+- name: showAutomationEnrollments
+  description: Show automation enrollments with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showAutomationEnrollments
+- name: deleteAutomationEnrollments
+  description: Delete automation enrollments with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deleteAutomationEnrollments
+- name: listAutomations
+  description: List all automations in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listAutomations
+- name: createAutomation
+  description: Create an automation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createAutomation
+- name: showAutomations
+  description: Show automation with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showAutomations
+- name: updateAutomation
+  description: Update an existing automation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updateAutomation
+- name: archiveAutomation
+  description: Archive an existing automation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#archiveAutomation
+- name: createBallot
+  description: Create a ballot
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createBallot
+- name: listBallots
+  description: List all ballots in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listBallots
+- name: showBallot
+  description: Show ballot with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showBallot
+- name: updateBallot
+  description: Update an existing ballot
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updateBallot
+- name: deleteBallot
+  description: Delete ballot with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deleteBallot
+- name: listBroadcasters
+  description: List all broadcasters in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listBroadcasters
+- name: showBroadcaster
+  description: Show broadcaster with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showBroadcaster
+- name: createContacts
+  description: Create a contact
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createContacts
+- name: listContacts
+  description: List all contacts in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listContacts
+- name: showContacts
+  description: Show contact with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showContacts
+- name: updateContacts
+  description: Update an existing contact
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updateContacts
+- name: deleteContacts
+  description: Delete contact with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deleteContacts
+- name: listCustomFields
+  description: List all custom fields in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listCustomFields
+- name: showCustomField
+  description: Show custom field with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showCustomField
+- name: createDonationTrackingCode
+  description: Create a donation tracking code
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createDonationTrackingCode
+- name: listDonationTrackingCodes
+  description: List all donation tracking codes in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listDonationTrackingCodes
+- name: showDonationTrackingCode
+  description: Show donation tracking code with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showDonationTrackingCode
+- name: updateDonationTrackingCode
+  description: Update an existing donation tracking code
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updateDonationTrackingCode
+- name: deleteDonationTrackingCode
+  description: Delete donation tracking code with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deleteDonationTrackingCode
+- name: createDonation
+  description: Create a donation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createDonation
+- name: listDonations
+  description: List all donations in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listDonations
+- name: showDonation
+  description: Show donation with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showDonation
+- name: updateDonation
+  description: Update an existing donation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updateDonation
+- name: deleteDonation
+  description: Delete donation with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deleteDonation
+- name: createElection
+  description: Create a election
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createElection
+- name: listElections
+  description: List all elections in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listElections
+- name: showElection
+  description: Show election with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showElection
+- name: updateElection
+  description: Update an existing election
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updateElection
+- name: deleteElection
+  description: Delete election with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deleteElection
+- name: createEventRsvp
+  description: Create an event rsvp
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createEventRsvp
+- name: listEventRsvps
+  description: List all event rsvps in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listEventRsvps
+- name: showEventRsvp
+  description: Show event rsvp with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showEventRsvp
+- name: updateEventRsvp
+  description: Update an existing event rsvp
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updateEventRsvp
+- name: deleteEventRsvp
+  description: Delete an event rsvp with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deleteEventRsvp
+- name: createEventTicketLevel
+  description: Create an event ticket level
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createEventTicketLevel
+- name: listEventTicketLevels
+  description: List all event ticket levels in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listEventTicketLevels
+- name: showEventTicketLevel
+  description: Show event ticket level with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showEventTicketLevel
+- name: updateEventTicketLevel
+  description: Update an existing event ticket level
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updateEventTicketLevel
+- name: deleteEventTicketLevel
+  description: Delete event ticket level with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deleteEventTicketLevel
+- name: createEvent
+  description: Create an event
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createEvent
+- name: listEvents
+  description: List all events in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listEvents
+- name: showEvent
+  description: Show event with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showEvent
+- name: updateEvent
+  description: Update an existing event
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updateEvent
+- name: deleteEvent
+  description: Delete event with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deleteEvent
+- name: listImports
+  description: List all imports in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listImports
+- name: showImport
+  description: Show import with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showImport
+- name: createList
+  description: Create a list
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createList
+- name: listLists
+  description: List all lists in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listLists
+- name: showList
+  description: Show list with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showList
+- name: updateList
+  description: Update an existing list
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updateList
+- name: deleteList
+  description: Delete list with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deleteList
+- name: addSignups
+  description: Add signups
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#addSignups
+- name: removeSignups
+  description: Remove signups
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#removeSignups
+- name: listSignupListings
+  description: List all signups on the list for provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listSignupListings
+- name: tagSignups
+  description: Add a tag to signups
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#tagSignups
+- name: untagSignups
+  description: Remove a tag from signups
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#untagSignups
+- name: listMailings
+  description: List all mailings in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listMailings
+- name: showMailing
+  description: Show mailing with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showMailing
+- name: createMembershipType
+  description: Create a membership type
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createMembershipType
+- name: listMembershipTypes
+  description: List all membership types in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listMembershipTypes
+- name: showMembershipType
+  description: Show membership type with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showMembershipType
+- name: updateMembershipType
+  description: Update an existing membership type
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updateMembershipType
+- name: deleteMembershipType
+  description: Delete membership type with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deleteMembershipType
+- name: createMembership
+  description: Create a membership
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createMembership
+- name: listMemberships
+  description: List all memberships in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listMemberships
+- name: showMembership
+  description: Show membership with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showMembership
+- name: updateMembership
+  description: Update an existing membership
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updateMembership
+- name: deleteMembership
+  description: Delete membership with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deleteMembership
+- name: createPage
+  description: Create a page
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createPage
+- name: listPages
+  description: List all pages in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listPages
+- name: showPage
+  description: Show page with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showPage
+- name: updatePage
+  description: Update an existing page
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updatePage
+- name: deletePage
+  description: Delete page with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deletePage
+- name: listPathHistories
+  description: List all path histories in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listPathHistories
+- name: showPathHistory
+  description: Show path history with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showPathHistory
+- name: createPathJourneyStatusChange
+  description: Create a path journey status change
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createPathJourneyStatusChange
+- name: listPathJourneyStatusChanges
+  description: List all path journey status changes in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listPathJourneyStatusChanges
+- name: showPathJourneyStatusChange
+  description: Show path journey status change with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showPathJourneyStatusChange
+- name: updatePathJourneyStatusChange
+  description: Update an existing path journey status change
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updatePathJourneyStatusChange
+- name: deletePathJourneyStatusChange
+  description: Delete path journey status change with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deletePathJourneyStatusChange
+- name: createPathJourney
+  description: Create a path journey
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createPathJourney
+- name: listPathJourneys
+  description: List all path journeys in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listPathJourneys
+- name: showPathJourney
+  description: Show path journey with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showPathJourney
+- name: updatePathJourney
+  description: Update an existing path journey
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updatePathJourney
+- name: abandonPathJourney
+  description: Abandon path journey with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#abandonPathJourney
+- name: completePathJourney
+  description: Complete path journey with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#completePathJourney
+- name: reactivatePathJourney
+  description: Reactivate path journey with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#reactivatePathJourney
+- name: voidPathJourney
+  description: Void path journey with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#voidPathJourney
+- name: createPathStep
+  description: Create a path step
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createPathStep
+- name: listPathSteps
+  description: List all path steps in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listPathSteps
+- name: showPathStep
+  description: Show path step with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showPathStep
+- name: updatePathStep
+  description: Update an existing path step
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updatePathStep
+- name: deletePathStep
+  description: Delete path step with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deletePathStep
+- name: createPath
+  description: Create a path
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createPath
+- name: listPaths
+  description: List all paths in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listPaths
+- name: showPath
+  description: Show path with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showPath
+- name: updatePath
+  description: Update an existing path
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updatePath
+- name: deletePath
+  description: Delete path with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deletePath
+- name: createPetitionSignature
+  description: Create a petition signature
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createPetitionSignature
+- name: listPetitionSignatures
+  description: List all petition signatures in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listPetitionSignatures
+- name: showPetitionSignature
+  description: Show petition signature with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showPetitionSignature
+- name: updatePetitionSignature
+  description: Update an existing petition signature
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updatePetitionSignature
+- name: deletePetitionSignature
+  description: Delete petition signature with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deletePetitionSignature
+- name: createPetition
+  description: Create a petition
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createPetition
+- name: listPetitions
+  description: List all petitions in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listPetitions
+- name: showPetition
+  description: Show petition with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showPetition
+- name: updatePetition
+  description: Update an existing petition
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updatePetition
+- name: deletePetition
+  description: Delete petition with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deletePetition
+- name: createPledge
+  description: Create a pledge
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createPledge
+- name: listPledges
+  description: List all pledges in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listPledges
+- name: showPledge
+  description: Show pledge with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showPledge
+- name: updatePledge
+  description: Update an existing pledge
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updatePledge
+- name: deletePledge
+  description: Delete pledge with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deletePledge
+- name: createPrecinct
+  description: Create a precinct
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createPrecinct
+- name: listPrecincts
+  description: List all precincts in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listPrecincts
+- name: showPrecinct
+  description: Show precinct with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showPrecinct
+- name: updatePrecinct
+  description: Update an existing precinct
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updatePrecinct
+- name: deletePrecinct
+  description: Delete precinct with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deletePrecinct
+- name: createRelationship
+  description: Create a relationship
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createRelationship
+- name: listRelationships
+  description: List all relationships in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listRelationships
+- name: showRelationship
+  description: Show relationship with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showRelationship
+- name: updateRelationship
+  description: Update an existing relationship
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updateRelationship
+- name: deleteRelationship
+  description: Delete relationship with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deleteRelationship
+- name: createSignupProfile
+  description: Create a signup profile
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createSignupProfile
+- name: listSignupProfiles
+  description: List all signup profiles in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listSignupProfiles
+- name: showSignupProfile
+  description: Show signup profile with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showSignupProfile
+- name: updateSignupProfile
+  description: Update an existing signup profile
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updateSignupProfile
+- name: deleteSignupProfile
+  description: Delete signup profile with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deleteSignupProfile
+- name: createSignupTagging
+  description: Create a signup tagging
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createSignupTagging
+- name: listSignupTaggings
+  description: List all signup taggings in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listSignupTaggings
+- name: showSignupTagging
+  description: Show signup tagging with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showSignupTagging
+- name: deleteSignupTagging
+  description: Delete signup tagging with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deleteSignupTagging
+- name: createSignupTag
+  description: Create a signup tag
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createSignupTag
+- name: listSignupTags
+  description: List all signup tags in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listSignupTags
+- name: showSignupTag
+  description: Show signup tag with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showSignupTag
+- name: updateSignupTag
+  description: Update an existing signup tag
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updateSignupTag
+- name: deleteSignupTag
+  description: Delete signup tag with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deleteSignupTag
+- name: createSignup
+  description: Create a signup
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createSignup
+- name: listSignups
+  description: List all signups in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listSignups
+- name: meSignup
+  description: Show signup assigned to auth token
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#meSignup
+- name: pushSignup
+  description: Push signup data into nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#pushSignup
+- name: showSignup
+  description: Show signup with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showSignup
+- name: updateSignup
+  description: Update an existing signup
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updateSignup
+- name: deleteSignup
+  description: Delete signup with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deleteSignup
+- name: listSites
+  description: List all sites in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listSites
+- name: createSuggestionBox
+  description: Create a suggestion box
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createSuggestionBox
+- name: listSuggestionBoxes
+  description: List all suggestion boxes in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listSuggestionBoxes
+- name: showSuggestionBox
+  description: Show SuggestionBox with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showSuggestionBox
+- name: updateSuggestionBox
+  description: Update a suggestion box
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updateSuggestionBox
+- name: deleteSuggestionBox
+  description: Delete a suggestion box
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deleteSuggestionBox
+- name: createSuggestion
+  description: Create a suggestion
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createSuggestion
+- name: listSuggestions
+  description: List all suggestions in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listSuggestions
+- name: showSuggestion
+  description: Show suggestion with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showSuggestion
+- name: updateSuggestion
+  description: Update a suggestion
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updateSuggestion
+- name: deleteSuggestion
+  description: Delete a suggestion
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deleteSuggestion
+- name: createSurveyQuestionPossibleResponse
+  description: Create a survey question possible response
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createSurveyQuestionPossibleResponse
+- name: listSurveyQuestionPossibleResponses
+  description: List all survey question possible responses in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listSurveyQuestionPossibleResponses
+- name: showSurveyQuestionPossibleResponse
+  description: Show survey question possible response with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showSurveyQuestionPossibleResponse
+- name: updateSurveyQuestionPossibleResponse
+  description: Update an existing survey question possible response
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updateSurveyQuestionPossibleResponse
+- name: deleteSurveyQuestionPossibleResponse
+  description: Delete survey question possible response with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deleteSurveyQuestionPossibleResponse
+- name: createSurveyQuestionResponse
+  description: Create a survey question response
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createSurveyQuestionResponse
+- name: listSurveyQuestionResponses
+  description: List all survey question responses in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listSurveyQuestionResponses
+- name: showSurveyQuestionResponse
+  description: Show survey question response with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showSurveyQuestionResponse
+- name: updateSurveyQuestionResponse
+  description: Update an existing survey question response
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updateSurveyQuestionResponse
+- name: deleteSurveyQuestionResponse
+  description: Delete survey question response with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deleteSurveyQuestionResponse
+- name: createSurveyQuestion
+  description: Create a survey question
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createSurveyQuestion
+- name: listSurveyQuestions
+  description: List all survey questions in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listSurveyQuestions
+- name: showSurveyQuestion
+  description: Show survey question with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showSurveyQuestion
+- name: updateSurveyQuestion
+  description: Update an existing survey question
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updateSurveyQuestion
+- name: deleteSurveyQuestion
+  description: Delete survey question with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deleteSurveyQuestion
+- name: createSurvey
+  description: Create a survey
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createSurvey
+- name: listSurveys
+  description: List all surveys in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listSurveys
+- name: showSurvey
+  description: Show survey with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showSurvey
+- name: updateSurvey
+  description: Update an existing survey
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updateSurvey
+- name: deleteSurvey
+  description: Delete survey with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deleteSurvey
+- name: createVoter
+  description: Create a voter
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#createVoter
+- name: listVoters
+  description: List all voters in a nation
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#listVoters
+- name: showVoter
+  description: Show voter with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#showVoter
+- name: updateVoter
+  description: Update an existing voter
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#updateVoter
+- name: deleteVoter
+  description: Delete voter with provided ID
+  source_operation: openapi/nationbuilder-v2-openapi-original.yml#deleteVoter

@@ -1,0 +1,54 @@
+generated: '2026-07-20'
+method: searched
+source: https://support.nationbuilder.com/en/articles/9757369-nationbuilder-v2-api-core-concepts
+docs: https://support.nationbuilder.com/en/articles/9757369-nationbuilder-v2-api-core-concepts
+api: v2
+spec_standard: json:api
+authentication:
+  style: oauth2-bearer
+  ref: authentication/nationbuilder-authentication.yml
+content_type:
+  request: application/vnd.api+json
+  response: application/vnd.api+json
+  format: JSON:API (data / relationships / included / meta / links members)
+pagination:
+  style: page-based
+  params: ['page[size]', 'page[number]']
+  default_page_size: 20
+  response_fields: [links.self, links.prev, links.next]
+  note: Index endpoints return 20 results per response by default.
+filtering:
+  supported: true
+  style: json:api filter[...] with sorting and sparse fieldsets (fields[type])
+relationships:
+  include: true
+  include_param: include
+  sideloading: >-
+    Connected resources retrieved together via the `include` parameter.
+    Sideloading a to-many relationship may return larger-than-expected payloads.
+  sideposting:
+    supported: true
+    methods: [create, update, destroy, disassociate]
+    note: Create/update related resources in a single request.
+  ref: data-model/nationbuilder-data-model.yml
+error_envelope:
+  standard: json:api
+  validation:
+    status: 422
+    shape: '`errors` array with detailed member/detail entries'
+  non_validation:
+    shape: object with `code` and `message`
+  status_range: 400-503
+  ref: errors/nationbuilder-problem-types.yml
+idempotency:
+  supported: false
+  note: No idempotency-key header is documented for the NationBuilder API.
+rate_limiting:
+  documented: true
+  docs: https://support.nationbuilder.com/en/articles/9868960-api-rate-limit-policy
+  exceeded_status: 429
+versioning:
+  ref: lifecycle/nationbuilder-lifecycle.yml
+  scheme: uri-path
+  current: v2
+  legacy: v1

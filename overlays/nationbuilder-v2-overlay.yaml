@@ -1,0 +1,16 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for NationBuilder V2 API
+  version: 1.0.0
+extends: openapi/nationbuilder-v2-openapi-original.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-07-20'
+    x-api-standard: json:api
+    x-authentication: OAuth 2.0 authorization-code (v2); per-nation token (v1 legacy)
+    x-rate-limit: 250 requests / 10s per IP and per token (~1500/min)
+    x-multi-tenant: per-nation host {nation-slug}.nationbuilder.com
+- target: $.servers[0].variables.subdomain
+  update:
+    x-note: Set to your NationBuilder nation slug; every request is nation-scoped.

@@ -1,0 +1,27 @@
+generated: '2026-07-20'
+method: searched
+source: https://support.nationbuilder.com/en/articles/9757369-nationbuilder-v2-api-core-concepts
+standards:
+  - id: json-api
+    conforms: true
+    evidence: >-
+      v2 API documents JSON:API request/response format (data / relationships /
+      included / meta / links, sparse fieldsets, include-based sideloading,
+      filter/sort params).
+  - id: oauth2
+    conforms: true
+    evidence: v2 auth is OAuth 2.0 authorization-code with refresh tokens.
+  - id: oauth2-pkce
+    conforms: true
+    evidence: PKCE documented as optional enhancement on the authorization-code flow.
+  - id: oidc
+    conforms: false
+    evidence: No OpenID Connect discovery or id_token documented.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      Errors use the JSON:API `errors` envelope (422 validation) and a
+      code/message object, not application/problem+json.
+  - id: rest
+    conforms: true
+    evidence: Resource-oriented CRUD over HTTP with JSON:API media type.

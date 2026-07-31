@@ -1,0 +1,51 @@
+generated: '2026-07-20'
+method: searched
+source: npm registry search + RubyGems search (2026-07-20)
+note: >-
+  NationBuilder does not publish a first-party SDK. The libraries below are
+  community/third-party clients for the NationBuilder API and are marked
+  official:false. No `SDKs` pointer is wired because no official client library
+  was found.
+packages:
+  - language: ruby
+    registry: rubygems
+    name: nationbuilder-rb
+    url: https://rubygems.org/gems/nationbuilder-rb
+    install: gem install nationbuilder-rb
+    official: false
+    description: A Ruby client to the NationBuilder API.
+  - language: ruby
+    registry: rubygems
+    name: nationbuilder
+    url: https://rubygems.org/gems/nationbuilder
+    install: gem install nationbuilder
+    official: false
+    description: NationBuilder API client.
+  - language: ruby
+    registry: rubygems
+    name: omniauth-nationbuilder
+    url: https://rubygems.org/gems/omniauth-nationbuilder
+    install: gem install omniauth-nationbuilder
+    official: false
+    description: OmniAuth strategy for NationBuilder using OAuth2.
+  - language: ruby
+    registry: rubygems
+    name: nb_api_client
+    url: https://rubygems.org/gems/nb_api_client
+    install: gem install nb_api_client
+    official: false
+    description: Wraps NationBuilder API requests with OAuth token refresh.
+  - language: javascript
+    registry: npm
+    name: nationbuilder
+    url: https://www.npmjs.com/package/nationbuilder
+    install: npm install nationbuilder
+    official: false
+    description: Community NationBuilder API client for Node.js.
+  - language: javascript
+    registry: npm
+    name: passport-nationbuilder
+    url: https://www.npmjs.com/package/passport-nationbuilder
+    install: npm install passport-nationbuilder
+    official: false
+    description: Passport strategy for authenticating with NationBuilder via OAuth2.

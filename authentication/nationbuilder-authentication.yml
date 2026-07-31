@@ -1,0 +1,39 @@
+generated: '2026-07-20'
+method: searched
+source: https://support.nationbuilder.com/en/articles/9903805-api-authentication-guide
+docs: https://support.nationbuilder.com/en/articles/9903805-api-authentication-guide
+summary:
+  types: [oauth2, apiKey]
+  api_key_in: [query]
+  oauth2_flows: [authorizationCode]
+  notes: >-
+    NationBuilder is multi-tenant: every nation is reached at its own
+    {nation-slug}.nationbuilder.com host. The current v2 API authenticates with
+    OAuth 2.0 authorization-code (PKCE optional). The legacy v1 API accepts a
+    per-nation API token.
+schemes:
+  - name: OAuth2AuthorizationCode
+    type: oauth2
+    applies_to: v2
+    flow: authorizationCode
+    pkce: optional
+    authorizationUrl: https://{nation-slug}.nationbuilder.com/oauth/authorize
+    tokenUrl: https://{nation-slug}.nationbuilder.com/oauth/token
+    token_type: bearer
+    access_token_ttl_hours: 24
+    refresh: true
+    refresh_grant: refresh_token
+    authorization_code_ttl_minutes: 10
+    registration: Settings > Developer (register an application to obtain client_id / client_secret)
+    docs: https://support.nationbuilder.com/en/articles/9903805-api-authentication-guide
+  - name: LegacyApiToken
+    type: apiKey
+    applies_to: v1
+    in: query
+    parameter: access_token
+    also_accepts: [__token]
+    note: >-
+      Legacy v1 API token minted per nation. Test tokens available at
+      https://nationbuilder.com/test_tokens. Migration to v2 OAuth is documented
+      in the Access Token Migration Guide.
+    docs: https://support.nationbuilder.com/en/articles/9559128-generating-api-tokens
