@@ -1,0 +1,805 @@
+{
+  "item": [
+    {
+      "id": "10f100b8-06dd-4776-88a8-d78cad09905d",
+      "name": "Broadcasters",
+      "description": {
+        "content": "Broadcasters are the voices who speak publicly on behalf of your nation. All external communications are organized around broadcasters.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8f66b996-1186-45a1-b8d5-36b9008bec7a",
+          "name": "List all broadcasters in a nation",
+          "request": {
+            "name": "List all broadcasters in a nation",
+            "description": {
+              "content": "Lists all broadcasters",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "broadcasters"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page[number]",
+                  "value": "1",
+                  "description": "Page number to list (starting at 1)"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[size]",
+                  "value": "20",
+                  "description": "Number of results to display per page (default: 20, max: 100, min: 1)"
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "",
+                  "description": "Comma-delimited list of sideloaded resources to include as part of the broadcaster index response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "fields[broadcasters]",
+                  "value": "",
+                  "description": "Comma-delimited list of broadcaster attributes to only return in the response"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your NationBuilder nation slug",
+                  "type": "any",
+                  "value": "{{subdomain}}",
+                  "key": "subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a1da14da-9777-4dc9-b63a-07025ae74d9d",
+              "name": "A page of matching broadcasters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "broadcasters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[number]",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "20"
+                    },
+                    {
+                      "key": "include",
+                      "value": ""
+                    },
+                    {
+                      "key": "fields[broadcasters]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your NationBuilder nation slug",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).",
+                  "key": "RateLimit-Limit",
+                  "value": "250"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests remaining for the current access token in the current rate-limit window.",
+                  "key": "RateLimit-Remaining",
+                  "value": "249"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (in seconds) at which the current rate-limit window resets.",
+                  "key": "RateLimit-Reset",
+                  "value": "1719964810"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"value\": \"<Error: Could not resolve allOf schema\"\n    },\n    {\n      \"value\": \"<Error: Could not resolve allOf schema\"\n    }\n  ],\n  \"links\": {\n    \"self\": \"/articles?page[number]=2\",\n    \"first\": \"/articles?page[number]=1\",\n    \"last\": \"/articles?page[number]=5\",\n    \"prev\": \"/articles?page[number]=1\",\n    \"next\": \"/articles?page[number]=3\"\n  },\n  \"included\": [\n    {\n      \"type\": \"string\",\n      \"id\": \"1\",\n      \"attributes\": {},\n      \"relationships\": {}\n    },\n    {\n      \"type\": \"string\",\n      \"id\": \"1\",\n      \"attributes\": {},\n      \"relationships\": {}\n    }\n  ],\n  \"meta\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e73994fd-3580-49f1-bca0-91ff37c39345",
+              "name": "The access token is missing, expired, or not authorized to access this resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "broadcasters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[number]",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "20"
+                    },
+                    {
+                      "key": "include",
+                      "value": ""
+                    },
+                    {
+                      "key": "fields[broadcasters]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your NationBuilder nation slug",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).",
+                  "key": "RateLimit-Limit",
+                  "value": "250"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests remaining for the current access token in the current rate-limit window.",
+                  "key": "RateLimit-Remaining",
+                  "value": "249"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (in seconds) at which the current rate-limit window resets.",
+                  "key": "RateLimit-Reset",
+                  "value": "1719964810"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"You are not authorized to access this content. Your access token may be missing. The resource owner also may not have a permission level sufficient to grant access.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a580688d-a324-40a6-8708-4c64c5f1e253",
+              "name": "The access token has exceeded its request quota for the current rate-limit window.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "broadcasters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[number]",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "20"
+                    },
+                    {
+                      "key": "include",
+                      "value": ""
+                    },
+                    {
+                      "key": "fields[broadcasters]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your NationBuilder nation slug",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).",
+                  "key": "RateLimit-Limit",
+                  "value": "250"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests remaining for the current access token in the current rate-limit window.",
+                  "key": "RateLimit-Remaining",
+                  "value": "249"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (in seconds) at which the current rate-limit window resets.",
+                  "key": "RateLimit-Reset",
+                  "value": "1719964810"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of seconds to wait before retrying. Sent with 429 responses.",
+                  "key": "Retry-After",
+                  "value": "10"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You have made too many requests. Please try again later.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d76826bd-cbcf-409f-8b6a-b27f896473d3",
+          "name": "Show broadcaster with provided ID",
+          "request": {
+            "name": "Show broadcaster with provided ID",
+            "description": {
+              "content": "Returns the broadcaster that matches the given ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "broadcasters",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "",
+                  "description": "Comma-delimited list of sideloaded resources to include as part of the broadcaster response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "fields[broadcasters]",
+                  "value": "",
+                  "description": "Comma-delimited list of broadcaster attributes to only return in the response"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) id"
+                },
+                {
+                  "description": "Your NationBuilder nation slug",
+                  "type": "any",
+                  "value": "{{subdomain}}",
+                  "key": "subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bde70edd-6d1b-4a5b-b58f-119ad42d245c",
+              "name": "The requested broadcaster.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "broadcasters",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": ""
+                    },
+                    {
+                      "key": "fields[broadcasters]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) id"
+                    },
+                    {
+                      "description": "Your NationBuilder nation slug",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).",
+                  "key": "RateLimit-Limit",
+                  "value": "250"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests remaining for the current access token in the current rate-limit window.",
+                  "key": "RateLimit-Remaining",
+                  "value": "249"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (in seconds) at which the current rate-limit window resets.",
+                  "key": "RateLimit-Reset",
+                  "value": "1719964810"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"included\": [\n    {\n      \"type\": \"string\",\n      \"id\": \"1\",\n      \"attributes\": {},\n      \"relationships\": {}\n    },\n    {\n      \"type\": \"string\",\n      \"id\": \"1\",\n      \"attributes\": {},\n      \"relationships\": {}\n    }\n  ],\n  \"meta\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f0fe65f7-82fc-4d2e-9bff-51d883e4917d",
+              "name": "The access token is missing, expired, or not authorized to access this resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "broadcasters",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": ""
+                    },
+                    {
+                      "key": "fields[broadcasters]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) id"
+                    },
+                    {
+                      "description": "Your NationBuilder nation slug",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).",
+                  "key": "RateLimit-Limit",
+                  "value": "250"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests remaining for the current access token in the current rate-limit window.",
+                  "key": "RateLimit-Remaining",
+                  "value": "249"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (in seconds) at which the current rate-limit window resets.",
+                  "key": "RateLimit-Reset",
+                  "value": "1719964810"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"You are not authorized to access this content. Your access token may be missing. The resource owner also may not have a permission level sufficient to grant access.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d535f0d5-cc32-4c0c-affd-f545c6577317",
+              "name": "No resource exists with the provided ID.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "broadcasters",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": ""
+                    },
+                    {
+                      "key": "fields[broadcasters]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) id"
+                    },
+                    {
+                      "description": "Your NationBuilder nation slug",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).",
+                  "key": "RateLimit-Limit",
+                  "value": "250"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests remaining for the current access token in the current rate-limit window.",
+                  "key": "RateLimit-Remaining",
+                  "value": "249"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (in seconds) at which the current rate-limit window resets.",
+                  "key": "RateLimit-Reset",
+                  "value": "1719964810"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"not_found\",\n  \"message\": \"Record not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dc8c82b9-37d5-4d2a-8441-f77cadf3dc31",
+              "name": "The access token has exceeded its request quota for the current rate-limit window.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "broadcasters",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": ""
+                    },
+                    {
+                      "key": "fields[broadcasters]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) id"
+                    },
+                    {
+                      "description": "Your NationBuilder nation slug",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).",
+                  "key": "RateLimit-Limit",
+                  "value": "250"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests remaining for the current access token in the current rate-limit window.",
+                  "key": "RateLimit-Remaining",
+                  "value": "249"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (in seconds) at which the current rate-limit window resets.",
+                  "key": "RateLimit-Reset",
+                  "value": "1719964810"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of seconds to wait before retrying. Sent with 429 responses.",
+                  "key": "Retry-After",
+                  "value": "10"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You have made too many requests. Please try again later.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your NationBuilder nation slug",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "yournation",
+      "key": "subdomain"
+    },
+    {
+      "type": "string",
+      "value": "https://{{subdomain}}.nationbuilder.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "95912825-5ef8-49c5-a3dc-ba2769a3890e",
+    "name": "NationBuilder V2 Async Processes Broadcasters API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The NationBuilder V2 API is a JSON:API-compliant API for managing NationBuilder\nresources such as people, donations, events, and lists. It layers a few\nconventions on top of the JSON:API standard, described below. For a broader\nintroduction, see the\n[NationBuilder v2 API core concepts](https://support.nationbuilder.com/en/articles/9757369-nationbuilder-v2-api-core-concepts)\nguide.\n\n### Request and response format\n\nRequests and responses follow the [JSON:API](https://jsonapi.org/) document\nstructure: single resources are returned under a top-level `data` member, and\ncollections are paginated arrays of resource objects with `links` for the\ncurrent, previous, and next pages. Related resources can be sideloaded into a\ntop-level `included` array with the `include` query parameter, and responses\ncan be trimmed to specific attributes with `fields[resource_type]` sparse\nfieldsets (plus opt-in `extra_fields[resource_type]` attributes where noted).\nResponses are served as `application/vnd.api+json`; request bodies may be\nsent as `application/vnd.api+json` or `application/json`.\n\nFiltering uses an operator syntax: `filter[attribute]=value` for\nequality (comma-separated values act as OR), and\n`filter[attribute][operator]=value` for other comparisons. String attributes\nsupport `eq`, `not_eq`, `eql`, `not_eql`, `prefix`, `not_prefix`, `suffix`,\n`not_suffix`, `match`, and `not_match`; numeric and date attributes support\n`eq`, `not_eq`, `gt`, `gte`, `lt`, and `lte`. Note that JSON:API relationship\nroutes (`/resource/{id}/relationships/other`) are not provided; related\nresources are reachable through the filtered index URLs given in each\nresource's `relationships` links.\n\n### Errors\n\nError responses use a flat JSON body with a machine-readable `code` and a\nhuman-readable `message`. Some errors carry additional detail members (for\nexample `validation_errors`). The exception is 422 validation failures,\nwhich return a JSON:API `errors` array locating each invalid field via\n`source.pointer`.\n\n### Rate limiting\n\nRequests are limited per access token (250 requests per 10-second window).\nEvery response includes `RateLimit-Limit`, `RateLimit-Remaining`, and\n`RateLimit-Reset` headers; exceeding the limit returns a 429 with a\n`Retry-After` header.\n",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,187 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NationBuilder V2 Async Processes Event Ticket Levels API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Event Ticket Levels",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all event ticket levels in a nation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/event_ticket_levels",
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the event ticket level index response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[event_ticket_levels]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of event ticket level attributes to only return in the response"
+              },
+              {
+                "name": "page[number]",
+                "value": "",
+                "type": "query",
+                "description": "Page number to list (starting at 1)"
+              },
+              {
+                "name": "page[size]",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to display per page (default: 20, max: 100, min: 1)"
+              }
+            ]
+          },
+          "docs": "Lists all event ticket levels in the nation. To request ticket levels for a specific event, filter on event_id using query filtering, `filter[event_id]=123`. Both the Event and Event RSVPs associated with a ticket level can be sideloaded."
+        },
+        {
+          "info": {
+            "name": "Create an event ticket level",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/event_ticket_levels",
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the event ticket level index response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[event_ticket_levels]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of event ticket level attributes to only return in the response"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an event ticket level. Ticket levels must be associated with an event, have a name, a number indicating how many tickets are included in a single purchase, a limit indicating the max number of tickets that can be sold, and an amount in cents indicating the cost of purchasing tickets at this ticket level."
+        },
+        {
+          "info": {
+            "name": "Show event ticket level with provided ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/event_ticket_levels/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the event ticket level response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[event_ticket_levels]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of event ticket level attributes to only return in the response"
+              }
+            ]
+          },
+          "docs": "Returns the event ticket level that matches the given ID."
+        },
+        {
+          "info": {
+            "name": "Update an existing event ticket level",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/event_ticket_levels/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the event ticket level response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[event_ticket_levels]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of event ticket level attributes to only return in the response"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing event ticket level with values provided in the payload."
+        },
+        {
+          "info": {
+            "name": "Delete event ticket level with provided ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/event_ticket_levels/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the event ticket level response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[event_ticket_levels]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of event ticket level attributes to only return in the response"
+              }
+            ]
+          },
+          "docs": "Permanently removes the event ticket level that matches the given ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

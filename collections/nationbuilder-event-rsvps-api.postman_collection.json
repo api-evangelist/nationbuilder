@@ -1,0 +1,2301 @@
+{
+  "item": [
+    {
+      "id": "af19c421-2486-419f-a243-2856f1923218",
+      "name": "Event Rsvps",
+      "description": {
+        "content": "This resource is for creating, reading, updating, and deleting Event RSVPs. When creating event RSVPs, the rsvp must be given signup data, either by passing a first name, last name, and email or phone number, or by sideposting a signup.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "17dc840f-b1e1-42e9-87ba-0d5ad8dc4f83",
+          "name": "Create an event rsvp",
+          "request": {
+            "name": "Create an event rsvp",
+            "description": {
+              "content": "Creates an event RSVP. Event RSVPs must contain enough signup data to find an existing signup in the nation, or create a new one. This means callers must provide a first name, last name, and email as part of the Event RSVP payload, which will be matched to an existing signup or will create a new signup with that data. Alternatively, callers may sidepost a signup resource as part of the payload. See sideposting documentation for details.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "event_rsvps"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "",
+                  "description": "Comma-delimited list of sideloaded resources to include as part of the event rsvp index response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "fields[event_rsvps]",
+                  "value": "",
+                  "description": "Comma-delimited list of event rsvp attributes to only return in the response"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your NationBuilder nation slug",
+                  "type": "any",
+                  "value": "{{subdomain}}",
+                  "key": "subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"value\": \"<Error: Could not resolve allOf schema\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b68f7228-1afa-4ede-b371-8bf19aa034ef",
+              "name": "The newly created event rsvp.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "event_rsvps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": ""
+                    },
+                    {
+                      "key": "fields[event_rsvps]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your NationBuilder nation slug",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).",
+                  "key": "RateLimit-Limit",
+                  "value": "250"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests remaining for the current access token in the current rate-limit window.",
+                  "key": "RateLimit-Remaining",
+                  "value": "249"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (in seconds) at which the current rate-limit window resets.",
+                  "key": "RateLimit-Reset",
+                  "value": "1719964810"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"included\": [\n    {\n      \"type\": \"string\",\n      \"id\": \"1\",\n      \"attributes\": {},\n      \"relationships\": {}\n    },\n    {\n      \"type\": \"string\",\n      \"id\": \"1\",\n      \"attributes\": {},\n      \"relationships\": {}\n    }\n  ],\n  \"meta\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "76d4a793-bd0c-4ee6-96f0-db7cbc221088",
+              "name": "The request body or query parameters are invalid, such as an unknown attribute, filter, filter operator, sort field, or sideload.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "event_rsvps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": ""
+                    },
+                    {
+                      "key": "fields[event_rsvps]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your NationBuilder nation slug",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).",
+                  "key": "RateLimit-Limit",
+                  "value": "250"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests remaining for the current access token in the current rate-limit window.",
+                  "key": "RateLimit-Remaining",
+                  "value": "249"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (in seconds) at which the current rate-limit window resets.",
+                  "key": "RateLimit-Reset",
+                  "value": "1719964810"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"bad_request\",\n  \"message\": \"Tried to filter on attribute :bogus, but could not find an attribute with that name.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b1fec31a-68a5-45ec-ada3-f4b8cbea48ba",
+              "name": "The access token is missing, expired, or not authorized to access this resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "event_rsvps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": ""
+                    },
+                    {
+                      "key": "fields[event_rsvps]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your NationBuilder nation slug",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).",
+                  "key": "RateLimit-Limit",
+                  "value": "250"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests remaining for the current access token in the current rate-limit window.",
+                  "key": "RateLimit-Remaining",
+                  "value": "249"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (in seconds) at which the current rate-limit window resets.",
+                  "key": "RateLimit-Reset",
+                  "value": "1719964810"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"You are not authorized to access this content. Your access token may be missing. The resource owner also may not have a permission level sufficient to grant access.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "adc3cc33-a3c9-4d34-a37a-2c422fb950bb",
+              "name": "Model validations failed for the resource being created or updated. Unlike this API's other errors, validation failures are returned as a JSON:API errors document locating each invalid field.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "event_rsvps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": ""
+                    },
+                    {
+                      "key": "fields[event_rsvps]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your NationBuilder nation slug",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).",
+                  "key": "RateLimit-Limit",
+                  "value": "250"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests remaining for the current access token in the current rate-limit window.",
+                  "key": "RateLimit-Remaining",
+                  "value": "249"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (in seconds) at which the current rate-limit window resets.",
+                  "key": "RateLimit-Reset",
+                  "value": "1719964810"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"unprocessable_entity\",\n      \"status\": \"422\",\n      \"title\": \"Validation Error\",\n      \"detail\": \"Email 'not-an-email' should look like an email address\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/email\"\n      },\n      \"meta\": {\n        \"attribute\": \"email\",\n        \"message\": \"'not-an-email' should look like an email address\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c7df7998-0c61-48d4-99a9-d775d8113abc",
+              "name": "The access token has exceeded its request quota for the current rate-limit window.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "event_rsvps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": ""
+                    },
+                    {
+                      "key": "fields[event_rsvps]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your NationBuilder nation slug",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).",
+                  "key": "RateLimit-Limit",
+                  "value": "250"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests remaining for the current access token in the current rate-limit window.",
+                  "key": "RateLimit-Remaining",
+                  "value": "249"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (in seconds) at which the current rate-limit window resets.",
+                  "key": "RateLimit-Reset",
+                  "value": "1719964810"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of seconds to wait before retrying. Sent with 429 responses.",
+                  "key": "Retry-After",
+                  "value": "10"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You have made too many requests. Please try again later.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "63c3e329-794c-4039-9e94-7f44f8f1f6b6",
+          "name": "List all event rsvps in a nation",
+          "request": {
+            "name": "List all event rsvps in a nation",
+            "description": {
+              "content": "Lists all event RSVPs in a nation",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "event_rsvps"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page[number]",
+                  "value": "1",
+                  "description": "Page number to list (starting at 1)"
+                },
+                {
+                  "disabled": false,
+                  "key": "page[size]",
+                  "value": "20",
+                  "description": "Number of results to display per page (default: 20, max: 100, min: 1)"
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "",
+                  "description": "Comma-delimited list of sideloaded resources to include as part of the event rsvp index response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "fields[event_rsvps]",
+                  "value": "",
+                  "description": "Comma-delimited list of event rsvp attributes to only return in the response"
+                }
+              ],
+              "variable": [
+                {
+                  "description": "Your NationBuilder nation slug",
+                  "type": "any",
+                  "value": "{{subdomain}}",
+                  "key": "subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dbda3d93-dc7e-48a6-8b53-81872e851f2f",
+              "name": "A page of matching event rsvps.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "event_rsvps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[number]",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "20"
+                    },
+                    {
+                      "key": "include",
+                      "value": ""
+                    },
+                    {
+                      "key": "fields[event_rsvps]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your NationBuilder nation slug",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).",
+                  "key": "RateLimit-Limit",
+                  "value": "250"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests remaining for the current access token in the current rate-limit window.",
+                  "key": "RateLimit-Remaining",
+                  "value": "249"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (in seconds) at which the current rate-limit window resets.",
+                  "key": "RateLimit-Reset",
+                  "value": "1719964810"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"value\": \"<Error: Could not resolve allOf schema\"\n    },\n    {\n      \"value\": \"<Error: Could not resolve allOf schema\"\n    }\n  ],\n  \"links\": {\n    \"self\": \"/articles?page[number]=2\",\n    \"first\": \"/articles?page[number]=1\",\n    \"last\": \"/articles?page[number]=5\",\n    \"prev\": \"/articles?page[number]=1\",\n    \"next\": \"/articles?page[number]=3\"\n  },\n  \"included\": [\n    {\n      \"type\": \"string\",\n      \"id\": \"1\",\n      \"attributes\": {},\n      \"relationships\": {}\n    },\n    {\n      \"type\": \"string\",\n      \"id\": \"1\",\n      \"attributes\": {},\n      \"relationships\": {}\n    }\n  ],\n  \"meta\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2e36e80b-ed84-4f04-a4ab-505871f59c6f",
+              "name": "The access token is missing, expired, or not authorized to access this resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "event_rsvps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[number]",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "20"
+                    },
+                    {
+                      "key": "include",
+                      "value": ""
+                    },
+                    {
+                      "key": "fields[event_rsvps]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your NationBuilder nation slug",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).",
+                  "key": "RateLimit-Limit",
+                  "value": "250"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests remaining for the current access token in the current rate-limit window.",
+                  "key": "RateLimit-Remaining",
+                  "value": "249"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (in seconds) at which the current rate-limit window resets.",
+                  "key": "RateLimit-Reset",
+                  "value": "1719964810"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"You are not authorized to access this content. Your access token may be missing. The resource owner also may not have a permission level sufficient to grant access.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "65e858e1-2415-4356-b5af-fdef252f4e8f",
+              "name": "The access token has exceeded its request quota for the current rate-limit window.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "event_rsvps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page[number]",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "20"
+                    },
+                    {
+                      "key": "include",
+                      "value": ""
+                    },
+                    {
+                      "key": "fields[event_rsvps]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "description": "Your NationBuilder nation slug",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).",
+                  "key": "RateLimit-Limit",
+                  "value": "250"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests remaining for the current access token in the current rate-limit window.",
+                  "key": "RateLimit-Remaining",
+                  "value": "249"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (in seconds) at which the current rate-limit window resets.",
+                  "key": "RateLimit-Reset",
+                  "value": "1719964810"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of seconds to wait before retrying. Sent with 429 responses.",
+                  "key": "Retry-After",
+                  "value": "10"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You have made too many requests. Please try again later.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e8c939c5-14a0-46ce-9647-104fbfbea4ad",
+          "name": "Show event rsvp with provided ID",
+          "request": {
+            "name": "Show event rsvp with provided ID",
+            "description": {
+              "content": "Show the event RSVP matching the provided ID",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "event_rsvps",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "",
+                  "description": "Comma-delimited list of sideloaded resources to include as part of the event rsvp response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "fields[event_rsvps]",
+                  "value": "",
+                  "description": "Comma-delimited list of event rsvp attributes to only return in the response"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) id"
+                },
+                {
+                  "description": "Your NationBuilder nation slug",
+                  "type": "any",
+                  "value": "{{subdomain}}",
+                  "key": "subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0513eb29-4d86-4bf5-adcc-19f4786788ce",
+              "name": "The requested event rsvp.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "event_rsvps",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": ""
+                    },
+                    {
+                      "key": "fields[event_rsvps]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) id"
+                    },
+                    {
+                      "description": "Your NationBuilder nation slug",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).",
+                  "key": "RateLimit-Limit",
+                  "value": "250"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests remaining for the current access token in the current rate-limit window.",
+                  "key": "RateLimit-Remaining",
+                  "value": "249"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (in seconds) at which the current rate-limit window resets.",
+                  "key": "RateLimit-Reset",
+                  "value": "1719964810"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"included\": [\n    {\n      \"type\": \"string\",\n      \"id\": \"1\",\n      \"attributes\": {},\n      \"relationships\": {}\n    },\n    {\n      \"type\": \"string\",\n      \"id\": \"1\",\n      \"attributes\": {},\n      \"relationships\": {}\n    }\n  ],\n  \"meta\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a60b4640-2fc0-43b7-99aa-11171264f57e",
+              "name": "The access token is missing, expired, or not authorized to access this resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "event_rsvps",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": ""
+                    },
+                    {
+                      "key": "fields[event_rsvps]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) id"
+                    },
+                    {
+                      "description": "Your NationBuilder nation slug",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).",
+                  "key": "RateLimit-Limit",
+                  "value": "250"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests remaining for the current access token in the current rate-limit window.",
+                  "key": "RateLimit-Remaining",
+                  "value": "249"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (in seconds) at which the current rate-limit window resets.",
+                  "key": "RateLimit-Reset",
+                  "value": "1719964810"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"You are not authorized to access this content. Your access token may be missing. The resource owner also may not have a permission level sufficient to grant access.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0efce6ec-c967-41a3-91e2-a4efe9901225",
+              "name": "No resource exists with the provided ID.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "event_rsvps",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": ""
+                    },
+                    {
+                      "key": "fields[event_rsvps]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) id"
+                    },
+                    {
+                      "description": "Your NationBuilder nation slug",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).",
+                  "key": "RateLimit-Limit",
+                  "value": "250"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests remaining for the current access token in the current rate-limit window.",
+                  "key": "RateLimit-Remaining",
+                  "value": "249"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (in seconds) at which the current rate-limit window resets.",
+                  "key": "RateLimit-Reset",
+                  "value": "1719964810"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"not_found\",\n  \"message\": \"Record not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "799c35db-b5b9-4827-9df4-6239ea7bab7e",
+              "name": "The access token has exceeded its request quota for the current rate-limit window.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "event_rsvps",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": ""
+                    },
+                    {
+                      "key": "fields[event_rsvps]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) id"
+                    },
+                    {
+                      "description": "Your NationBuilder nation slug",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).",
+                  "key": "RateLimit-Limit",
+                  "value": "250"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests remaining for the current access token in the current rate-limit window.",
+                  "key": "RateLimit-Remaining",
+                  "value": "249"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (in seconds) at which the current rate-limit window resets.",
+                  "key": "RateLimit-Reset",
+                  "value": "1719964810"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of seconds to wait before retrying. Sent with 429 responses.",
+                  "key": "Retry-After",
+                  "value": "10"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You have made too many requests. Please try again later.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7ecd4992-bf18-48cd-a9b3-e9ed97546db0",
+          "name": "Update an existing event rsvp",
+          "request": {
+            "name": "Update an existing event rsvp",
+            "description": {
+              "content": "Updates an existing event RSVP. Note that first name, last name, and email are NOT propagated to the event RSVP's signup. You must update the signup via a sidepost payload, or update the signup directly via the signup resource.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "event_rsvps",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "",
+                  "description": "Comma-delimited list of sideloaded resources to include as part of the event rsvp response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "fields[event_rsvps]",
+                  "value": "",
+                  "description": "Comma-delimited list of event rsvp attributes to only return in the response"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) id"
+                },
+                {
+                  "description": "Your NationBuilder nation slug",
+                  "type": "any",
+                  "value": "{{subdomain}}",
+                  "key": "subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"value\": \"<Error: Could not resolve allOf schema\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9e028ae2-b122-4fda-a691-fb5765042c7b",
+              "name": "The updated event rsvp.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "event_rsvps",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": ""
+                    },
+                    {
+                      "key": "fields[event_rsvps]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) id"
+                    },
+                    {
+                      "description": "Your NationBuilder nation slug",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).",
+                  "key": "RateLimit-Limit",
+                  "value": "250"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests remaining for the current access token in the current rate-limit window.",
+                  "key": "RateLimit-Remaining",
+                  "value": "249"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (in seconds) at which the current rate-limit window resets.",
+                  "key": "RateLimit-Reset",
+                  "value": "1719964810"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"data\": {},\n  \"included\": [\n    {\n      \"type\": \"string\",\n      \"id\": \"1\",\n      \"attributes\": {},\n      \"relationships\": {}\n    },\n    {\n      \"type\": \"string\",\n      \"id\": \"1\",\n      \"attributes\": {},\n      \"relationships\": {}\n    }\n  ],\n  \"meta\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ebddb432-9892-4c5d-8f36-f4532da1b0a7",
+              "name": "The request body or query parameters are invalid, such as an unknown attribute, filter, filter operator, sort field, or sideload.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "event_rsvps",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": ""
+                    },
+                    {
+                      "key": "fields[event_rsvps]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) id"
+                    },
+                    {
+                      "description": "Your NationBuilder nation slug",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).",
+                  "key": "RateLimit-Limit",
+                  "value": "250"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests remaining for the current access token in the current rate-limit window.",
+                  "key": "RateLimit-Remaining",
+                  "value": "249"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (in seconds) at which the current rate-limit window resets.",
+                  "key": "RateLimit-Reset",
+                  "value": "1719964810"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"bad_request\",\n  \"message\": \"Tried to filter on attribute :bogus, but could not find an attribute with that name.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7b5b0287-8067-4ec7-a108-319a9b41da3b",
+              "name": "The access token is missing, expired, or not authorized to access this resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "event_rsvps",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": ""
+                    },
+                    {
+                      "key": "fields[event_rsvps]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) id"
+                    },
+                    {
+                      "description": "Your NationBuilder nation slug",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).",
+                  "key": "RateLimit-Limit",
+                  "value": "250"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests remaining for the current access token in the current rate-limit window.",
+                  "key": "RateLimit-Remaining",
+                  "value": "249"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (in seconds) at which the current rate-limit window resets.",
+                  "key": "RateLimit-Reset",
+                  "value": "1719964810"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"You are not authorized to access this content. Your access token may be missing. The resource owner also may not have a permission level sufficient to grant access.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d35741e5-ccee-4eaa-befc-a34ef25704e5",
+              "name": "No resource exists with the provided ID.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "event_rsvps",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": ""
+                    },
+                    {
+                      "key": "fields[event_rsvps]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) id"
+                    },
+                    {
+                      "description": "Your NationBuilder nation slug",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).",
+                  "key": "RateLimit-Limit",
+                  "value": "250"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests remaining for the current access token in the current rate-limit window.",
+                  "key": "RateLimit-Remaining",
+                  "value": "249"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (in seconds) at which the current rate-limit window resets.",
+                  "key": "RateLimit-Reset",
+                  "value": "1719964810"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"not_found\",\n  \"message\": \"Record not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ac574603-2af5-4e9e-9bc6-8cde5b7e1c80",
+              "name": "Model validations failed for the resource being created or updated. Unlike this API's other errors, validation failures are returned as a JSON:API errors document locating each invalid field.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "event_rsvps",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": ""
+                    },
+                    {
+                      "key": "fields[event_rsvps]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) id"
+                    },
+                    {
+                      "description": "Your NationBuilder nation slug",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).",
+                  "key": "RateLimit-Limit",
+                  "value": "250"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests remaining for the current access token in the current rate-limit window.",
+                  "key": "RateLimit-Remaining",
+                  "value": "249"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (in seconds) at which the current rate-limit window resets.",
+                  "key": "RateLimit-Reset",
+                  "value": "1719964810"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"unprocessable_entity\",\n      \"status\": \"422\",\n      \"title\": \"Validation Error\",\n      \"detail\": \"Email 'not-an-email' should look like an email address\",\n      \"source\": {\n        \"pointer\": \"/data/attributes/email\"\n      },\n      \"meta\": {\n        \"attribute\": \"email\",\n        \"message\": \"'not-an-email' should look like an email address\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f52a88e6-203d-4509-8439-c4de618fd464",
+              "name": "The access token has exceeded its request quota for the current rate-limit window.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "event_rsvps",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": ""
+                    },
+                    {
+                      "key": "fields[event_rsvps]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) id"
+                    },
+                    {
+                      "description": "Your NationBuilder nation slug",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).",
+                  "key": "RateLimit-Limit",
+                  "value": "250"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests remaining for the current access token in the current rate-limit window.",
+                  "key": "RateLimit-Remaining",
+                  "value": "249"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (in seconds) at which the current rate-limit window resets.",
+                  "key": "RateLimit-Reset",
+                  "value": "1719964810"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of seconds to wait before retrying. Sent with 429 responses.",
+                  "key": "Retry-After",
+                  "value": "10"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You have made too many requests. Please try again later.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a46b7799-e3b1-424e-b193-0ed1f0974769",
+          "name": "Delete an event rsvp with provided ID",
+          "request": {
+            "name": "Delete an event rsvp with provided ID",
+            "description": {
+              "content": "Delete the event RSVP matching the provided ID",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "event_rsvps",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "",
+                  "description": "Comma-delimited list of sideloaded resources to include as part of the event rsvp response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "fields[event_rsvps]",
+                  "value": "",
+                  "description": "Comma-delimited list of event rsvp attributes to only return in the response"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) id"
+                },
+                {
+                  "description": "Your NationBuilder nation slug",
+                  "type": "any",
+                  "value": "{{subdomain}}",
+                  "key": "subdomain"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/vnd.api+json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "21cb81f3-5c6f-4a09-8d64-cbd761412b19",
+              "name": "Confirmation that the event rsvp was deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "event_rsvps",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": ""
+                    },
+                    {
+                      "key": "fields[event_rsvps]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) id"
+                    },
+                    {
+                      "description": "Your NationBuilder nation slug",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/vnd.api+json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).",
+                  "key": "RateLimit-Limit",
+                  "value": "250"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests remaining for the current access token in the current rate-limit window.",
+                  "key": "RateLimit-Remaining",
+                  "value": "249"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (in seconds) at which the current rate-limit window resets.",
+                  "key": "RateLimit-Reset",
+                  "value": "1719964810"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/vnd.api+json"
+                }
+              ],
+              "body": "{\n  \"meta\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "23de0aef-0bf7-4099-af72-feb333e64a54",
+              "name": "The access token is missing, expired, or not authorized to access this resource.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "event_rsvps",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": ""
+                    },
+                    {
+                      "key": "fields[event_rsvps]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) id"
+                    },
+                    {
+                      "description": "Your NationBuilder nation slug",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).",
+                  "key": "RateLimit-Limit",
+                  "value": "250"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests remaining for the current access token in the current rate-limit window.",
+                  "key": "RateLimit-Remaining",
+                  "value": "249"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (in seconds) at which the current rate-limit window resets.",
+                  "key": "RateLimit-Reset",
+                  "value": "1719964810"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"unauthorized\",\n  \"message\": \"You are not authorized to access this content. Your access token may be missing. The resource owner also may not have a permission level sufficient to grant access.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5e43f36f-bc3e-4fb7-8a30-c3fa4ec4de3b",
+              "name": "No resource exists with the provided ID.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "event_rsvps",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": ""
+                    },
+                    {
+                      "key": "fields[event_rsvps]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) id"
+                    },
+                    {
+                      "description": "Your NationBuilder nation slug",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).",
+                  "key": "RateLimit-Limit",
+                  "value": "250"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests remaining for the current access token in the current rate-limit window.",
+                  "key": "RateLimit-Remaining",
+                  "value": "249"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (in seconds) at which the current rate-limit window resets.",
+                  "key": "RateLimit-Reset",
+                  "value": "1719964810"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"not_found\",\n  \"message\": \"Record not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "730bccde-2d89-4754-af8a-d35f0a247dfa",
+              "name": "The access token has exceeded its request quota for the current rate-limit window.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "event_rsvps",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": ""
+                    },
+                    {
+                      "key": "fields[event_rsvps]",
+                      "value": ""
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) id"
+                    },
+                    {
+                      "description": "Your NationBuilder nation slug",
+                      "type": "any",
+                      "value": "{{subdomain}}",
+                      "key": "subdomain"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).",
+                  "key": "RateLimit-Limit",
+                  "value": "250"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests remaining for the current access token in the current rate-limit window.",
+                  "key": "RateLimit-Remaining",
+                  "value": "249"
+                },
+                {
+                  "disabled": false,
+                  "description": "Unix timestamp (in seconds) at which the current rate-limit window resets.",
+                  "key": "RateLimit-Reset",
+                  "value": "1719964810"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of seconds to wait before retrying. Sent with 429 responses.",
+                  "key": "Retry-After",
+                  "value": "10"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"You have made too many requests. Please try again later.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "Your NationBuilder nation slug",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "yournation",
+      "key": "subdomain"
+    },
+    {
+      "type": "string",
+      "value": "https://{{subdomain}}.nationbuilder.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8ca9e652-3712-426f-9b4c-4831bc01ebf3",
+    "name": "NationBuilder V2 Async Processes Event Rsvps API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The NationBuilder V2 API is a JSON:API-compliant API for managing NationBuilder\nresources such as people, donations, events, and lists. It layers a few\nconventions on top of the JSON:API standard, described below. For a broader\nintroduction, see the\n[NationBuilder v2 API core concepts](https://support.nationbuilder.com/en/articles/9757369-nationbuilder-v2-api-core-concepts)\nguide.\n\n### Request and response format\n\nRequests and responses follow the [JSON:API](https://jsonapi.org/) document\nstructure: single resources are returned under a top-level `data` member, and\ncollections are paginated arrays of resource objects with `links` for the\ncurrent, previous, and next pages. Related resources can be sideloaded into a\ntop-level `included` array with the `include` query parameter, and responses\ncan be trimmed to specific attributes with `fields[resource_type]` sparse\nfieldsets (plus opt-in `extra_fields[resource_type]` attributes where noted).\nResponses are served as `application/vnd.api+json`; request bodies may be\nsent as `application/vnd.api+json` or `application/json`.\n\nFiltering uses an operator syntax: `filter[attribute]=value` for\nequality (comma-separated values act as OR), and\n`filter[attribute][operator]=value` for other comparisons. String attributes\nsupport `eq`, `not_eq`, `eql`, `not_eql`, `prefix`, `not_prefix`, `suffix`,\n`not_suffix`, `match`, and `not_match`; numeric and date attributes support\n`eq`, `not_eq`, `gt`, `gte`, `lt`, and `lte`. Note that JSON:API relationship\nroutes (`/resource/{id}/relationships/other`) are not provided; related\nresources are reachable through the filtered index URLs given in each\nresource's `relationships` links.\n\n### Errors\n\nError responses use a flat JSON body with a machine-readable `code` and a\nhuman-readable `message`. Some errors carry additional detail members (for\nexample `validation_errors`). The exception is 422 validation failures,\nwhich return a JSON:API `errors` array locating each invalid field via\n`source.pointer`.\n\n### Rate limiting\n\nRequests are limited per access token (250 requests per 10-second window).\nEvery response includes `RateLimit-Limit`, `RateLimit-Remaining`, and\n`RateLimit-Reset` headers; exceeding the limit returns a 429 with a\n`Retry-After` header.\n",
+      "type": "text/plain"
+    }
+  }
+}

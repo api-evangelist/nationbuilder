@@ -1,0 +1,140 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NationBuilder V2 Async Processes Automation Enrollments API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Automation Enrollments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all automation enrollments in a nation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/automation_enrollments",
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the automation enrollment index response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[automation_enrollments]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of automation enrollment attributes to only return in the response"
+              },
+              {
+                "name": "page[number]",
+                "value": "",
+                "type": "query",
+                "description": "Page number to list (starting at 1)"
+              },
+              {
+                "name": "page[size]",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to display per page (default: 20, max: 100, min: 1)"
+              }
+            ]
+          },
+          "docs": "Lists all automation enrollments"
+        },
+        {
+          "info": {
+            "name": "Create an automation enrollment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/automation_enrollments",
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the automation enrollment index response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[automation_enrollments]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of automation enrollment attributes to only return in the response"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an automation enrollment from given data"
+        },
+        {
+          "info": {
+            "name": "Show automation enrollments with provided ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/automation_enrollments/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the automation enrollment response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[automation_enrollments]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of automation enrollment attributes to only return in the response"
+              }
+            ]
+          },
+          "docs": "Returns the automation enrollments that matches the given ID."
+        },
+        {
+          "info": {
+            "name": "Delete automation enrollments with provided ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/automation_enrollments/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              }
+            ]
+          },
+          "docs": "Permanently removes the automation enrollments that matches the given ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

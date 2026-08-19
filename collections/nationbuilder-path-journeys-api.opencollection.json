@@ -1,0 +1,292 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NationBuilder V2 Async Processes Path Journeys API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Path Journeys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all path journeys in a nation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/path_journeys",
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the path journey index response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[path_journeys]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of path journey attributes to only return in the response"
+              },
+              {
+                "name": "page[number]",
+                "value": "",
+                "type": "query",
+                "description": "Page number to list (starting at 1)"
+              },
+              {
+                "name": "page[size]",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to display per page (default: 20, max: 100, min: 1)"
+              }
+            ]
+          },
+          "docs": "Lists all path journeys"
+        },
+        {
+          "info": {
+            "name": "Create a path journey",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/path_journeys",
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the path journey index response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[path_journeys]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of path journey attributes to only return in the response"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a path journey from given data"
+        },
+        {
+          "info": {
+            "name": "Show path journey with provided ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/path_journeys/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the path journey response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[path_journeys]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of path journey attributes to only return in the response"
+              }
+            ]
+          },
+          "docs": "Returns the JSON:API resource object for a single path journey."
+        },
+        {
+          "info": {
+            "name": "Update an existing path journey",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/path_journeys/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the path journey response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[path_journeys]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of path journey attributes to only return in the response"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing path journey"
+        },
+        {
+          "info": {
+            "name": "Abandon path journey with provided ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/path_journeys/:id/abandon",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "path_journey_status_change_id",
+                "value": "1",
+                "type": "query",
+                "description": "ID of the path journey status change reason to record for this status transition."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the path journey response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[path_journeys]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of path journey attributes to only return in the response"
+              }
+            ]
+          },
+          "docs": "Marks the path journey as abandoned, optionally recording an abandonment reason."
+        },
+        {
+          "info": {
+            "name": "Complete path journey with provided ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/path_journeys/:id/complete",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "path_journey_status_change_id",
+                "value": "1",
+                "type": "query",
+                "description": "ID of the path journey status change reason to record for this status transition."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the path journey response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[path_journeys]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of path journey attributes to only return in the response"
+              }
+            ]
+          },
+          "docs": "Marks the path journey as completed, optionally recording a completion reason."
+        },
+        {
+          "info": {
+            "name": "Reactivate path journey with provided ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/path_journeys/:id/reactivate",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the path journey response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[path_journeys]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of path journey attributes to only return in the response"
+              }
+            ]
+          },
+          "docs": "Returns an abandoned or completed path journey to active status."
+        },
+        {
+          "info": {
+            "name": "Void path journey with provided ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/path_journeys/:id/void",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the path journey response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[path_journeys]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of path journey attributes to only return in the response"
+              }
+            ]
+          },
+          "docs": "Voids the path journey so it is excluded from path reporting."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

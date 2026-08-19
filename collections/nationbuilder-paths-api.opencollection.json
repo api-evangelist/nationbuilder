@@ -1,0 +1,187 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NationBuilder V2 Async Processes Paths API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Paths",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all paths in a nation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/paths",
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the path index response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[paths]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of path attributes to only return in the response"
+              },
+              {
+                "name": "page[number]",
+                "value": "",
+                "type": "query",
+                "description": "Page number to list (starting at 1)"
+              },
+              {
+                "name": "page[size]",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to display per page (default: 20, max: 100, min: 1)"
+              }
+            ]
+          },
+          "docs": "Lists all paths"
+        },
+        {
+          "info": {
+            "name": "Create a path",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/paths",
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the path index response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[paths]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of path attributes to only return in the response"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a path from given data"
+        },
+        {
+          "info": {
+            "name": "Show path with provided ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/paths/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the path response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[paths]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of path attributes to only return in the response"
+              }
+            ]
+          },
+          "docs": "Returns the JSON:API resource object for a single path."
+        },
+        {
+          "info": {
+            "name": "Update an existing path",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/paths/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the path response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[paths]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of path attributes to only return in the response"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing path"
+        },
+        {
+          "info": {
+            "name": "Delete path with provided ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/paths/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the path response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[paths]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of path attributes to only return in the response"
+              }
+            ]
+          },
+          "docs": "Permanently removes the path that matches the given ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

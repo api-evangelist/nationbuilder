@@ -1,0 +1,199 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NationBuilder V2 Async Processes Automations API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Automations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all automations in a nation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/automations",
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the automation response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n\nSupported sideloads: (none)\n"
+              },
+              {
+                "name": "fields[automations]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of automation attributes to only return in the response"
+              },
+              {
+                "name": "extra_fields[automations]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of extra automation attributes, which are only returned in the response if requested."
+              },
+              {
+                "name": "page[number]",
+                "value": "",
+                "type": "query",
+                "description": "Page number to list (starting at 1)"
+              },
+              {
+                "name": "page[size]",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to display per page (default: 20, max: 100, min: 1)"
+              }
+            ]
+          },
+          "docs": "Lists all automations"
+        },
+        {
+          "info": {
+            "name": "Create an automation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/automations",
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the automation response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n\nSupported sideloads: (none)\n"
+              },
+              {
+                "name": "fields[automations]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of automation attributes to only return in the response"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an automation from given data"
+        },
+        {
+          "info": {
+            "name": "Show automation with provided ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/automations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the automation response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[automations]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of automation attributes to only return in the response"
+              },
+              {
+                "name": "extra_fields[automations]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of extra automation attributes, which are only returned in the response if requested."
+              }
+            ]
+          },
+          "docs": "Returns the automation that matches the given ID."
+        },
+        {
+          "info": {
+            "name": "Update an existing automation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/automations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the automation response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[automations]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of automation attributes to only return in the response"
+              },
+              {
+                "name": "extra_fields[automations]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of extra automation attributes, which are only returned in the response if requested."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing automation"
+        },
+        {
+          "info": {
+            "name": "Archive an existing automation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/automations/:id/archive",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the automation response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              }
+            ]
+          },
+          "docs": "Archives an existing automation"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

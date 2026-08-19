@@ -1,0 +1,217 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NationBuilder V2 Async Processes Events API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all events in a nation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/events",
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the event index response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[events]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of event attributes to only return in the response"
+              },
+              {
+                "name": "extra_fields[events]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of extra event attributes, which are only returned in the response if requested."
+              },
+              {
+                "name": "page[number]",
+                "value": "",
+                "type": "query",
+                "description": "Page number to list (starting at 1)"
+              },
+              {
+                "name": "page[size]",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to display per page (default: 20, max: 100, min: 1)"
+              }
+            ]
+          },
+          "docs": "Lists all events within a nation."
+        },
+        {
+          "info": {
+            "name": "Create an event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/events",
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the event index response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[events]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of event attributes to only return in the response"
+              },
+              {
+                "name": "extra_fields[events]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of extra event attributes, which are only returned in the response if requested."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create events with the provided payload. Events must be created with a page resource, which can be sideposted as shown in the example payload. Events must also have a start_at time."
+        },
+        {
+          "info": {
+            "name": "Show event with provided ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/events/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the event response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[events]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of event attributes to only return in the response"
+              },
+              {
+                "name": "extra_fields[events]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of extra event attributes, which are only returned in the response if requested."
+              }
+            ]
+          },
+          "docs": "Returns the event that matches the given ID."
+        },
+        {
+          "info": {
+            "name": "Update an existing event",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/events/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the event response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[events]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of event attributes to only return in the response"
+              },
+              {
+                "name": "extra_fields[events]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of extra event attributes, which are only returned in the response if requested."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing event"
+        },
+        {
+          "info": {
+            "name": "Delete event with provided ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/events/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the event response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[events]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of event attributes to only return in the response"
+              },
+              {
+                "name": "extra_fields[events]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of extra event attributes, which are only returned in the response if requested."
+              }
+            ]
+          },
+          "docs": "Permanently removes the event that matches the given ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,163 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NationBuilder V2 Async Processes Suggestion Boxes API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Suggestion Boxes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all suggestion boxes in a nation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/suggestion_boxes",
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the suggestion box index response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[suggestion_boxes]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of suggestion box attributes to only return in the response"
+              },
+              {
+                "name": "page[number]",
+                "value": "",
+                "type": "query",
+                "description": "Page number to list (starting at 1)"
+              },
+              {
+                "name": "page[size]",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to display per page (default: 20, max: 100, min: 1)"
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of all SuggestionBoxes across all sites."
+        },
+        {
+          "info": {
+            "name": "Create a suggestion box",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/suggestion_boxes",
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the suggestion box index response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[suggestion_boxes]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of suggestion box attributes to only return in the response"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a SuggestionBox page from given data.\n\n**Required attributes:**\n- `site_id` - ID of the site to create the page on\n- `name` - Display name for the page\n- `status` - Publication status ('published', 'draft', 'unlisted')\n\n**Optional attributes:**\n- `slug` - URL-friendly identifier -- `https://yoursite.com/slug` (auto-generated from name if not provided)\n- `content` - Description/instructions for the page\n- `tag_list` - Comma-separated list of tags to be used for categorizing Suggestions\n- "
+        },
+        {
+          "info": {
+            "name": "Show SuggestionBox with provided ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/suggestion_boxes/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the suggestion box response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[suggestion_boxes]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of suggestion box attributes to only return in the response"
+              }
+            ]
+          },
+          "docs": "Retrieves a specific SuggestionBox by its ID."
+        },
+        {
+          "info": {
+            "name": "Update a suggestion box",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/suggestion_boxes/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Make updates to a SuggestionBox.\n\n**Attributes:**\n- `site_id` - ID of the site to place the SuggestionBox page on\n- `name` - Display name for the SuggestionBox page\n- `status` - Publication status ('published', 'draft', 'unlisted')\n- `slug` - URL-friendly identifier (auto-generated from name if not provided)\n- `content` - Description/instructions for the SuggestionBox page\n- `tag_list` - Comma-separated list of tags to accept for related suggestions\n- `require_image` - Whether suggestions must i"
+        },
+        {
+          "info": {
+            "name": "Delete a suggestion box",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/suggestion_boxes/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              }
+            ]
+          },
+          "docs": "Permanently deletes a SuggestionBox and its associated page.\n\n**Warning:** This action cannot be undone. The SuggestionBox and all its data\nwill be permanently removed from the system.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

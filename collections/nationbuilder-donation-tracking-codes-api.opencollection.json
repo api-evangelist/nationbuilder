@@ -1,0 +1,187 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NationBuilder V2 Async Processes Donation Tracking Codes API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Donation Tracking Codes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all donation tracking codes in a nation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/donation_tracking_codes",
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the donation tracking code response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n\nSupported sideloads: (none)\n"
+              },
+              {
+                "name": "fields[donation_tracking_codes]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of donation tracking code attributes to only return in the response"
+              },
+              {
+                "name": "page[number]",
+                "value": "",
+                "type": "query",
+                "description": "Page number to list (starting at 1)"
+              },
+              {
+                "name": "page[size]",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to display per page (default: 20, max: 100, min: 1)"
+              }
+            ]
+          },
+          "docs": "Lists all donation tracking codes"
+        },
+        {
+          "info": {
+            "name": "Create a donation tracking code",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/donation_tracking_codes",
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the donation tracking code response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n\nSupported sideloads: (none)\n"
+              },
+              {
+                "name": "fields[donation_tracking_codes]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of donation tracking code attributes to only return in the response"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a donation tracking code from given data"
+        },
+        {
+          "info": {
+            "name": "Show donation tracking code with provided ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/donation_tracking_codes/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the donation tracking code response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[donation_tracking_codes]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of donation tracking code attributes to only return in the response"
+              }
+            ]
+          },
+          "docs": "Returns the donation tracking code that matches the given ID."
+        },
+        {
+          "info": {
+            "name": "Update an existing donation tracking code",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/donation_tracking_codes/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the donation tracking code response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[donation_tracking_codes]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of donation tracking code attributes to only return in the response"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing donation tracking code"
+        },
+        {
+          "info": {
+            "name": "Delete donation tracking code with provided ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/donation_tracking_codes/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the donation tracking code response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[donation_tracking_codes]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of donation tracking code attributes to only return in the response"
+              }
+            ]
+          },
+          "docs": "Permanently removes the donation tracking code that matches the given ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

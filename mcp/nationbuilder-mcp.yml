@@ -579,3 +579,9 @@ tools:
 - name: deleteVoter
   description: Delete voter with provided ID
   source_operation: openapi/nationbuilder-v2-openapi-original.yml#deleteVoter
+deployment:
+  mode: none
+  verified: derived
+  tools: 190
+  checked: '2026-08-12'
+  source: catalog MCP census

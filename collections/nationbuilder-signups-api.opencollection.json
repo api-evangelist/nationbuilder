@@ -1,0 +1,283 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NationBuilder V2 Async Processes Signups API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Signups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all signups in a nation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/signups",
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the signup response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[signups]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of signup attributes to only return in the response"
+              },
+              {
+                "name": "extra_fields[signups]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of extra attributes, which are only returned in the response if requested."
+              },
+              {
+                "name": "page[number]",
+                "value": "",
+                "type": "query",
+                "description": "Page number to list (starting at 1)"
+              },
+              {
+                "name": "page[size]",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to display per page (default: 20, max: 100, min: 1)"
+              }
+            ]
+          },
+          "docs": "Lists all signups"
+        },
+        {
+          "info": {
+            "name": "Create a signup",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/signups",
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the signup response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[signups]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of signup attributes to only return in the response"
+              },
+              {
+                "name": "extra_fields[signups]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of extra attributes, which are only returned in the response if requested."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a signup from given data"
+        },
+        {
+          "info": {
+            "name": "Show signup assigned to auth token",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/signups/me",
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[signups]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of signup attributes to only return in the response"
+              },
+              {
+                "name": "extra_fields[signups]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of extra attributes, which are only returned in the response if requested."
+              }
+            ]
+          },
+          "docs": "Returns the signup associated with the current access token."
+        },
+        {
+          "info": {
+            "name": "Push signup data into nation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/signups/push",
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[signups]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of signup attributes to only return in the response"
+              },
+              {
+                "name": "extra_fields[signups]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of extra attributes, which are only returned in the response if requested."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint attempts to match the input person resource to a person already in the nation. If a match is found, the matched person is updated and a 200 status code is returned. If a match is not found, a new person is created and a 201 status code is returned. Matches are found by including one of the following IDs in the request:\n  - civicrm_id\n  - county_file_id\n  - dw_id\n  - external_id\n  - email\n  - facebook_username\n  - ngp_id\n  - salesforce_id\n  - twitter_login\n  - van_id\n\nThe push endpo"
+        },
+        {
+          "info": {
+            "name": "Show signup with provided ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/signups/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[signups]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of signup attributes to only return in the response"
+              },
+              {
+                "name": "extra_fields[signups]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of extra attributes, which are only returned in the response if requested."
+              }
+            ]
+          },
+          "docs": "Returns the JSON:API resource object for a single signup."
+        },
+        {
+          "info": {
+            "name": "Update an existing signup",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/signups/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[signups]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of signup attributes to only return in the response"
+              },
+              {
+                "name": "extra_fields[signups]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of extra attributes, which are only returned in the response if requested."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing signup"
+        },
+        {
+          "info": {
+            "name": "Delete signup with provided ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/signups/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[signups]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of signup attributes to only return in the response"
+              },
+              {
+                "name": "extra_fields[signups]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of extra attributes, which are only returned in the response if requested."
+              }
+            ]
+          },
+          "docs": "Permanently removes the signup that matches the given ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

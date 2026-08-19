@@ -1,0 +1,187 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NationBuilder V2 Async Processes Event Rsvps API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Event Rsvps",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all event rsvps in a nation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/event_rsvps",
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the event rsvp index response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[event_rsvps]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of event rsvp attributes to only return in the response"
+              },
+              {
+                "name": "page[number]",
+                "value": "",
+                "type": "query",
+                "description": "Page number to list (starting at 1)"
+              },
+              {
+                "name": "page[size]",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to display per page (default: 20, max: 100, min: 1)"
+              }
+            ]
+          },
+          "docs": "Lists all event RSVPs in a nation"
+        },
+        {
+          "info": {
+            "name": "Create an event rsvp",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/event_rsvps",
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the event rsvp index response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[event_rsvps]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of event rsvp attributes to only return in the response"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an event RSVP. Event RSVPs must contain enough signup data to find an existing signup in the nation, or create a new one. This means callers must provide a first name, last name, and email as part of the Event RSVP payload, which will be matched to an existing signup or will create a new signup with that data. Alternatively, callers may sidepost a signup resource as part of the payload. See sideposting documentation for details."
+        },
+        {
+          "info": {
+            "name": "Show event rsvp with provided ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/event_rsvps/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the event rsvp response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[event_rsvps]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of event rsvp attributes to only return in the response"
+              }
+            ]
+          },
+          "docs": "Show the event RSVP matching the provided ID"
+        },
+        {
+          "info": {
+            "name": "Update an existing event rsvp",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/event_rsvps/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the event rsvp response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[event_rsvps]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of event rsvp attributes to only return in the response"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing event RSVP. Note that first name, last name, and email are NOT propagated to the event RSVP's signup. You must update the signup via a sidepost payload, or update the signup directly via the signup resource."
+        },
+        {
+          "info": {
+            "name": "Delete an event rsvp with provided ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/event_rsvps/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the event rsvp response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[event_rsvps]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of event rsvp attributes to only return in the response"
+              }
+            ]
+          },
+          "docs": "Delete the event RSVP matching the provided ID"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

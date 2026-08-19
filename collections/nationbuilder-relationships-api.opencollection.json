@@ -1,0 +1,175 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NationBuilder V2 Async Processes Relationships API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Relationships",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all relationships in a nation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/relationships",
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the relationship index response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[relationships]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of relationship attributes to only return in the response"
+              }
+            ]
+          },
+          "docs": "Lists all relationships"
+        },
+        {
+          "info": {
+            "name": "Create a relationship",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/relationships",
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the relationship index response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[relationships]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of relationship attributes to only return in the response"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a relationship from given data. Valid relationship types are affiliate-affiliate, alum-school, assistant-assisted, board_member-organization, candidate-committee, chapter-parent, child-parent, consultant-organization, employee-employer, family_partner-family_partner, friend-friend, member-organization, mentee-mentor, partner-partner, primary_contact-organization, relative-relative, representative-constituent, resident-organization, sibling-sibling, spouse-spouse, student-school, student-"
+        },
+        {
+          "info": {
+            "name": "Show relationship with provided ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/relationships/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the relationship response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[relationships]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of relationship attributes to only return in the response"
+              }
+            ]
+          },
+          "docs": "Returns the relationship that matches the given ID."
+        },
+        {
+          "info": {
+            "name": "Update an existing relationship",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/relationships/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the relationship response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[relationships]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of relationship attributes to only return in the response"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing relationship. Valid relationship types are affiliate-affiliate, alum-school, assistant-assisted, board_member-organization, candidate-committee, chapter-parent, child-parent, consultant-organization, employee-employer, family_partner-family_partner, friend-friend, member-organization, mentee-mentor, partner-partner, primary_contact-organization, relative-relative, representative-constituent, resident-organization, sibling-sibling, spouse-spouse, student-school, student-teache"
+        },
+        {
+          "info": {
+            "name": "Delete relationship with provided ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/relationships/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the relationship response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[relationships]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of relationship attributes to only return in the response"
+              }
+            ]
+          },
+          "docs": "Permanently removes the relationship that matches the given ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

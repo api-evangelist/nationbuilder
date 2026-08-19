@@ -1,0 +1,104 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NationBuilder V2 Async Processes Mailings API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Mailings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all mailings in a nation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/mailings",
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the mailing index response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[mailings]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of mailing attributes to only return in the response"
+              },
+              {
+                "name": "extra_fields[mailings]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of extra mailing attributes, which are only returned in the response if requested."
+              },
+              {
+                "name": "page[number]",
+                "value": "",
+                "type": "query",
+                "description": "Page number to list (starting at 1)"
+              },
+              {
+                "name": "page[size]",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to display per page (default: 20, max: 100, min: 1)"
+              }
+            ]
+          },
+          "docs": "Lists all mailings"
+        },
+        {
+          "info": {
+            "name": "Show mailing with provided ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{subdomain}.nationbuilder.com/api/v2/mailings/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "id"
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of sideloaded resources to include as part of the mailing response.\nSee guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about\nsideloading large numbers of resources and pagination.\n"
+              },
+              {
+                "name": "fields[mailings]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of mailing attributes to only return in the response"
+              },
+              {
+                "name": "extra_fields[mailings]",
+                "value": "",
+                "type": "query",
+                "description": "Comma-delimited list of extra mailing attributes, which are only returned in the response if requested."
+              }
+            ]
+          },
+          "docs": "Returns the mailing that matches the given ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
