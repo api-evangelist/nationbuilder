@@ -40,6 +40,17 @@ tags:
 - Community Organizing
 - CRM
 - Political
+- Non-Profit
+- Fundraising
+- Advocacy
+- Website Builder
+- Event
+- Email
+- JSON:API
+tags_raw:
+- Community Organizing
+- CRM
+- Political
 - Nonprofit
 - Fundraising
 - Advocacy
@@ -327,6 +338,8 @@ apis:
   humanURL: https://support.nationbuilder.com/en/collections/10408291-api
   baseURL: https://{nation-slug}.nationbuilder.com/api/v2
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
@@ -373,6 +386,8 @@ apis:
   humanURL: https://support.nationbuilder.com/en/collections/10408291-api
   baseURL: https://{nation-slug}.nationbuilder.com/api/v2
   tags:
+  - List
+  tags_raw:
   - Lists
   properties:
   - type: OpenAPI
