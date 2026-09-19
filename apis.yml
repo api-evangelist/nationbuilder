@@ -124,6 +124,8 @@ apis:
   humanURL: https://support.nationbuilder.com/en/collections/10408291-api
   baseURL: https://{nation-slug}.nationbuilder.com/api/v2
   tags:
+  - Automation
+  tags_raw:
   - Automations
   properties:
   - type: OpenAPI
@@ -376,6 +378,8 @@ apis:
   humanURL: https://support.nationbuilder.com/en/collections/10408291-api
   baseURL: https://{nation-slug}.nationbuilder.com/api/v2
   tags:
+  - Import
+  tags_raw:
   - Imports
   properties:
   - type: OpenAPI
@@ -473,6 +477,8 @@ apis:
   humanURL: https://support.nationbuilder.com/en/collections/10408291-api
   baseURL: https://{nation-slug}.nationbuilder.com/api/v2
   tags:
+  - Membership
+  tags_raw:
   - Memberships
   properties:
   - type: OpenAPI
