@@ -1,0 +1,43 @@
+slug: nationbuilder
+provider: NationBuilder
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 3
+edges:
+- tag: Signups
+  spec_file: nationbuilder-signups-api-openapi.yml
+  capability_id: BC-420.10
+  capability_id_l1: BC-420
+  capability_name: Customer Data Management
+  confidence: 0.82
+  evidence: PATCH /api/v2/signups/push  pushSignup  Push signup data into nation
+  reason: Signups are the core person/supporter records of the NationBuilder CRM; create/update/push/delete
+    of these records is customer (supporter) master data management.
+- tag: Signup Profiles
+  spec_file: nationbuilder-signup-profiles-api-openapi.yml
+  capability_id: BC-420.10
+  capability_id_l1: BC-420
+  capability_name: Customer Data Management
+  confidence: 0.72
+  evidence: POST /api/v2/signup_profiles  createSignupProfile  Create a signup profile
+  reason: Signups are NationBuilder's supporter/person records; signup profiles hold additional profile
+    attributes on those records, i.e. maintenance of the customer/supporter master record.
+- tag: Mailings
+  spec_file: nationbuilder-mailings-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.7
+  evidence: 'GET /api/v2/mailings listMailings ''List all mailings in a nation''; mailing_read_only_attributes,
+    mailing_extra_field_values; vendor description: ''email and text messaging'''
+  reason: Exposes the platform's email/text blast records, i.e. outbound digital marketing communications
+    to the supporter base. Read-only surface, so confidence is moderate.
