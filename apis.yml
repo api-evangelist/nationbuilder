@@ -1009,6 +1009,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Plans
+  url: plans/nationbuilder-plans-pricing.yml
 - type: CapabilityMap
   url: capabilities/nationbuilder-capability-edges.yml
   name: NationBuilder Business Capability Map
