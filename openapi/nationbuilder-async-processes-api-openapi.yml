@@ -1,87 +1,10 @@
-openapi: 3.1.2
+openapi: 3.2.0
 info:
   title: NationBuilder V2 Async Processes API
   version: '2.0'
   description: 'The NationBuilder V2 API is a JSON:API-compliant API for managing NationBuilder
 
-    resources such as people, donations, events, and lists. It layers a few
-
-    conventions on top of the JSON:API standard, described below. For a broader
-
-    introduction, see the
-
-    [NationBuilder v2 API core concepts](https://support.nationbuilder.com/en/articles/9757369-nationbuilder-v2-api-core-concepts)
-
-    guide.
-
-
-    ### Request and response format
-
-
-    Requests and responses follow the [JSON:API](https://jsonapi.org/) document
-
-    structure: single resources are returned under a top-level `data` member, and
-
-    collections are paginated arrays of resource objects with `links` for the
-
-    current, previous, and next pages. Related resources can be sideloaded into a
-
-    top-level `included` array with the `include` query parameter, and responses
-
-    can be trimmed to specific attributes with `fields[resource_type]` sparse
-
-    fieldsets (plus opt-in `extra_fields[resource_type]` attributes where noted).
-
-    Responses are served as `application/vnd.api+json`; request bodies may be
-
-    sent as `application/vnd.api+json` or `application/json`.
-
-
-    Filtering uses an operator syntax: `filter[attribute]=value` for
-
-    equality (comma-separated values act as OR), and
-
-    `filter[attribute][operator]=value` for other comparisons. String attributes
-
-    support `eq`, `not_eq`, `eql`, `not_eql`, `prefix`, `not_prefix`, `suffix`,
-
-    `not_suffix`, `match`, and `not_match`; numeric and date attributes support
-
-    `eq`, `not_eq`, `gt`, `gte`, `lt`, and `lte`. Note that JSON:API relationship
-
-    routes (`/resource/{id}/relationships/other`) are not provided; related
-
-    resources are reachable through the filtered index URLs given in each
-
-    resource''s `relationships` links.
-
-
-    ### Errors
-
-
-    Error responses use a flat JSON body with a machine-readable `code` and a
-
-    human-readable `message`. Some errors carry additional detail members (for
-
-    example `validation_errors`). The exception is 422 validation failures,
-
-    which return a JSON:API `errors` array locating each invalid field via
-
-    `source.pointer`.
-
-
-    ### Rate limiting
-
-
-    Requests are limited per access token (250 requests per 10-second window).
-
-    Every response includes `RateLimit-Limit`, `RateLimit-Remaining`, and
-
-    `RateLimit-Reset` headers; exceeding the limit returns a 429 with a
-
-    `Retry-After` header.
-
-    '
+    resources such as people, donations, events, and lists.'
 servers:
 - url: https://{subdomain}.nationbuilder.com
   variables:
@@ -139,6 +62,17 @@ paths:
           $ref: '#/components/responses/rate_limited'
 components:
   schemas:
+    rate_limited_response:
+      description: The body returned by the rate limiter when an access token exceeds its request quota.
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          description: Human-readable explanation of the rate limit.
+          examples:
+          - You have made too many requests. Please try again later.
     error_response:
       description: The error body returned for 4xx and 5xx responses, with a machine-readable code and a human-readable message. Some errors include additional detail members alongside these two. The exception is 422 validation failures, which are returned as JSON:API errors documents instead.
       type: object
@@ -156,18 +90,14 @@ components:
           description: Human-readable explanation of the failure.
           examples:
           - Record not found
-    rate_limited_response:
-      description: The body returned by the rate limiter when an access token exceeds its request quota.
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
-          description: Human-readable explanation of the rate limit.
-          examples:
-          - You have made too many requests. Please try again later.
   headers:
+    RateLimit-Reset:
+      description: Unix timestamp (in seconds) at which the current rate-limit window resets.
+      schema:
+        type: string
+        examples:
+        - '1719964810'
+      examples: {}
     RateLimit-Remaining:
       description: Number of requests remaining for the current access token in the current rate-limit window.
       schema:
@@ -189,13 +119,14 @@ components:
         examples:
         - '250'
       examples: {}
-    RateLimit-Reset:
-      description: Unix timestamp (in seconds) at which the current rate-limit window resets.
+  parameters:
+    id:
+      name: id
+      in: path
+      description: id
+      required: true
       schema:
         type: string
-        examples:
-        - '1719964810'
-      examples: {}
   responses:
     unauthorized:
       description: The access token is missing, expired, or not authorized to access this resource.
@@ -211,6 +142,22 @@ components:
           example:
             code: unauthorized
             message: You are not authorized to access this content. Your access token may be missing. The resource owner also may not have a permission level sufficient to grant access.
+          schema:
+            $ref: '#/components/schemas/error_response'
+    not_found:
+      description: No resource exists with the provided ID.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/json:
+          example:
+            code: not_found
+            message: Record not found
           schema:
             $ref: '#/components/schemas/error_response'
     rate_limited:
@@ -230,30 +177,6 @@ components:
             message: You have made too many requests. Please try again later.
           schema:
             $ref: '#/components/schemas/rate_limited_response'
-    not_found:
-      description: No resource exists with the provided ID.
-      headers:
-        RateLimit-Limit:
-          $ref: '#/components/headers/RateLimit-Limit'
-        RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimit-Remaining'
-        RateLimit-Reset:
-          $ref: '#/components/headers/RateLimit-Reset'
-      content:
-        application/json:
-          example:
-            code: not_found
-            message: Record not found
-          schema:
-            $ref: '#/components/schemas/error_response'
-  parameters:
-    id:
-      name: id
-      in: path
-      description: id
-      required: true
-      schema:
-        type: string
   securitySchemes:
     BearerAuth:
       description: Authentication using a bearer token (JWT) issued via OAuth.

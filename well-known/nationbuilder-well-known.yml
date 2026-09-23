@@ -1,12 +1,12 @@
 generated: '2026-07-20'
 method: searched
 host: https://nationbuilder.com
-note: >-
-  No /.well-known/ discovery documents are published on the primary host.
-  All standard discovery paths probed 404 on 2026-07-20. Recorded for
-  auditability; no WellKnown/SecurityTxt pointer is wired because nothing
-  is present.
-documents:
+note: No /.well-known/ discovery documents are published on the primary host. All standard discovery paths
+  probed 404 on 2026-07-20. Recorded for auditability; no WellKnown/SecurityTxt pointer is wired because
+  nothing is present.
+hosts:
+- host: https://nationbuilder.com
+  documents:
   - path: /.well-known/security.txt
     status: 404
   - path: /.well-known/openid-configuration
@@ -17,3 +17,8 @@ documents:
     status: 404
   - path: /.well-known/ai-plugin.json
     status: 404
+x-shape-fix:
+  converted: '2026-08-20'
+  from: documents
+  note: Rewritten into hosts[] -> documents[], the only shape well_known_docs() in score.rb reads. A served
+    .well-known surface recorded in any other shape scores as absent.

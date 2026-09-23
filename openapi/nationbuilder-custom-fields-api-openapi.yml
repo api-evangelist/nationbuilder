@@ -1,87 +1,10 @@
-openapi: 3.1.2
+openapi: 3.2.0
 info:
-  title: NationBuilder V2 Async Processes Custom Fields API
+  title: NationBuilder V2 Custom Fields API
   version: '2.0'
   description: 'The NationBuilder V2 API is a JSON:API-compliant API for managing NationBuilder
 
-    resources such as people, donations, events, and lists. It layers a few
-
-    conventions on top of the JSON:API standard, described below. For a broader
-
-    introduction, see the
-
-    [NationBuilder v2 API core concepts](https://support.nationbuilder.com/en/articles/9757369-nationbuilder-v2-api-core-concepts)
-
-    guide.
-
-
-    ### Request and response format
-
-
-    Requests and responses follow the [JSON:API](https://jsonapi.org/) document
-
-    structure: single resources are returned under a top-level `data` member, and
-
-    collections are paginated arrays of resource objects with `links` for the
-
-    current, previous, and next pages. Related resources can be sideloaded into a
-
-    top-level `included` array with the `include` query parameter, and responses
-
-    can be trimmed to specific attributes with `fields[resource_type]` sparse
-
-    fieldsets (plus opt-in `extra_fields[resource_type]` attributes where noted).
-
-    Responses are served as `application/vnd.api+json`; request bodies may be
-
-    sent as `application/vnd.api+json` or `application/json`.
-
-
-    Filtering uses an operator syntax: `filter[attribute]=value` for
-
-    equality (comma-separated values act as OR), and
-
-    `filter[attribute][operator]=value` for other comparisons. String attributes
-
-    support `eq`, `not_eq`, `eql`, `not_eql`, `prefix`, `not_prefix`, `suffix`,
-
-    `not_suffix`, `match`, and `not_match`; numeric and date attributes support
-
-    `eq`, `not_eq`, `gt`, `gte`, `lt`, and `lte`. Note that JSON:API relationship
-
-    routes (`/resource/{id}/relationships/other`) are not provided; related
-
-    resources are reachable through the filtered index URLs given in each
-
-    resource''s `relationships` links.
-
-
-    ### Errors
-
-
-    Error responses use a flat JSON body with a machine-readable `code` and a
-
-    human-readable `message`. Some errors carry additional detail members (for
-
-    example `validation_errors`). The exception is 422 validation failures,
-
-    which return a JSON:API `errors` array locating each invalid field via
-
-    `source.pointer`.
-
-
-    ### Rate limiting
-
-
-    Requests are limited per access token (250 requests per 10-second window).
-
-    Every response includes `RateLimit-Limit`, `RateLimit-Remaining`, and
-
-    `RateLimit-Reset` headers; exceeding the limit returns a 429 with a
-
-    `Retry-After` header.
-
-    '
+    resources such as people, donations, events, and lists.'
 servers:
 - url: https://{subdomain}.nationbuilder.com
   variables:
@@ -93,7 +16,7 @@ security:
 tags:
 - name: Custom Fields
   x-tag-expanded: false
-  description: Custom fields are available for Signups and Donations. See [here](https://support.nationbuilder.com/en/articles/2340612-introduction-to-custom-fields) for more information.
+  description: Custom fields are available for Signups and Donations. See here for more information.
 paths:
   /api/v2/custom_fields:
     parameters:
@@ -159,23 +82,22 @@ paths:
           $ref: '#/components/responses/rate_limited'
 components:
   schemas:
-    error_response:
-      description: The error body returned for 4xx and 5xx responses, with a machine-readable code and a human-readable message. Some errors include additional detail members alongside these two. The exception is 422 validation failures, which are returned as JSON:API errors documents instead.
+    index_document:
+      description: The JSON:API top-level document shape for paginated collection responses, with resource objects under data and pagination links.
       type: object
       required:
-      - code
-      - message
+      - data
       properties:
-        code:
-          type: string
-          description: Machine-readable error code identifying the failure.
-          examples:
-          - not_found
-        message:
-          type: string
-          description: Human-readable explanation of the failure.
-          examples:
-          - Record not found
+        data:
+          type: array
+          description: The page of resource objects for this collection; each resource binds its concrete item schema here via allOf composition.
+        links:
+          $ref: '#/components/schemas/pagination_links'
+        included:
+          $ref: '#/components/schemas/included'
+        meta:
+          type: object
+          description: Non-standard information about the document, such as requested statistics. Empty unless the endpoint has metadata to convey.
     custom_field_show_response:
       description: A JSON:API response containing a single custom field.
       allOf:
@@ -184,20 +106,18 @@ components:
         properties:
           data:
             $ref: '#/components/schemas/custom_field_response_data'
-    show_document:
-      description: The JSON:API top-level document shape for responses returning a single resource under the data member.
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          type: object
-          description: The primary resource object; each resource binds its concrete schema here via allOf composition.
-        included:
-          $ref: '#/components/schemas/included'
-        meta:
-          type: object
-          description: Non-standard information about the document. Empty unless the endpoint has metadata to convey.
+    custom_field_response_data:
+      description: The JSON:API resource object representing a custom field.
+      allOf:
+      - $ref: '#/components/schemas/resource_identifier'
+      - type: object
+        properties:
+          type:
+            const: custom_fields
+            examples:
+            - custom_fields
+          attributes:
+            $ref: '#/components/schemas/custom_field_read_only_attributes'
     custom_field_field_values:
       description: Readable custom_field attribute names selectable with sparse fieldsets (fields[custom_fields]).
       type: string
@@ -225,6 +145,71 @@ components:
         type:
           type: string
           description: The JSON:API resource type.
+    error_response:
+      description: The error body returned for 4xx and 5xx responses, with a machine-readable code and a human-readable message. Some errors include additional detail members alongside these two. The exception is 422 validation failures, which are returned as JSON:API errors documents instead.
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code identifying the failure.
+          examples:
+          - not_found
+        message:
+          type: string
+          description: Human-readable explanation of the failure.
+          examples:
+          - Record not found
+    pagination_links:
+      description: JSON:API pagination links for the pages of a collection. A key whose page is unavailable, or that the server's pagination strategy does not provide, is omitted or null.
+      type: object
+      properties:
+        self:
+          type: string
+          description: Link to the current page.
+          examples:
+          - /articles?page[number]=2
+        first:
+          type:
+          - string
+          - 'null'
+          description: Link to the first page.
+          examples:
+          - /articles?page[number]=1
+        last:
+          type:
+          - string
+          - 'null'
+          description: Link to the last page.
+          examples:
+          - /articles?page[number]=5
+        prev:
+          type:
+          - string
+          - 'null'
+          description: Link to the previous page.
+          examples:
+          - /articles?page[number]=1
+        next:
+          type:
+          - string
+          - 'null'
+          description: Link to the next page.
+          examples:
+          - /articles?page[number]=3
+    rate_limited_response:
+      description: The body returned by the rate limiter when an access token exceeds its request quota.
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          description: Human-readable explanation of the rate limit.
+          examples:
+          - You have made too many requests. Please try again later.
     custom_field_read_only_attributes:
       description: The read-only attributes of a custom_field.
       type: object
@@ -283,92 +268,25 @@ components:
           format: date-time
           examples:
           - '2019-10-26T10:00:00-04:00'
-    pagination_links:
-      description: JSON:API pagination links for the pages of a collection. A key whose page is unavailable, or that the server's pagination strategy does not provide, is omitted or null.
-      type: object
-      properties:
-        self:
-          type: string
-          description: Link to the current page.
-          examples:
-          - /articles?page[number]=2
-        first:
-          type:
-          - string
-          - 'null'
-          description: Link to the first page.
-          examples:
-          - /articles?page[number]=1
-        last:
-          type:
-          - string
-          - 'null'
-          description: Link to the last page.
-          examples:
-          - /articles?page[number]=5
-        prev:
-          type:
-          - string
-          - 'null'
-          description: Link to the previous page.
-          examples:
-          - /articles?page[number]=1
-        next:
-          type:
-          - string
-          - 'null'
-          description: Link to the next page.
-          examples:
-          - /articles?page[number]=3
-    custom_field_index_response:
-      description: A paginated JSON:API response containing a list of custom fields.
-      allOf:
-      - $ref: '#/components/schemas/index_document'
-      - type: object
-        properties:
-          data:
-            type: array
-            items:
-              $ref: '#/components/schemas/custom_field_response_data'
-    index_document:
-      description: The JSON:API top-level document shape for paginated collection responses, with resource objects under data and pagination links.
+    included:
+      description: Sideloaded resources requested via the include query parameter. Each entry is a full resource object whose shape is documented under its own resource type.
+      type: array
+      items:
+        $ref: '#/components/schemas/resource'
+    show_document:
+      description: The JSON:API top-level document shape for responses returning a single resource under the data member.
       type: object
       required:
       - data
       properties:
         data:
-          type: array
-          description: The page of resource objects for this collection; each resource binds its concrete item schema here via allOf composition.
-        links:
-          $ref: '#/components/schemas/pagination_links'
+          type: object
+          description: The primary resource object; each resource binds its concrete schema here via allOf composition.
         included:
           $ref: '#/components/schemas/included'
         meta:
           type: object
-          description: Non-standard information about the document, such as requested statistics. Empty unless the endpoint has metadata to convey.
-    custom_field_response_data:
-      description: The JSON:API resource object representing a custom field.
-      allOf:
-      - $ref: '#/components/schemas/resource_identifier'
-      - type: object
-        properties:
-          type:
-            const: custom_fields
-            examples:
-            - custom_fields
-          attributes:
-            $ref: '#/components/schemas/custom_field_read_only_attributes'
-    rate_limited_response:
-      description: The body returned by the rate limiter when an access token exceeds its request quota.
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
-          description: Human-readable explanation of the rate limit.
-          examples:
-          - You have made too many requests. Please try again later.
+          description: Non-standard information about the document. Empty unless the endpoint has metadata to convey.
     resource:
       description: A generic JSON:API resource object. Resources sideloaded in a document's included member use this shape; their attributes are those of the resource type named in the type member.
       allOf:
@@ -381,81 +299,24 @@ components:
           relationships:
             type: object
             description: References from this resource to other resources in the document.
-    included:
-      description: Sideloaded resources requested via the include query parameter. Each entry is a full resource object whose shape is documented under its own resource type.
-      type: array
-      items:
-        $ref: '#/components/schemas/resource'
-  parameters:
-    custom_field_sparse_fields:
-      name: fields[custom_fields]
-      in: query
-      required: false
-      description: Comma-delimited list of custom field attributes to only return in the response
-      schema:
-        type: array
-        default: []
-        uniqueItems: true
-        items:
-          $ref: '#/components/schemas/custom_field_field_values'
-      style: form
-      explode: false
-    pagination_size:
-      name: page[size]
-      description: 'Number of results to display per page (default: 20, max: 100, min: 1)'
-      in: query
-      required: false
-      schema:
-        type: string
-        default: '20'
-    id:
-      name: id
-      in: path
-      description: id
-      required: true
-      schema:
-        type: string
-    custom_field_show_include:
-      name: include
-      in: query
-      description: 'Comma-delimited list of sideloaded resources to include as part of the response.
-
-        See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
-
-        sideloading large numbers of resources and pagination.
-
-
-        Supported sideloads: (none)
-
-        '
-      schema:
-        type: string
-        default: ''
-    custom_field_index_include:
-      name: include
-      in: query
-      description: 'Comma-delimited list of sideloaded resources to include as part of the custom field response.
-
-        See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
-
-        sideloading large numbers of resources and pagination.
-
-
-        Supported sideloads: (none)
-
-        '
-      schema:
-        type: string
-        default: ''
-    pagination_number:
-      name: page[number]
-      description: Page number to list (starting at 1)
-      in: query
-      required: false
-      schema:
-        type: string
-        default: '1'
+    custom_field_index_response:
+      description: A paginated JSON:API response containing a list of custom fields.
+      allOf:
+      - $ref: '#/components/schemas/index_document'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/custom_field_response_data'
   headers:
+    RateLimit-Reset:
+      description: Unix timestamp (in seconds) at which the current rate-limit window resets.
+      schema:
+        type: string
+        examples:
+        - '1719964810'
+      examples: {}
     RateLimit-Remaining:
       description: Number of requests remaining for the current access token in the current rate-limit window.
       schema:
@@ -477,14 +338,23 @@ components:
         examples:
         - '250'
       examples: {}
-    RateLimit-Reset:
-      description: Unix timestamp (in seconds) at which the current rate-limit window resets.
-      schema:
-        type: string
-        examples:
-        - '1719964810'
-      examples: {}
   responses:
+    not_found:
+      description: No resource exists with the provided ID.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/json:
+          example:
+            code: not_found
+            message: Record not found
+          schema:
+            $ref: '#/components/schemas/error_response'
     unauthorized:
       description: The access token is missing, expired, or not authorized to access this resource.
       headers:
@@ -518,22 +388,75 @@ components:
             message: You have made too many requests. Please try again later.
           schema:
             $ref: '#/components/schemas/rate_limited_response'
-    not_found:
-      description: No resource exists with the provided ID.
-      headers:
-        RateLimit-Limit:
-          $ref: '#/components/headers/RateLimit-Limit'
-        RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimit-Remaining'
-        RateLimit-Reset:
-          $ref: '#/components/headers/RateLimit-Reset'
-      content:
-        application/json:
-          example:
-            code: not_found
-            message: Record not found
-          schema:
-            $ref: '#/components/schemas/error_response'
+  parameters:
+    custom_field_index_include:
+      name: include
+      in: query
+      description: 'Comma-delimited list of sideloaded resources to include as part of the custom field response.
+
+        See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
+
+        sideloading large numbers of resources and pagination.
+
+
+        Supported sideloads: (none)
+
+        '
+      schema:
+        type: string
+        default: ''
+    custom_field_show_include:
+      name: include
+      in: query
+      description: 'Comma-delimited list of sideloaded resources to include as part of the response.
+
+        See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
+
+        sideloading large numbers of resources and pagination.
+
+
+        Supported sideloads: (none)
+
+        '
+      schema:
+        type: string
+        default: ''
+    custom_field_sparse_fields:
+      name: fields[custom_fields]
+      in: query
+      required: false
+      description: Comma-delimited list of custom field attributes to only return in the response
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/custom_field_field_values'
+      style: form
+      explode: false
+    id:
+      name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    pagination_number:
+      name: page[number]
+      description: Page number to list (starting at 1)
+      in: query
+      required: false
+      schema:
+        type: string
+        default: '1'
+    pagination_size:
+      name: page[size]
+      description: 'Number of results to display per page (default: 20, max: 100, min: 1)'
+      in: query
+      required: false
+      schema:
+        type: string
+        default: '20'
   securitySchemes:
     BearerAuth:
       description: Authentication using a bearer token (JWT) issued via OAuth.
