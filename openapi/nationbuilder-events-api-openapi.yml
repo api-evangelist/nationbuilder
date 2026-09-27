@@ -332,69 +332,97 @@ paths:
         '429':
           $ref: '#/components/responses/rate_limited'
 components:
+  responses:
+    unauthorized:
+      description: The access token is missing, expired, or not authorized to access this resource.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/json:
+          example:
+            code: unauthorized
+            message: You are not authorized to access this content. Your access token may be missing. The resource owner also may not have a permission level sufficient to grant access.
+          schema:
+            $ref: '#/components/schemas/error_response'
+    rate_limited:
+      description: The access token has exceeded its request quota for the current rate-limit window.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+        Retry-After:
+          $ref: '#/components/headers/Retry-After'
+      content:
+        application/json:
+          example:
+            message: You have made too many requests. Please try again later.
+          schema:
+            $ref: '#/components/schemas/rate_limited_response'
+    bad_request:
+      description: The request body or query parameters are invalid, such as an unknown attribute, filter, filter operator, sort field, or sideload.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/json:
+          example:
+            code: bad_request
+            message: Tried to filter on attribute :bogus, but could not find an attribute with that name.
+          schema:
+            $ref: '#/components/schemas/error_response'
+    unprocessable:
+      description: Model validations failed for the resource being created or updated. Unlike this API's other errors, validation failures are returned as a JSON:API errors document locating each invalid field.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/vnd.api+json:
+          example:
+            errors:
+            - code: unprocessable_entity
+              status: '422'
+              title: Validation Error
+              detail: Email 'not-an-email' should look like an email address
+              source:
+                pointer: /data/attributes/email
+              meta:
+                attribute: email
+                message: '''not-an-email'' should look like an email address'
+          schema:
+            $ref: '#/components/schemas/validation_error_document'
+    not_found:
+      description: No resource exists with the provided ID.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/json:
+          example:
+            code: not_found
+            message: Record not found
+          schema:
+            $ref: '#/components/schemas/error_response'
   schemas:
-    event_field_values:
-      description: Readable event attribute names selectable with sparse fieldsets (fields[events]).
-      type: string
-      enum:
-      - accept_rsvps
-      - additional_rsvps_count
-      - allow_guests
-      - attending_count
-      - auto_response_broadcaster_id
-      - auto_response_content
-      - auto_response_subject
-      - capacity_count
-      - contact_email
-      - contact_email_private
-      - contact_name
-      - contact_phone_number
-      - contact_phone_private
-      - content
-      - donation_tracking_code_id
-      - duration
-      - event_form_address
-      - event_form_phone
-      - gather_volunteers
-      - page_id
-      - point_person_id
-      - private
-      - sends_auto_response
-      - show_guests
-      - start_at
-      - time_zone
-      - user_ticket_currency
-      - user_ticket_price_in_cents
-      - user_ticket_purchase_url
-      - uses_shifts
-      - uses_tickets
-      - venue_name
-    index_document:
-      description: The JSON:API top-level document shape for paginated collection responses, with resource objects under data and pagination links.
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          type: array
-          description: The page of resource objects for this collection; each resource binds its concrete item schema here via allOf composition.
-        links:
-          $ref: '#/components/schemas/pagination_links'
-        included:
-          $ref: '#/components/schemas/included'
-        meta:
-          type: object
-          description: Non-standard information about the document, such as requested statistics. Empty unless the endpoint has metadata to convey.
-    event_index_response:
-      description: A paginated JSON:API response containing a list of events.
-      allOf:
-      - $ref: '#/components/schemas/index_document'
-      - type: object
-        properties:
-          data:
-            type: array
-            items:
-              $ref: '#/components/schemas/event_response_data'
     validation_error_document:
       description: The JSON:API errors document returned with status 422 when model validations fail on create or update. Unlike this API's flat 4xx error bodies, validation failures follow the JSON:API errors format.
       type: object
@@ -406,16 +434,6 @@ components:
           minItems: 1
           items:
             $ref: '#/components/schemas/validation_error'
-    event_sideload_values:
-      description: Relationship names that can be sideloaded with the include query parameter on event endpoints.
-      type: string
-      enum:
-      - auto_response_broadcaster
-      - event_ticket_levels
-      - page
-      - point_person
-      - rsvps
-      - tracking_code
     event_read_write_attributes:
       description: The attributes of a event that can be both read and written.
       type: object
@@ -809,35 +827,31 @@ components:
           examples:
           - Event Center
           description: Name of the venue
-    resource_identifier:
-      description: A JSON:API resource identifier object, the type/id pair that uniquely identifies a single resource.
+    show_document:
+      description: The JSON:API top-level document shape for responses returning a single resource under the data member.
       type: object
       required:
-      - type
-      - id
+      - data
       properties:
-        id:
-          type: string
-          description: Unique identifier of the resource.
+        data:
+          type: object
+          description: The primary resource object; each resource binds its concrete schema here via allOf composition.
+        included:
+          $ref: '#/components/schemas/included'
+        meta:
+          type: object
+          description: Non-standard information about the document. Empty unless the endpoint has metadata to convey.
+    event_read_only_attributes:
+      description: The read-only attributes of a event.
+      type: object
+      properties:
+        page_id:
+          type:
+          - string
+          - 'null'
           examples:
           - '1'
-        type:
-          type: string
-          description: The JSON:API resource type.
-    delete_document:
-      examples:
-      - meta: {}
-      description: The successful destroy response, an empty JSON:API meta-only document returned with status 200 (rather than JSON:API's commonly used 204 No Content).
-      type: object
-      required:
-      - meta
-      additionalProperties: false
-      properties:
-        meta:
-          examples:
-          - {}
-          type: object
-          properties: {}
+          description: ID of the page associated with the event
     event_write_only_attributes:
       description: The write-only attributes of a event.
       type: object
@@ -867,82 +881,42 @@ components:
             work_phone_number: '5555555555'
             delete: true
           description: "        Attribute used to write data to the given event's Venue address.\n        When an address already exists, provided values will be used to patch the existing address data,\n        only overwriting values provided in the payload.\n        When no address exists, the existing data will be used to persist a new address.\n"
-    error_response:
-      description: The error body returned for 4xx and 5xx responses, with a machine-readable code and a human-readable message. Some errors include additional detail members alongside these two. The exception is 422 validation failures, which are returned as JSON:API errors documents instead.
-      type: object
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: string
-          description: Machine-readable error code identifying the failure.
-          examples:
-          - not_found
-        message:
-          type: string
-          description: Human-readable explanation of the failure.
-          examples:
-          - Record not found
-    pagination_links:
-      description: JSON:API pagination links for the pages of a collection. A key whose page is unavailable, or that the server's pagination strategy does not provide, is omitted or null.
-      type: object
-      properties:
-        self:
-          type: string
-          description: Link to the current page.
-          examples:
-          - /articles?page[number]=2
-        first:
-          type:
-          - string
-          - 'null'
-          description: Link to the first page.
-          examples:
-          - /articles?page[number]=1
-        last:
-          type:
-          - string
-          - 'null'
-          description: Link to the last page.
-          examples:
-          - /articles?page[number]=5
-        prev:
-          type:
-          - string
-          - 'null'
-          description: Link to the previous page.
-          examples:
-          - /articles?page[number]=1
-        next:
-          type:
-          - string
-          - 'null'
-          description: Link to the next page.
-          examples:
-          - /articles?page[number]=3
-    event_show_response:
-      description: A JSON:API response containing a single event.
-      allOf:
-      - $ref: '#/components/schemas/show_document'
-      - type: object
-        properties:
-          data:
-            $ref: '#/components/schemas/event_response_data'
-    event_response_data:
-      description: The JSON:API resource object representing a event.
-      allOf:
-      - $ref: '#/components/schemas/resource_identifier'
-      - type: object
-        properties:
-          type:
-            const: events
-            examples:
-            - events
-          attributes:
-            allOf:
-            - $ref: '#/components/schemas/event_read_write_attributes'
-            - $ref: '#/components/schemas/event_read_only_attributes'
+    event_field_values:
+      description: Readable event attribute names selectable with sparse fieldsets (fields[events]).
+      type: string
+      enum:
+      - accept_rsvps
+      - additional_rsvps_count
+      - allow_guests
+      - attending_count
+      - auto_response_broadcaster_id
+      - auto_response_content
+      - auto_response_subject
+      - capacity_count
+      - contact_email
+      - contact_email_private
+      - contact_name
+      - contact_phone_number
+      - contact_phone_private
+      - content
+      - donation_tracking_code_id
+      - duration
+      - event_form_address
+      - event_form_phone
+      - gather_volunteers
+      - page_id
+      - point_person_id
+      - private
+      - sends_auto_response
+      - show_guests
+      - start_at
+      - time_zone
+      - user_ticket_currency
+      - user_ticket_price_in_cents
+      - user_ticket_purchase_url
+      - uses_shifts
+      - uses_tickets
+      - venue_name
     rate_limited_response:
       description: The body returned by the rate limiter when an access token exceeds its request quota.
       type: object
@@ -954,43 +928,6 @@ components:
           description: Human-readable explanation of the rate limit.
           examples:
           - You have made too many requests. Please try again later.
-    update_request_document:
-      description: The JSON:API top-level document shape for update requests, whose data member identifies the resource by type and id and carries the changed attributes.
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - id
-          properties:
-            id:
-              type: string
-              description: The ID of the resource being updated.
-            type:
-              type: string
-              description: The JSON:API resource type of the resource being updated.
-    included:
-      description: Sideloaded resources requested via the include query parameter. Each entry is a full resource object whose shape is documented under its own resource type.
-      type: array
-      items:
-        $ref: '#/components/schemas/resource'
-    show_document:
-      description: The JSON:API top-level document shape for responses returning a single resource under the data member.
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          type: object
-          description: The primary resource object; each resource binds its concrete schema here via allOf composition.
-        included:
-          $ref: '#/components/schemas/included'
-        meta:
-          type: object
-          description: Non-standard information about the document. Empty unless the endpoint has metadata to convey.
     resource:
       description: A generic JSON:API resource object. Resources sideloaded in a document's included member use this shape; their attributes are those of the resource type named in the type member.
       allOf:
@@ -1003,6 +940,89 @@ components:
           relationships:
             type: object
             description: References from this resource to other resources in the document.
+    sidepost_relationship_data:
+      description: Identifies a related resource written in the same request (a sidepost), an extension to JSON:API. For method create, the temp-id links this relationship entry to the matching object in the request's top-level included array; the other methods identify an existing related resource by id. Omitting method associates an existing resource without modifying it.
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          description: The JSON:API type of the related resource.
+        id:
+          type: string
+          description: The ID of an existing related resource; used with every method except create.
+        temp-id:
+          type: string
+          description: Client-generated temporary ID tying this relationship to an entry in the included array when creating the related resource.
+          examples:
+          - new-id
+        method:
+          type: string
+          description: The sidepost operation to perform on the related resource.
+          enum:
+          - create
+          - update
+          - destroy
+          - disassociate
+          examples:
+          - create
+    index_document:
+      description: The JSON:API top-level document shape for paginated collection responses, with resource objects under data and pagination links.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: array
+          description: The page of resource objects for this collection; each resource binds its concrete item schema here via allOf composition.
+        links:
+          $ref: '#/components/schemas/pagination_links'
+        included:
+          $ref: '#/components/schemas/included'
+        meta:
+          type: object
+          description: Non-standard information about the document, such as requested statistics. Empty unless the endpoint has metadata to convey.
+    event_update_request:
+      description: The request body for updating an existing event.
+      allOf:
+      - $ref: '#/components/schemas/update_request_document'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              id:
+                type: string
+                examples:
+                - '1'
+              type:
+                const: events
+                examples:
+                - events
+              attributes:
+                allOf:
+                - $ref: '#/components/schemas/event_read_write_attributes'
+                - $ref: '#/components/schemas/event_write_only_attributes'
+    create_request_document:
+      description: The JSON:API top-level document shape for create requests, whose data member carries the new resource's type and attributes.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          properties:
+            type:
+              type: string
+              description: The JSON:API resource type of the resource being created.
+    event_extra_field_values:
+      description: Opt-in event attribute names requestable with extra_fields[events].
+      type: string
+      enum:
+      - venue_address
     page_sidepost_attributes:
       description: Writable page attributes for sideposting; excludes page_type_name which the parent resource sets.
       type: object
@@ -1086,17 +1106,103 @@ components:
           examples:
           - Page Title
           description: Brief page description seen on search engines.
-    event_read_only_attributes:
-      description: The read-only attributes of a event.
+    event_index_response:
+      description: A paginated JSON:API response containing a list of events.
+      allOf:
+      - $ref: '#/components/schemas/index_document'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/event_response_data'
+    pagination_links:
+      description: JSON:API pagination links for the pages of a collection. A key whose page is unavailable, or that the server's pagination strategy does not provide, is omitted or null.
       type: object
       properties:
-        page_id:
+        self:
+          type: string
+          description: Link to the current page.
+          examples:
+          - /articles?page[number]=2
+        first:
           type:
           - string
           - 'null'
+          description: Link to the first page.
           examples:
-          - '1'
-          description: ID of the page associated with the event
+          - /articles?page[number]=1
+        last:
+          type:
+          - string
+          - 'null'
+          description: Link to the last page.
+          examples:
+          - /articles?page[number]=5
+        prev:
+          type:
+          - string
+          - 'null'
+          description: Link to the previous page.
+          examples:
+          - /articles?page[number]=1
+        next:
+          type:
+          - string
+          - 'null'
+          description: Link to the next page.
+          examples:
+          - /articles?page[number]=3
+    update_request_document:
+      description: The JSON:API top-level document shape for update requests, whose data member identifies the resource by type and id and carries the changed attributes.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          properties:
+            id:
+              type: string
+              description: The ID of the resource being updated.
+            type:
+              type: string
+              description: The JSON:API resource type of the resource being updated.
+    event_sideload_values:
+      description: Relationship names that can be sideloaded with the include query parameter on event endpoints.
+      type: string
+      enum:
+      - auto_response_broadcaster
+      - event_ticket_levels
+      - page
+      - point_person
+      - rsvps
+      - tracking_code
+    event_show_response:
+      description: A JSON:API response containing a single event.
+      allOf:
+      - $ref: '#/components/schemas/show_document'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/event_response_data'
+    delete_document:
+      examples:
+      - meta: {}
+      description: The successful destroy response, an empty JSON:API meta-only document returned with status 200 (rather than JSON:API's commonly used 204 No Content).
+      type: object
+      required:
+      - meta
+      additionalProperties: false
+      properties:
+        meta:
+          examples:
+          - {}
+          type: object
+          properties: {}
     event_create_request:
       description: The request body for creating a new event.
       allOf:
@@ -1171,25 +1277,11 @@ components:
                         description: Must be 'Event' for this endpoint.
                         enum:
                         - Event
-    event_extra_field_values:
-      description: Opt-in event attribute names requestable with extra_fields[events].
-      type: string
-      enum:
-      - venue_address
-    create_request_document:
-      description: The JSON:API top-level document shape for create requests, whose data member carries the new resource's type and attributes.
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          properties:
-            type:
-              type: string
-              description: The JSON:API resource type of the resource being created.
+    included:
+      description: Sideloaded resources requested via the include query parameter. Each entry is a full resource object whose shape is documented under its own resource type.
+      type: array
+      items:
+        $ref: '#/components/schemas/resource'
     validation_error:
       description: A single JSON:API error object describing a validation failure, locating the invalid field via source.pointer and carrying the model-level attribute, message, and code under meta.
       type: object
@@ -1235,68 +1327,59 @@ components:
             code:
               type: string
               description: The validation failure code.
-    sidepost_relationship_data:
-      description: Identifies a related resource written in the same request (a sidepost), an extension to JSON:API. For method create, the temp-id links this relationship entry to the matching object in the request's top-level included array; the other methods identify an existing related resource by id. Omitting method associates an existing resource without modifying it.
+    event_response_data:
+      description: The JSON:API resource object representing a event.
+      allOf:
+      - $ref: '#/components/schemas/resource_identifier'
+      - type: object
+        properties:
+          type:
+            const: events
+            examples:
+            - events
+          attributes:
+            allOf:
+            - $ref: '#/components/schemas/event_read_write_attributes'
+            - $ref: '#/components/schemas/event_read_only_attributes'
+    resource_identifier:
+      description: A JSON:API resource identifier object, the type/id pair that uniquely identifies a single resource.
       type: object
       required:
       - type
+      - id
       properties:
-        type:
-          type: string
-          description: The JSON:API type of the related resource.
         id:
           type: string
-          description: The ID of an existing related resource; used with every method except create.
-        temp-id:
-          type: string
-          description: Client-generated temporary ID tying this relationship to an entry in the included array when creating the related resource.
+          description: Unique identifier of the resource.
           examples:
-          - new-id
-        method:
+          - '1'
+        type:
           type: string
-          description: The sidepost operation to perform on the related resource.
-          enum:
-          - create
-          - update
-          - destroy
-          - disassociate
+          description: The JSON:API resource type.
+    error_response:
+      description: The error body returned for 4xx and 5xx responses, with a machine-readable code and a human-readable message. Some errors include additional detail members alongside these two. The exception is 422 validation failures, which are returned as JSON:API errors documents instead.
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code identifying the failure.
           examples:
-          - create
-    event_update_request:
-      description: The request body for updating an existing event.
-      allOf:
-      - $ref: '#/components/schemas/update_request_document'
-      - type: object
-        properties:
-          data:
-            type: object
-            properties:
-              id:
-                type: string
-                examples:
-                - '1'
-              type:
-                const: events
-                examples:
-                - events
-              attributes:
-                allOf:
-                - $ref: '#/components/schemas/event_read_write_attributes'
-                - $ref: '#/components/schemas/event_write_only_attributes'
+          - not_found
+        message:
+          type: string
+          description: Human-readable explanation of the failure.
+          examples:
+          - Record not found
   headers:
-    RateLimit-Reset:
-      description: Unix timestamp (in seconds) at which the current rate-limit window resets.
+    Retry-After:
+      description: Number of seconds to wait before retrying. Sent with 429 responses.
       schema:
         type: string
         examples:
-        - '1719964810'
-      examples: {}
-    RateLimit-Limit:
-      description: Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).
-      schema:
-        type: string
-        examples:
-        - '250'
+        - '10'
       examples: {}
     RateLimit-Remaining:
       description: Number of requests remaining for the current access token in the current rate-limit window.
@@ -1305,62 +1388,21 @@ components:
         examples:
         - '249'
       examples: {}
-    Retry-After:
-      description: Number of seconds to wait before retrying. Sent with 429 responses.
+    RateLimit-Limit:
+      description: Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).
       schema:
         type: string
         examples:
-        - '10'
+        - '250'
+      examples: {}
+    RateLimit-Reset:
+      description: Unix timestamp (in seconds) at which the current rate-limit window resets.
+      schema:
+        type: string
+        examples:
+        - '1719964810'
       examples: {}
   parameters:
-    event_show_include:
-      name: include
-      in: query
-      description: 'Comma-delimited list of sideloaded resources to include as part of the event response.
-
-        See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
-
-        sideloading large numbers of resources and pagination.
-
-        '
-      schema:
-        type: array
-        default: []
-        uniqueItems: true
-        items:
-          $ref: '#/components/schemas/event_sideload_values'
-      required: false
-      style: form
-      explode: false
-    event_sparse_fields:
-      name: fields[events]
-      in: query
-      required: false
-      description: Comma-delimited list of event attributes to only return in the response
-      schema:
-        type: array
-        default: []
-        uniqueItems: true
-        items:
-          $ref: '#/components/schemas/event_field_values'
-      style: form
-      explode: false
-    pagination_number:
-      name: page[number]
-      description: Page number to list (starting at 1)
-      in: query
-      required: false
-      schema:
-        type: string
-        default: '1'
-    pagination_size:
-      name: page[size]
-      description: 'Number of results to display per page (default: 20, max: 100, min: 1)'
-      in: query
-      required: false
-      schema:
-        type: string
-        default: '20'
     event_index_include:
       name: include
       in: query
@@ -1393,6 +1435,46 @@ components:
           $ref: '#/components/schemas/event_extra_field_values'
       style: form
       explode: false
+    event_show_include:
+      name: include
+      in: query
+      description: 'Comma-delimited list of sideloaded resources to include as part of the event response.
+
+        See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
+
+        sideloading large numbers of resources and pagination.
+
+        '
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/event_sideload_values'
+      required: false
+      style: form
+      explode: false
+    event_sparse_fields:
+      name: fields[events]
+      in: query
+      required: false
+      description: Comma-delimited list of event attributes to only return in the response
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/event_field_values'
+      style: form
+      explode: false
+    pagination_size:
+      name: page[size]
+      description: 'Number of results to display per page (default: 20, max: 100, min: 1)'
+      in: query
+      required: false
+      schema:
+        type: string
+        default: '20'
     id:
       name: id
       in: path
@@ -1400,96 +1482,14 @@ components:
       required: true
       schema:
         type: string
-  responses:
-    not_found:
-      description: No resource exists with the provided ID.
-      headers:
-        RateLimit-Limit:
-          $ref: '#/components/headers/RateLimit-Limit'
-        RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimit-Remaining'
-        RateLimit-Reset:
-          $ref: '#/components/headers/RateLimit-Reset'
-      content:
-        application/json:
-          example:
-            code: not_found
-            message: Record not found
-          schema:
-            $ref: '#/components/schemas/error_response'
-    unauthorized:
-      description: The access token is missing, expired, or not authorized to access this resource.
-      headers:
-        RateLimit-Limit:
-          $ref: '#/components/headers/RateLimit-Limit'
-        RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimit-Remaining'
-        RateLimit-Reset:
-          $ref: '#/components/headers/RateLimit-Reset'
-      content:
-        application/json:
-          example:
-            code: unauthorized
-            message: You are not authorized to access this content. Your access token may be missing. The resource owner also may not have a permission level sufficient to grant access.
-          schema:
-            $ref: '#/components/schemas/error_response'
-    rate_limited:
-      description: The access token has exceeded its request quota for the current rate-limit window.
-      headers:
-        RateLimit-Limit:
-          $ref: '#/components/headers/RateLimit-Limit'
-        RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimit-Remaining'
-        RateLimit-Reset:
-          $ref: '#/components/headers/RateLimit-Reset'
-        Retry-After:
-          $ref: '#/components/headers/Retry-After'
-      content:
-        application/json:
-          example:
-            message: You have made too many requests. Please try again later.
-          schema:
-            $ref: '#/components/schemas/rate_limited_response'
-    bad_request:
-      description: The request body or query parameters are invalid, such as an unknown attribute, filter, filter operator, sort field, or sideload.
-      headers:
-        RateLimit-Limit:
-          $ref: '#/components/headers/RateLimit-Limit'
-        RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimit-Remaining'
-        RateLimit-Reset:
-          $ref: '#/components/headers/RateLimit-Reset'
-      content:
-        application/json:
-          example:
-            code: bad_request
-            message: Tried to filter on attribute :bogus, but could not find an attribute with that name.
-          schema:
-            $ref: '#/components/schemas/error_response'
-    unprocessable:
-      description: Model validations failed for the resource being created or updated. Unlike this API's other errors, validation failures are returned as a JSON:API errors document locating each invalid field.
-      headers:
-        RateLimit-Limit:
-          $ref: '#/components/headers/RateLimit-Limit'
-        RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimit-Remaining'
-        RateLimit-Reset:
-          $ref: '#/components/headers/RateLimit-Reset'
-      content:
-        application/vnd.api+json:
-          example:
-            errors:
-            - code: unprocessable_entity
-              status: '422'
-              title: Validation Error
-              detail: Email 'not-an-email' should look like an email address
-              source:
-                pointer: /data/attributes/email
-              meta:
-                attribute: email
-                message: '''not-an-email'' should look like an email address'
-          schema:
-            $ref: '#/components/schemas/validation_error_document'
+    pagination_number:
+      name: page[number]
+      description: Page number to list (starting at 1)
+      in: query
+      required: false
+      schema:
+        type: string
+        default: '1'
   requestBodies:
     event_update_request_body:
       description: The attributes to update on the existing event.

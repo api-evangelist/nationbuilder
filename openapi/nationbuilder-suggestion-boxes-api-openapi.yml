@@ -260,6 +260,84 @@ paths:
           $ref: '#/components/responses/rate_limited'
 components:
   schemas:
+    suggestion_box_sideload_values:
+      description: Relationship names that can be sideloaded with the include query parameter on suggestion_box endpoints.
+      type: string
+      enum:
+      - page
+      - point_person
+      - suggestions
+    validation_error_document:
+      description: The JSON:API errors document returned with status 422 when model validations fail on create or update. Unlike this API's flat 4xx error bodies, validation failures follow the JSON:API errors format.
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/validation_error'
+    suggestion_box_create_request:
+      description: The request body for creating a new suggestion box.
+      allOf:
+      - $ref: '#/components/schemas/create_request_document'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              type:
+                const: suggestion_boxes
+                examples:
+                - suggestion_boxes
+              attributes:
+                $ref: '#/components/schemas/suggestion_box_read_write_attributes'
+    show_document:
+      description: The JSON:API top-level document shape for responses returning a single resource under the data member.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: object
+          description: The primary resource object; each resource binds its concrete schema here via allOf composition.
+        included:
+          $ref: '#/components/schemas/included'
+        meta:
+          type: object
+          description: Non-standard information about the document. Empty unless the endpoint has metadata to convey.
+    suggestion_box_show_response:
+      description: A JSON:API response containing a single suggestion box.
+      allOf:
+      - $ref: '#/components/schemas/show_document'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/suggestion_box_response_data'
+    rate_limited_response:
+      description: The body returned by the rate limiter when an access token exceeds its request quota.
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          description: Human-readable explanation of the rate limit.
+          examples:
+          - You have made too many requests. Please try again later.
+    resource:
+      description: A generic JSON:API resource object. Resources sideloaded in a document's included member use this shape; their attributes are those of the resource type named in the type member.
+      allOf:
+      - $ref: '#/components/schemas/resource_identifier'
+      - type: object
+        properties:
+          attributes:
+            type: object
+            description: The attributes of the resource, as documented for its resource type.
+          relationships:
+            type: object
+            description: References from this resource to other resources in the document.
     index_document:
       description: The JSON:API top-level document shape for paginated collection responses, with resource objects under data and pagination links.
       type: object
@@ -276,111 +354,45 @@ components:
         meta:
           type: object
           description: Non-standard information about the document, such as requested statistics. Empty unless the endpoint has metadata to convey.
-    suggestion_box_index_response:
-      description: A paginated JSON:API response containing a list of suggestion boxes.
-      allOf:
-      - $ref: '#/components/schemas/index_document'
-      - type: object
-        properties:
-          data:
-            type: array
-            items:
-              $ref: '#/components/schemas/suggestion_box_response_data'
-    suggestion_box_create_request:
-      description: The request body for creating a new suggestion box.
-      allOf:
-      - $ref: '#/components/schemas/create_request_document'
-      - type: object
-        properties:
-          data:
-            type: object
-            properties:
-              type:
-                const: suggestion_boxes
-                examples:
-                - suggestion_boxes
-              attributes:
-                $ref: '#/components/schemas/suggestion_box_read_write_attributes'
-    validation_error_document:
-      description: The JSON:API errors document returned with status 422 when model validations fail on create or update. Unlike this API's flat 4xx error bodies, validation failures follow the JSON:API errors format.
+    create_request_document:
+      description: The JSON:API top-level document shape for create requests, whose data member carries the new resource's type and attributes.
       type: object
       required:
-      - errors
+      - data
       properties:
-        errors:
-          type: array
-          minItems: 1
-          items:
-            $ref: '#/components/schemas/validation_error'
-    resource_identifier:
-      description: A JSON:API resource identifier object, the type/id pair that uniquely identifies a single resource.
-      type: object
-      required:
-      - type
-      - id
-      properties:
-        id:
-          type: string
-          description: Unique identifier of the resource.
-          examples:
-          - '1'
-        type:
-          type: string
-          description: The JSON:API resource type.
-    error_response:
-      description: The error body returned for 4xx and 5xx responses, with a machine-readable code and a human-readable message. Some errors include additional detail members alongside these two. The exception is 422 validation failures, which are returned as JSON:API errors documents instead.
-      type: object
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: string
-          description: Machine-readable error code identifying the failure.
-          examples:
-          - not_found
-        message:
-          type: string
-          description: Human-readable explanation of the failure.
-          examples:
-          - Record not found
-    pagination_links:
-      description: JSON:API pagination links for the pages of a collection. A key whose page is unavailable, or that the server's pagination strategy does not provide, is omitted or null.
-      type: object
-      properties:
-        self:
-          type: string
-          description: Link to the current page.
-          examples:
-          - /articles?page[number]=2
-        first:
-          type:
-          - string
-          - 'null'
-          description: Link to the first page.
-          examples:
-          - /articles?page[number]=1
-        last:
-          type:
-          - string
-          - 'null'
-          description: Link to the last page.
-          examples:
-          - /articles?page[number]=5
-        prev:
-          type:
-          - string
-          - 'null'
-          description: Link to the previous page.
-          examples:
-          - /articles?page[number]=1
-        next:
-          type:
-          - string
-          - 'null'
-          description: Link to the next page.
-          examples:
-          - /articles?page[number]=3
+        data:
+          type: object
+          required:
+          - type
+          properties:
+            type:
+              type: string
+              description: The JSON:API resource type of the resource being created.
+    suggestion_box_field_values:
+      description: Readable suggestion_box attribute names selectable with sparse fieldsets (fields[suggestion_boxes]).
+      type: string
+      enum:
+      - allow_image
+      - auto_response_broadcaster
+      - content
+      - created_at
+      - external_id
+      - headline
+      - name
+      - official_response_notification_broadcaster
+      - page_id
+      - point_person_id
+      - require_image
+      - response_notification_broadcaster
+      - send_auto_responses
+      - send_official_response_notifications
+      - send_response_notifications
+      - site_id
+      - slug
+      - status
+      - tag_list
+      - title
+      - updated_at
     suggestion_box_read_write_attributes:
       description: The attributes of a suggestion_box that can be both read and written.
       type: object
@@ -499,24 +511,43 @@ components:
           examples:
           - Community Ideas - My Site
           description: Page title. If not provided, or set to empty, will default to "name - site.name"
-    rate_limited_response:
-      description: The body returned by the rate limiter when an access token exceeds its request quota.
+    pagination_links:
+      description: JSON:API pagination links for the pages of a collection. A key whose page is unavailable, or that the server's pagination strategy does not provide, is omitted or null.
       type: object
-      required:
-      - message
       properties:
-        message:
+        self:
           type: string
-          description: Human-readable explanation of the rate limit.
+          description: Link to the current page.
           examples:
-          - You have made too many requests. Please try again later.
-    suggestion_box_sideload_values:
-      description: Relationship names that can be sideloaded with the include query parameter on suggestion_box endpoints.
-      type: string
-      enum:
-      - page
-      - point_person
-      - suggestions
+          - /articles?page[number]=2
+        first:
+          type:
+          - string
+          - 'null'
+          description: Link to the first page.
+          examples:
+          - /articles?page[number]=1
+        last:
+          type:
+          - string
+          - 'null'
+          description: Link to the last page.
+          examples:
+          - /articles?page[number]=5
+        prev:
+          type:
+          - string
+          - 'null'
+          description: Link to the previous page.
+          examples:
+          - /articles?page[number]=1
+        next:
+          type:
+          - string
+          - 'null'
+          description: Link to the next page.
+          examples:
+          - /articles?page[number]=3
     update_request_document:
       description: The JSON:API top-level document shape for update requests, whose data member identifies the resource by type and id and carries the changed attributes.
       type: object
@@ -535,117 +566,40 @@ components:
             type:
               type: string
               description: The JSON:API resource type of the resource being updated.
-    suggestion_box_field_values:
-      description: Readable suggestion_box attribute names selectable with sparse fieldsets (fields[suggestion_boxes]).
-      type: string
-      enum:
-      - allow_image
-      - auto_response_broadcaster
-      - content
-      - created_at
-      - external_id
-      - headline
-      - name
-      - official_response_notification_broadcaster
-      - page_id
-      - point_person_id
-      - require_image
-      - response_notification_broadcaster
-      - send_auto_responses
-      - send_official_response_notifications
-      - send_response_notifications
-      - site_id
-      - slug
-      - status
-      - tag_list
-      - title
-      - updated_at
+    suggestion_box_update_request:
+      description: The request body for updating an existing suggestion box.
+      allOf:
+      - $ref: '#/components/schemas/update_request_document'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              id:
+                type: string
+                examples:
+                - '1'
+              type:
+                const: suggestion_boxes
+                examples:
+                - suggestion_boxes
+              attributes:
+                $ref: '#/components/schemas/suggestion_box_read_write_attributes'
     included:
       description: Sideloaded resources requested via the include query parameter. Each entry is a full resource object whose shape is documented under its own resource type.
       type: array
       items:
         $ref: '#/components/schemas/resource'
-    show_document:
-      description: The JSON:API top-level document shape for responses returning a single resource under the data member.
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          type: object
-          description: The primary resource object; each resource binds its concrete schema here via allOf composition.
-        included:
-          $ref: '#/components/schemas/included'
-        meta:
-          type: object
-          description: Non-standard information about the document. Empty unless the endpoint has metadata to convey.
-    resource:
-      description: A generic JSON:API resource object. Resources sideloaded in a document's included member use this shape; their attributes are those of the resource type named in the type member.
+    suggestion_box_index_response:
+      description: A paginated JSON:API response containing a list of suggestion boxes.
       allOf:
-      - $ref: '#/components/schemas/resource_identifier'
-      - type: object
-        properties:
-          attributes:
-            type: object
-            description: The attributes of the resource, as documented for its resource type.
-          relationships:
-            type: object
-            description: References from this resource to other resources in the document.
-    suggestion_box_read_only_attributes:
-      description: The read-only attributes of a suggestion_box.
-      type: object
-      properties:
-        created_at:
-          type: string
-          format: date-time
-          examples:
-          - '2019-10-26T10:00:00-04:00'
-        page_id:
-          type: string
-          examples:
-          - '1'
-          description: Associated page ID (read-only)
-        updated_at:
-          type: string
-          format: date-time
-          examples:
-          - '2019-10-26T10:00:00-04:00'
-    suggestion_box_show_response:
-      description: A JSON:API response containing a single suggestion box.
-      allOf:
-      - $ref: '#/components/schemas/show_document'
+      - $ref: '#/components/schemas/index_document'
       - type: object
         properties:
           data:
-            $ref: '#/components/schemas/suggestion_box_response_data'
-    suggestion_box_response_data:
-      description: The JSON:API resource object representing a suggestion box.
-      allOf:
-      - $ref: '#/components/schemas/resource_identifier'
-      - type: object
-        properties:
-          type:
-            const: suggestion_boxes
-            examples:
-            - suggestion_boxes
-          attributes:
-            allOf:
-            - $ref: '#/components/schemas/suggestion_box_read_write_attributes'
-            - $ref: '#/components/schemas/suggestion_box_read_only_attributes'
-    create_request_document:
-      description: The JSON:API top-level document shape for create requests, whose data member carries the new resource's type and attributes.
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          properties:
-            type:
-              type: string
-              description: The JSON:API resource type of the resource being created.
+            type: array
+            items:
+              $ref: '#/components/schemas/suggestion_box_response_data'
     validation_error:
       description: A single JSON:API error object describing a validation failure, locating the invalid field via source.pointer and carrying the model-level attribute, message, and code under meta.
       type: object
@@ -691,71 +645,72 @@ components:
             code:
               type: string
               description: The validation failure code.
-    suggestion_box_update_request:
-      description: The request body for updating an existing suggestion box.
+    suggestion_box_read_only_attributes:
+      description: The read-only attributes of a suggestion_box.
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+        page_id:
+          type: string
+          examples:
+          - '1'
+          description: Associated page ID (read-only)
+        updated_at:
+          type: string
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+    suggestion_box_response_data:
+      description: The JSON:API resource object representing a suggestion box.
       allOf:
-      - $ref: '#/components/schemas/update_request_document'
+      - $ref: '#/components/schemas/resource_identifier'
       - type: object
         properties:
-          data:
-            type: object
-            properties:
-              id:
-                type: string
-                examples:
-                - '1'
-              type:
-                const: suggestion_boxes
-                examples:
-                - suggestion_boxes
-              attributes:
-                $ref: '#/components/schemas/suggestion_box_read_write_attributes'
-  headers:
-    RateLimit-Reset:
-      description: Unix timestamp (in seconds) at which the current rate-limit window resets.
-      schema:
-        type: string
-        examples:
-        - '1719964810'
-      examples: {}
-    RateLimit-Limit:
-      description: Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).
-      schema:
-        type: string
-        examples:
-        - '250'
-      examples: {}
-    RateLimit-Remaining:
-      description: Number of requests remaining for the current access token in the current rate-limit window.
-      schema:
-        type: string
-        examples:
-        - '249'
-      examples: {}
-    Retry-After:
-      description: Number of seconds to wait before retrying. Sent with 429 responses.
-      schema:
-        type: string
-        examples:
-        - '10'
-      examples: {}
+          type:
+            const: suggestion_boxes
+            examples:
+            - suggestion_boxes
+          attributes:
+            allOf:
+            - $ref: '#/components/schemas/suggestion_box_read_write_attributes'
+            - $ref: '#/components/schemas/suggestion_box_read_only_attributes'
+    resource_identifier:
+      description: A JSON:API resource identifier object, the type/id pair that uniquely identifies a single resource.
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the resource.
+          examples:
+          - '1'
+        type:
+          type: string
+          description: The JSON:API resource type.
+    error_response:
+      description: The error body returned for 4xx and 5xx responses, with a machine-readable code and a human-readable message. Some errors include additional detail members alongside these two. The exception is 422 validation failures, which are returned as JSON:API errors documents instead.
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code identifying the failure.
+          examples:
+          - not_found
+        message:
+          type: string
+          description: Human-readable explanation of the failure.
+          examples:
+          - Record not found
   responses:
-    not_found:
-      description: No resource exists with the provided ID.
-      headers:
-        RateLimit-Limit:
-          $ref: '#/components/headers/RateLimit-Limit'
-        RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimit-Remaining'
-        RateLimit-Reset:
-          $ref: '#/components/headers/RateLimit-Reset'
-      content:
-        application/json:
-          example:
-            code: not_found
-            message: Record not found
-          schema:
-            $ref: '#/components/schemas/error_response'
     unauthorized:
       description: The access token is missing, expired, or not authorized to access this resource.
       headers:
@@ -829,16 +784,52 @@ components:
                 message: '''not-an-email'' should look like an email address'
           schema:
             $ref: '#/components/schemas/validation_error_document'
-  requestBodies:
-    suggestion_box_update_request_body:
-      description: The attributes to update on the existing suggestion box.
+    not_found:
+      description: No resource exists with the provided ID.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
       content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/suggestion_box_update_request'
         application/json:
+          example:
+            code: not_found
+            message: Record not found
           schema:
-            $ref: '#/components/schemas/suggestion_box_update_request'
+            $ref: '#/components/schemas/error_response'
+  headers:
+    Retry-After:
+      description: Number of seconds to wait before retrying. Sent with 429 responses.
+      schema:
+        type: string
+        examples:
+        - '10'
+      examples: {}
+    RateLimit-Remaining:
+      description: Number of requests remaining for the current access token in the current rate-limit window.
+      schema:
+        type: string
+        examples:
+        - '249'
+      examples: {}
+    RateLimit-Limit:
+      description: Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).
+      schema:
+        type: string
+        examples:
+        - '250'
+      examples: {}
+    RateLimit-Reset:
+      description: Unix timestamp (in seconds) at which the current rate-limit window resets.
+      schema:
+        type: string
+        examples:
+        - '1719964810'
+      examples: {}
+  requestBodies:
     suggestion_box_create_request_body:
       description: The suggestion box to create.
       content:
@@ -848,26 +839,16 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/suggestion_box_create_request'
+    suggestion_box_update_request_body:
+      description: The attributes to update on the existing suggestion box.
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/suggestion_box_update_request'
+        application/json:
+          schema:
+            $ref: '#/components/schemas/suggestion_box_update_request'
   parameters:
-    suggestion_box_show_include:
-      name: include
-      in: query
-      description: 'Comma-delimited list of sideloaded resources to include as part of the suggestion box response.
-
-        See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
-
-        sideloading large numbers of resources and pagination.
-
-        '
-      schema:
-        type: array
-        default: []
-        uniqueItems: true
-        items:
-          $ref: '#/components/schemas/suggestion_box_sideload_values'
-      required: false
-      style: form
-      explode: false
     suggestion_box_index_include:
       name: include
       in: query
@@ -887,14 +868,6 @@ components:
       required: false
       style: form
       explode: false
-    pagination_number:
-      name: page[number]
-      description: Page number to list (starting at 1)
-      in: query
-      required: false
-      schema:
-        type: string
-        default: '1'
     pagination_size:
       name: page[size]
       description: 'Number of results to display per page (default: 20, max: 100, min: 1)'
@@ -916,6 +889,25 @@ components:
           $ref: '#/components/schemas/suggestion_box_field_values'
       style: form
       explode: false
+    suggestion_box_show_include:
+      name: include
+      in: query
+      description: 'Comma-delimited list of sideloaded resources to include as part of the suggestion box response.
+
+        See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
+
+        sideloading large numbers of resources and pagination.
+
+        '
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/suggestion_box_sideload_values'
+      required: false
+      style: form
+      explode: false
     id:
       name: id
       in: path
@@ -923,6 +915,14 @@ components:
       required: true
       schema:
         type: string
+    pagination_number:
+      name: page[number]
+      description: Page number to list (starting at 1)
+      in: query
+      required: false
+      schema:
+        type: string
+        default: '1'
   securitySchemes:
     BearerAuth:
       description: Authentication using a bearer token (JWT) issued via OAuth.
