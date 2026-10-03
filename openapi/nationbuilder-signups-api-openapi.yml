@@ -271,108 +271,374 @@ paths:
         '429':
           $ref: '#/components/responses/rate_limited'
 components:
-  responses:
-    unauthorized:
-      description: The access token is missing, expired, or not authorized to access this resource.
-      headers:
-        RateLimit-Limit:
-          $ref: '#/components/headers/RateLimit-Limit'
-        RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimit-Remaining'
-        RateLimit-Reset:
-          $ref: '#/components/headers/RateLimit-Reset'
-      content:
-        application/json:
-          example:
-            code: unauthorized
-            message: You are not authorized to access this content. Your access token may be missing. The resource owner also may not have a permission level sufficient to grant access.
-          schema:
-            $ref: '#/components/schemas/error_response'
-    rate_limited:
-      description: The access token has exceeded its request quota for the current rate-limit window.
-      headers:
-        RateLimit-Limit:
-          $ref: '#/components/headers/RateLimit-Limit'
-        RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimit-Remaining'
-        RateLimit-Reset:
-          $ref: '#/components/headers/RateLimit-Reset'
-        Retry-After:
-          $ref: '#/components/headers/Retry-After'
-      content:
-        application/json:
-          example:
-            message: You have made too many requests. Please try again later.
-          schema:
-            $ref: '#/components/schemas/rate_limited_response'
-    bad_request:
-      description: The request body or query parameters are invalid, such as an unknown attribute, filter, filter operator, sort field, or sideload.
-      headers:
-        RateLimit-Limit:
-          $ref: '#/components/headers/RateLimit-Limit'
-        RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimit-Remaining'
-        RateLimit-Reset:
-          $ref: '#/components/headers/RateLimit-Reset'
-      content:
-        application/json:
-          example:
-            code: bad_request
-            message: Tried to filter on attribute :bogus, but could not find an attribute with that name.
-          schema:
-            $ref: '#/components/schemas/error_response'
-    unprocessable:
-      description: Model validations failed for the resource being created or updated. Unlike this API's other errors, validation failures are returned as a JSON:API errors document locating each invalid field.
-      headers:
-        RateLimit-Limit:
-          $ref: '#/components/headers/RateLimit-Limit'
-        RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimit-Remaining'
-        RateLimit-Reset:
-          $ref: '#/components/headers/RateLimit-Reset'
-      content:
-        application/vnd.api+json:
-          example:
-            errors:
-            - code: unprocessable_entity
-              status: '422'
-              title: Validation Error
-              detail: Email 'not-an-email' should look like an email address
-              source:
-                pointer: /data/attributes/email
-              meta:
-                attribute: email
-                message: '''not-an-email'' should look like an email address'
-          schema:
-            $ref: '#/components/schemas/validation_error_document'
-    not_found:
-      description: No resource exists with the provided ID.
-      headers:
-        RateLimit-Limit:
-          $ref: '#/components/headers/RateLimit-Limit'
-        RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimit-Remaining'
-        RateLimit-Reset:
-          $ref: '#/components/headers/RateLimit-Reset'
-      content:
-        application/json:
-          example:
-            code: not_found
-            message: Record not found
-          schema:
-            $ref: '#/components/schemas/error_response'
   schemas:
-    validation_error_document:
-      description: The JSON:API errors document returned with status 422 when model validations fail on create or update. Unlike this API's flat 4xx error bodies, validation failures follow the JSON:API errors format.
+    signup_field_values:
+      description: Readable signup attribute names selectable with sparse fieldsets (fields[signups]).
+      type: string
+      enum:
+      - author_id
+      - availability
+      - banned_at
+      - born_at
+      - capital_amount_in_cents
+      - church
+      - city_district
+      - city_sub_district
+      - civicrm_id
+      - contact_status
+      - could_vote_status
+      - county_district
+      - county_file_id
+      - created_at
+      - custom_values
+      - datatrust_id
+      - demo
+      - do_not_call
+      - do_not_contact
+      - donations_amount_in_cents
+      - donations_amount_this_cycle_in_cents
+      - donations_count
+      - donations_count_this_cycle
+      - donations_pledged_amount_in_cents
+      - donations_raised_amount_in_cents
+      - donations_raised_amount_this_cycle_in_cents
+      - donations_raised_count
+      - donations_raised_count_this_cycle
+      - donations_to_raise_amount_in_cents
+      - dw_id
+      - email
+      - email1
+      - email1_is_bad
+      - email1_is_bouncing
+      - email2
+      - email2_is_bad
+      - email2_is_bouncing
+      - email3
+      - email3_is_bad
+      - email3_is_bouncing
+      - email4
+      - email4_is_bad
+      - email4_is_bouncing
+      - email_opt_in
+      - employer
+      - ethnicity
+      - external_id
+      - fax_number
+      - federal_district
+      - federal_donotcall
+      - fire_district
+      - first_donated_at
+      - first_fundraised_at
+      - first_name
+      - first_prospect_at
+      - first_recruited_at
+      - first_supporter_at
+      - first_volunteer_at
+      - full_name
+      - import_id
+      - inferred_party
+      - inferred_support_level
+      - is_cpu
+      - is_deceased
+      - is_donor
+      - is_fundraiser
+      - is_ignore_donation_limits
+      - is_leaderboardable
+      - is_mobile_bad
+      - is_possible_duplicate
+      - is_profile_private
+      - is_profile_searchable
+      - is_prospect
+      - is_supporter
+      - is_survey_question_private
+      - is_volunteer
+      - judicial_district
+      - labour_region
+      - language
+      - last_call_id
+      - last_contacted_at
+      - last_contacted_by_id
+      - last_donated_at
+      - last_fundraised_at
+      - last_name
+      - last_rule_violation_at
+      - legal_name
+      - locale
+      - marital_status
+      - middle_name
+      - mobile_number
+      - mobile_opt_in
+      - ngp_id
+      - note
+      - note_updated_at
+      - occupation
+      - parent_id
+      - party
+      - party_member
+      - pf_strat_id
+      - phone_number
+      - phone_time
+      - precinct_id
+      - prefix
+      - previous_party
+      - primary_email_id
+      - priority_level
+      - priority_level_changed_at
+      - profile_content
+      - profile_content_html
+      - profile_headline
+      - received_capital_amount_in_cents
+      - recruiter_id
+      - registered_at
+      - religion
+      - rnc_id
+      - rnc_regid
+      - rule_violations_count
+      - salesforce_id
+      - school_district
+      - school_sub_district
+      - sex
+      - signup_type
+      - spent_capital_amount_in_cents
+      - state_file_id
+      - state_lower_district
+      - state_upper_district
+      - submitted_address
+      - suffix
+      - support_level
+      - support_level_changed_at
+      - supranational_district
+      - township
+      - unsubscribed_at
+      - updated_at
+      - username
+      - van_id
+      - village_district
+      - ward
+      - warnings_count
+      - work_phone_number
+    pagination_links:
+      description: JSON:API pagination links for the pages of a collection. A key whose page is unavailable, or that the server's pagination strategy does not provide, is omitted or null.
+      type: object
+      properties:
+        self:
+          type: string
+          description: Link to the current page.
+          examples:
+          - /articles?page[number]=2
+        first:
+          type:
+          - string
+          - 'null'
+          description: Link to the first page.
+          examples:
+          - /articles?page[number]=1
+        last:
+          type:
+          - string
+          - 'null'
+          description: Link to the last page.
+          examples:
+          - /articles?page[number]=5
+        prev:
+          type:
+          - string
+          - 'null'
+          description: Link to the previous page.
+          examples:
+          - /articles?page[number]=1
+        next:
+          type:
+          - string
+          - 'null'
+          description: Link to the next page.
+          examples:
+          - /articles?page[number]=3
+    validation_error:
+      description: A single JSON:API error object describing a validation failure, locating the invalid field via source.pointer and carrying the model-level attribute, message, and code under meta.
+      type: object
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code.
+          examples:
+          - unprocessable_entity
+        status:
+          type: string
+          description: The HTTP status code, as a string.
+          examples:
+          - '422'
+        title:
+          type: string
+          description: Short human-readable summary of the error type.
+          examples:
+          - Validation Error
+        detail:
+          type: string
+          description: Human-readable explanation specific to this failure.
+          examples:
+          - Email 'not-an-email' should look like an email address
+        source:
+          type: object
+          properties:
+            pointer:
+              type: string
+              description: JSON Pointer to the request document member the error relates to.
+              examples:
+              - /data/attributes/email
+        meta:
+          type: object
+          description: The underlying model validation error, including the attribute name, message, and code. Errors on sideposted resources nest these members under a relationship key.
+          properties:
+            attribute:
+              type: string
+              description: The attribute that failed validation.
+            message:
+              type: string
+              description: The validation failure message.
+            code:
+              type: string
+              description: The validation failure code.
+    update_request_document:
+      description: The JSON:API top-level document shape for update requests, whose data member identifies the resource by type and id and carries the changed attributes.
       type: object
       required:
-      - errors
+      - data
       properties:
-        errors:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          properties:
+            id:
+              type: string
+              description: The ID of the resource being updated.
+            type:
+              type: string
+              description: The JSON:API resource type of the resource being updated.
+    signup_show_response:
+      description: A JSON:API response containing a single signup.
+      allOf:
+      - $ref: '#/components/schemas/show_document'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/signup_response_data'
+    index_document:
+      description: The JSON:API top-level document shape for paginated collection responses, with resource objects under data and pagination links.
+      type: object
+      required:
+      - data
+      properties:
+        data:
           type: array
-          minItems: 1
-          items:
-            $ref: '#/components/schemas/validation_error'
+          description: The page of resource objects for this collection; each resource binds its concrete item schema here via allOf composition.
+        links:
+          $ref: '#/components/schemas/pagination_links'
+        included:
+          $ref: '#/components/schemas/included'
+        meta:
+          type: object
+          description: Non-standard information about the document, such as requested statistics. Empty unless the endpoint has metadata to convey.
+    signup_read_only_attributes:
+      description: The read-only attributes of a signup.
+      type: object
+      properties:
+        created_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+        email1_is_bouncing:
+          type:
+          - boolean
+          - 'null'
+          examples:
+          - false
+          description: Whether email address 1 is marked as bounced.
+        email2_is_bouncing:
+          type:
+          - boolean
+          - 'null'
+          examples:
+          - false
+          description: Whether email address 2 is marked as bounced.
+        email3_is_bouncing:
+          type:
+          - boolean
+          - 'null'
+          examples:
+          - false
+          description: Whether email address 3 is marked as bounced.
+        email4_is_bouncing:
+          type:
+          - boolean
+          - 'null'
+          examples:
+          - false
+          description: Whether email address 4 is marked as bounced.
+        full_name:
+          type:
+          - string
+          - 'null'
+          examples:
+          - Lucy Octavia Butler
+          description: Signup's full name.
+        is_cpu:
+          type:
+          - boolean
+          - 'null'
+          examples:
+          - false
+          description: Is the signup a control panel user
+        is_donor:
+          type:
+          - boolean
+          - 'null'
+          examples:
+          - false
+          description: The signup is a donor.
+        note_updated_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+          description: Last time the note was updated.
+        priority_level_changed_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+          description: The last time the priority level changed.
+        profile_content_html:
+          type:
+          - string
+          - 'null'
+          examples:
+          - <h1>My Profile</h1>
+          description: HTML formatted version of the signup's profile contents.
+        support_level_changed_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+          description: When the signups support level changed.
+        updated_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
     signup_read_write_attributes:
       description: The attributes of a signup that can be both read and written.
       type: object
@@ -1344,6 +1610,38 @@ components:
           examples:
           - '1234567890'
           description: Signup's work phone number.
+    error_response:
+      description: The error body returned for 4xx and 5xx responses, with a machine-readable code and a human-readable message. Some errors include additional detail members alongside these two. The exception is 422 validation failures, which are returned as JSON:API errors documents instead.
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code identifying the failure.
+          examples:
+          - not_found
+        message:
+          type: string
+          description: Human-readable explanation of the failure.
+          examples:
+          - Record not found
+    resource_identifier:
+      description: A JSON:API resource identifier object, the type/id pair that uniquely identifies a single resource.
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the resource.
+          examples:
+          - '1'
+        type:
+          type: string
+          description: The JSON:API resource type.
     show_document:
       description: The JSON:API top-level document shape for responses returning a single resource under the data member.
       type: object
@@ -1358,252 +1656,31 @@ components:
         meta:
           type: object
           description: Non-standard information about the document. Empty unless the endpoint has metadata to convey.
-    signup_create_request:
-      description: The request body for creating a new signup.
-      allOf:
-      - $ref: '#/components/schemas/create_request_document'
-      - type: object
-        properties:
-          data:
-            type: object
-            properties:
-              type:
-                const: signups
-                examples:
-                - signups
-              attributes:
-                allOf:
-                - $ref: '#/components/schemas/signup_read_write_attributes'
-                - $ref: '#/components/schemas/signup_write_only_attributes'
-    signup_response_data:
-      description: The JSON:API resource object representing a signup.
-      allOf:
-      - $ref: '#/components/schemas/resource_identifier'
-      - type: object
-        properties:
-          type:
-            const: signups
-            examples:
-            - signups
-          attributes:
-            allOf:
-            - $ref: '#/components/schemas/signup_read_write_attributes'
-            - $ref: '#/components/schemas/signup_read_only_attributes'
-    rate_limited_response:
-      description: The body returned by the rate limiter when an access token exceeds its request quota.
+    delete_document:
+      examples:
+      - meta: {}
+      description: The successful destroy response, an empty JSON:API meta-only document returned with status 200 (rather than JSON:API's commonly used 204 No Content).
       type: object
       required:
-      - message
+      - meta
+      additionalProperties: false
       properties:
-        message:
-          type: string
-          description: Human-readable explanation of the rate limit.
-          examples:
-          - You have made too many requests. Please try again later.
-    signup_field_values:
-      description: Readable signup attribute names selectable with sparse fieldsets (fields[signups]).
-      type: string
-      enum:
-      - author_id
-      - availability
-      - banned_at
-      - born_at
-      - capital_amount_in_cents
-      - church
-      - city_district
-      - city_sub_district
-      - civicrm_id
-      - contact_status
-      - could_vote_status
-      - county_district
-      - county_file_id
-      - created_at
-      - custom_values
-      - datatrust_id
-      - demo
-      - do_not_call
-      - do_not_contact
-      - donations_amount_in_cents
-      - donations_amount_this_cycle_in_cents
-      - donations_count
-      - donations_count_this_cycle
-      - donations_pledged_amount_in_cents
-      - donations_raised_amount_in_cents
-      - donations_raised_amount_this_cycle_in_cents
-      - donations_raised_count
-      - donations_raised_count_this_cycle
-      - donations_to_raise_amount_in_cents
-      - dw_id
-      - email
-      - email1
-      - email1_is_bad
-      - email1_is_bouncing
-      - email2
-      - email2_is_bad
-      - email2_is_bouncing
-      - email3
-      - email3_is_bad
-      - email3_is_bouncing
-      - email4
-      - email4_is_bad
-      - email4_is_bouncing
-      - email_opt_in
-      - employer
-      - ethnicity
-      - external_id
-      - fax_number
-      - federal_district
-      - federal_donotcall
-      - fire_district
-      - first_donated_at
-      - first_fundraised_at
-      - first_name
-      - first_prospect_at
-      - first_recruited_at
-      - first_supporter_at
-      - first_volunteer_at
-      - full_name
-      - import_id
-      - inferred_party
-      - inferred_support_level
-      - is_cpu
-      - is_deceased
-      - is_donor
-      - is_fundraiser
-      - is_ignore_donation_limits
-      - is_leaderboardable
-      - is_mobile_bad
-      - is_possible_duplicate
-      - is_profile_private
-      - is_profile_searchable
-      - is_prospect
-      - is_supporter
-      - is_survey_question_private
-      - is_volunteer
-      - judicial_district
-      - labour_region
-      - language
-      - last_call_id
-      - last_contacted_at
-      - last_contacted_by_id
-      - last_donated_at
-      - last_fundraised_at
-      - last_name
-      - last_rule_violation_at
-      - legal_name
-      - locale
-      - marital_status
-      - middle_name
-      - mobile_number
-      - mobile_opt_in
-      - ngp_id
-      - note
-      - note_updated_at
-      - occupation
-      - parent_id
-      - party
-      - party_member
-      - pf_strat_id
-      - phone_number
-      - phone_time
-      - precinct_id
-      - prefix
-      - previous_party
-      - primary_email_id
-      - priority_level
-      - priority_level_changed_at
-      - profile_content
-      - profile_content_html
-      - profile_headline
-      - received_capital_amount_in_cents
-      - recruiter_id
-      - registered_at
-      - religion
-      - rnc_id
-      - rnc_regid
-      - rule_violations_count
-      - salesforce_id
-      - school_district
-      - school_sub_district
-      - sex
-      - signup_type
-      - spent_capital_amount_in_cents
-      - state_file_id
-      - state_lower_district
-      - state_upper_district
-      - submitted_address
-      - suffix
-      - support_level
-      - support_level_changed_at
-      - supranational_district
-      - township
-      - unsubscribed_at
-      - updated_at
-      - username
-      - van_id
-      - village_district
-      - ward
-      - warnings_count
-      - work_phone_number
-    resource:
-      description: A generic JSON:API resource object. Resources sideloaded in a document's included member use this shape; their attributes are those of the resource type named in the type member.
-      allOf:
-      - $ref: '#/components/schemas/resource_identifier'
-      - type: object
-        properties:
-          attributes:
-            type: object
-            description: The attributes of the resource, as documented for its resource type.
-          relationships:
-            type: object
-            description: References from this resource to other resources in the document.
-    index_document:
-      description: The JSON:API top-level document shape for paginated collection responses, with resource objects under data and pagination links.
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          type: array
-          description: The page of resource objects for this collection; each resource binds its concrete item schema here via allOf composition.
-        links:
-          $ref: '#/components/schemas/pagination_links'
-        included:
-          $ref: '#/components/schemas/included'
         meta:
+          examples:
+          - {}
           type: object
-          description: Non-standard information about the document, such as requested statistics. Empty unless the endpoint has metadata to convey.
-    signup_index_response:
-      description: A paginated JSON:API response containing a list of signups.
-      allOf:
-      - $ref: '#/components/schemas/index_document'
-      - type: object
-        properties:
-          data:
-            type: array
-            items:
-              $ref: '#/components/schemas/signup_response_data'
-    signup_update_request:
-      description: The request body for updating an existing signup.
-      allOf:
-      - $ref: '#/components/schemas/update_request_document'
-      - type: object
-        properties:
-          data:
-            type: object
-            properties:
-              id:
-                type: string
-                examples:
-                - '1'
-              type:
-                const: signups
-                examples:
-                - signups
-              attributes:
-                allOf:
-                - $ref: '#/components/schemas/signup_read_write_attributes'
-                - $ref: '#/components/schemas/signup_write_only_attributes'
+          properties: {}
+    validation_error_document:
+      description: The JSON:API errors document returned with status 422 when model validations fail on create or update. Unlike this API's flat 4xx error bodies, validation failures follow the JSON:API errors format.
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/validation_error'
     create_request_document:
       description: The JSON:API top-level document shape for create requests, whose data member carries the new resource's type and attributes.
       type: object
@@ -1618,104 +1695,22 @@ components:
             type:
               type: string
               description: The JSON:API resource type of the resource being created.
-    signup_read_only_attributes:
-      description: The read-only attributes of a signup.
+    included:
+      description: Sideloaded resources requested via the include query parameter. Each entry is a full resource object whose shape is documented under its own resource type.
+      type: array
+      items:
+        $ref: '#/components/schemas/resource'
+    rate_limited_response:
+      description: The body returned by the rate limiter when an access token exceeds its request quota.
       type: object
+      required:
+      - message
       properties:
-        created_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
+        message:
+          type: string
+          description: Human-readable explanation of the rate limit.
           examples:
-          - '2019-10-26T10:00:00-04:00'
-        email1_is_bouncing:
-          type:
-          - boolean
-          - 'null'
-          examples:
-          - false
-          description: Whether email address 1 is marked as bounced.
-        email2_is_bouncing:
-          type:
-          - boolean
-          - 'null'
-          examples:
-          - false
-          description: Whether email address 2 is marked as bounced.
-        email3_is_bouncing:
-          type:
-          - boolean
-          - 'null'
-          examples:
-          - false
-          description: Whether email address 3 is marked as bounced.
-        email4_is_bouncing:
-          type:
-          - boolean
-          - 'null'
-          examples:
-          - false
-          description: Whether email address 4 is marked as bounced.
-        full_name:
-          type:
-          - string
-          - 'null'
-          examples:
-          - Lucy Octavia Butler
-          description: Signup's full name.
-        is_cpu:
-          type:
-          - boolean
-          - 'null'
-          examples:
-          - false
-          description: Is the signup a control panel user
-        is_donor:
-          type:
-          - boolean
-          - 'null'
-          examples:
-          - false
-          description: The signup is a donor.
-        note_updated_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          examples:
-          - '2019-10-26T10:00:00-04:00'
-          description: Last time the note was updated.
-        priority_level_changed_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          examples:
-          - '2019-10-26T10:00:00-04:00'
-          description: The last time the priority level changed.
-        profile_content_html:
-          type:
-          - string
-          - 'null'
-          examples:
-          - <h1>My Profile</h1>
-          description: HTML formatted version of the signup's profile contents.
-        support_level_changed_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          examples:
-          - '2019-10-26T10:00:00-04:00'
-          description: When the signups support level changed.
-        updated_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          examples:
-          - '2019-10-26T10:00:00-04:00'
+          - You have made too many requests. Please try again later.
     signup_sideload_values:
       description: Relationship names that can be sideloaded with the include query parameter on signup endpoints.
       type: string
@@ -1733,43 +1728,32 @@ components:
       - signup_tags
       - taggings
       - voter
-    pagination_links:
-      description: JSON:API pagination links for the pages of a collection. A key whose page is unavailable, or that the server's pagination strategy does not provide, is omitted or null.
-      type: object
-      properties:
-        self:
-          type: string
-          description: Link to the current page.
-          examples:
-          - /articles?page[number]=2
-        first:
+    signup_response_data:
+      description: The JSON:API resource object representing a signup.
+      allOf:
+      - $ref: '#/components/schemas/resource_identifier'
+      - type: object
+        properties:
           type:
-          - string
-          - 'null'
-          description: Link to the first page.
-          examples:
-          - /articles?page[number]=1
-        last:
-          type:
-          - string
-          - 'null'
-          description: Link to the last page.
-          examples:
-          - /articles?page[number]=5
-        prev:
-          type:
-          - string
-          - 'null'
-          description: Link to the previous page.
-          examples:
-          - /articles?page[number]=1
-        next:
-          type:
-          - string
-          - 'null'
-          description: Link to the next page.
-          examples:
-          - /articles?page[number]=3
+            const: signups
+            examples:
+            - signups
+          attributes:
+            allOf:
+            - $ref: '#/components/schemas/signup_read_write_attributes'
+            - $ref: '#/components/schemas/signup_read_only_attributes'
+    resource:
+      description: A generic JSON:API resource object. Resources sideloaded in a document's included member use this shape; their attributes are those of the resource type named in the type member.
+      allOf:
+      - $ref: '#/components/schemas/resource_identifier'
+      - type: object
+        properties:
+          attributes:
+            type: object
+            description: The attributes of the resource, as documented for its resource type.
+          relationships:
+            type: object
+            description: References from this resource to other resources in the document.
     signup_extra_field_values:
       description: Opt-in signup attribute names requestable with extra_fields[signups].
       type: string
@@ -1936,167 +1920,55 @@ components:
             work_phone_number: '5555555555'
             delete: true
           description: "        Attribute used to write data to the given signup's Work address.\n        When an address already exists, provided values will be used to patch the existing address data,\n        only overwriting values provided in the payload.\n        When no address exists, the existing data will be used to persist a new address.\n"
-    update_request_document:
-      description: The JSON:API top-level document shape for update requests, whose data member identifies the resource by type and id and carries the changed attributes.
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - id
-          properties:
-            id:
-              type: string
-              description: The ID of the resource being updated.
-            type:
-              type: string
-              description: The JSON:API resource type of the resource being updated.
-    signup_show_response:
-      description: A JSON:API response containing a single signup.
+    signup_create_request:
+      description: The request body for creating a new signup.
       allOf:
-      - $ref: '#/components/schemas/show_document'
+      - $ref: '#/components/schemas/create_request_document'
       - type: object
         properties:
           data:
-            $ref: '#/components/schemas/signup_response_data'
-    delete_document:
-      examples:
-      - meta: {}
-      description: The successful destroy response, an empty JSON:API meta-only document returned with status 200 (rather than JSON:API's commonly used 204 No Content).
-      type: object
-      required:
-      - meta
-      additionalProperties: false
-      properties:
-        meta:
-          examples:
-          - {}
-          type: object
-          properties: {}
-    included:
-      description: Sideloaded resources requested via the include query parameter. Each entry is a full resource object whose shape is documented under its own resource type.
-      type: array
-      items:
-        $ref: '#/components/schemas/resource'
-    validation_error:
-      description: A single JSON:API error object describing a validation failure, locating the invalid field via source.pointer and carrying the model-level attribute, message, and code under meta.
-      type: object
-      properties:
-        code:
-          type: string
-          description: Machine-readable error code.
-          examples:
-          - unprocessable_entity
-        status:
-          type: string
-          description: The HTTP status code, as a string.
-          examples:
-          - '422'
-        title:
-          type: string
-          description: Short human-readable summary of the error type.
-          examples:
-          - Validation Error
-        detail:
-          type: string
-          description: Human-readable explanation specific to this failure.
-          examples:
-          - Email 'not-an-email' should look like an email address
-        source:
-          type: object
-          properties:
-            pointer:
-              type: string
-              description: JSON Pointer to the request document member the error relates to.
-              examples:
-              - /data/attributes/email
-        meta:
-          type: object
-          description: The underlying model validation error, including the attribute name, message, and code. Errors on sideposted resources nest these members under a relationship key.
-          properties:
-            attribute:
-              type: string
-              description: The attribute that failed validation.
-            message:
-              type: string
-              description: The validation failure message.
-            code:
-              type: string
-              description: The validation failure code.
-    resource_identifier:
-      description: A JSON:API resource identifier object, the type/id pair that uniquely identifies a single resource.
-      type: object
-      required:
-      - type
-      - id
-      properties:
-        id:
-          type: string
-          description: Unique identifier of the resource.
-          examples:
-          - '1'
-        type:
-          type: string
-          description: The JSON:API resource type.
-    error_response:
-      description: The error body returned for 4xx and 5xx responses, with a machine-readable code and a human-readable message. Some errors include additional detail members alongside these two. The exception is 422 validation failures, which are returned as JSON:API errors documents instead.
-      type: object
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: string
-          description: Machine-readable error code identifying the failure.
-          examples:
-          - not_found
-        message:
-          type: string
-          description: Human-readable explanation of the failure.
-          examples:
-          - Record not found
-  headers:
-    Retry-After:
-      description: Number of seconds to wait before retrying. Sent with 429 responses.
-      schema:
-        type: string
-        examples:
-        - '10'
-      examples: {}
-    RateLimit-Remaining:
-      description: Number of requests remaining for the current access token in the current rate-limit window.
-      schema:
-        type: string
-        examples:
-        - '249'
-      examples: {}
-    RateLimit-Limit:
-      description: Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).
-      schema:
-        type: string
-        examples:
-        - '250'
-      examples: {}
-    RateLimit-Reset:
-      description: Unix timestamp (in seconds) at which the current rate-limit window resets.
-      schema:
-        type: string
-        examples:
-        - '1719964810'
-      examples: {}
+            type: object
+            properties:
+              type:
+                const: signups
+                examples:
+                - signups
+              attributes:
+                allOf:
+                - $ref: '#/components/schemas/signup_read_write_attributes'
+                - $ref: '#/components/schemas/signup_write_only_attributes'
+    signup_update_request:
+      description: The request body for updating an existing signup.
+      allOf:
+      - $ref: '#/components/schemas/update_request_document'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              id:
+                type: string
+                examples:
+                - '1'
+              type:
+                const: signups
+                examples:
+                - signups
+              attributes:
+                allOf:
+                - $ref: '#/components/schemas/signup_read_write_attributes'
+                - $ref: '#/components/schemas/signup_write_only_attributes'
+    signup_index_response:
+      description: A paginated JSON:API response containing a list of signups.
+      allOf:
+      - $ref: '#/components/schemas/index_document'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/signup_response_data'
   requestBodies:
-    signup_update_request_body:
-      description: The attributes to update on the existing signup.
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/signup_update_request'
-        application/json:
-          schema:
-            $ref: '#/components/schemas/signup_update_request'
     signup_create_request_body:
       description: The signup to create.
       content:
@@ -2106,39 +1978,135 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/signup_create_request'
+    signup_update_request_body:
+      description: The attributes to update on the existing signup.
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/signup_update_request'
+        application/json:
+          schema:
+            $ref: '#/components/schemas/signup_update_request'
+  headers:
+    RateLimit-Remaining:
+      description: Number of requests remaining for the current access token in the current rate-limit window.
+      schema:
+        type: string
+        examples:
+        - '249'
+      examples: {}
+    RateLimit-Reset:
+      description: Unix timestamp (in seconds) at which the current rate-limit window resets.
+      schema:
+        type: string
+        examples:
+        - '1719964810'
+      examples: {}
+    Retry-After:
+      description: Number of seconds to wait before retrying. Sent with 429 responses.
+      schema:
+        type: string
+        examples:
+        - '10'
+      examples: {}
+    RateLimit-Limit:
+      description: Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).
+      schema:
+        type: string
+        examples:
+        - '250'
+      examples: {}
+  responses:
+    unprocessable:
+      description: Model validations failed for the resource being created or updated. Unlike this API's other errors, validation failures are returned as a JSON:API errors document locating each invalid field.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/vnd.api+json:
+          example:
+            errors:
+            - code: unprocessable_entity
+              status: '422'
+              title: Validation Error
+              detail: Email 'not-an-email' should look like an email address
+              source:
+                pointer: /data/attributes/email
+              meta:
+                attribute: email
+                message: '''not-an-email'' should look like an email address'
+          schema:
+            $ref: '#/components/schemas/validation_error_document'
+    rate_limited:
+      description: The access token has exceeded its request quota for the current rate-limit window.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+        Retry-After:
+          $ref: '#/components/headers/Retry-After'
+      content:
+        application/json:
+          example:
+            message: You have made too many requests. Please try again later.
+          schema:
+            $ref: '#/components/schemas/rate_limited_response'
+    bad_request:
+      description: The request body or query parameters are invalid, such as an unknown attribute, filter, filter operator, sort field, or sideload.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/json:
+          example:
+            code: bad_request
+            message: Tried to filter on attribute :bogus, but could not find an attribute with that name.
+          schema:
+            $ref: '#/components/schemas/error_response'
+    unauthorized:
+      description: The access token is missing, expired, or not authorized to access this resource.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/json:
+          example:
+            code: unauthorized
+            message: You are not authorized to access this content. Your access token may be missing. The resource owner also may not have a permission level sufficient to grant access.
+          schema:
+            $ref: '#/components/schemas/error_response'
+    not_found:
+      description: No resource exists with the provided ID.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/json:
+          example:
+            code: not_found
+            message: Record not found
+          schema:
+            $ref: '#/components/schemas/error_response'
   parameters:
-    signup_extra_fields:
-      name: extra_fields[signups]
-      in: query
-      required: false
-      style: form
-      explode: false
-      description: Comma-delimited list of extra attributes, which are only returned in the response if requested.
-      schema:
-        type: array
-        default: []
-        uniqueItems: true
-        items:
-          $ref: '#/components/schemas/signup_extra_field_values'
-    signup_show_include:
-      name: include
-      in: query
-      required: false
-      style: form
-      explode: false
-      description: 'Comma-delimited list of sideloaded resources to include as part of the response.
-
-        See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
-
-        sideloading large numbers of resources and pagination.
-
-        '
-      schema:
-        type: array
-        default: []
-        uniqueItems: true
-        items:
-          $ref: '#/components/schemas/signup_sideload_values'
     signup_index_include:
       name: include
       in: query
@@ -2158,14 +2126,19 @@ components:
         uniqueItems: true
         items:
           $ref: '#/components/schemas/signup_sideload_values'
-    pagination_size:
-      name: page[size]
-      description: 'Number of results to display per page (default: 20, max: 100, min: 1)'
+    signup_extra_fields:
+      name: extra_fields[signups]
       in: query
       required: false
+      style: form
+      explode: false
+      description: Comma-delimited list of extra attributes, which are only returned in the response if requested.
       schema:
-        type: string
-        default: '20'
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/signup_extra_field_values'
     id:
       name: id
       in: path
@@ -2194,6 +2167,33 @@ components:
         uniqueItems: true
         items:
           $ref: '#/components/schemas/signup_field_values'
+    signup_show_include:
+      name: include
+      in: query
+      required: false
+      style: form
+      explode: false
+      description: 'Comma-delimited list of sideloaded resources to include as part of the response.
+
+        See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
+
+        sideloading large numbers of resources and pagination.
+
+        '
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/signup_sideload_values'
+    pagination_size:
+      name: page[size]
+      description: 'Number of results to display per page (default: 20, max: 100, min: 1)'
+      in: query
+      required: false
+      schema:
+        type: string
+        default: '20'
   securitySchemes:
     BearerAuth:
       description: Authentication using a bearer token (JWT) issued via OAuth.

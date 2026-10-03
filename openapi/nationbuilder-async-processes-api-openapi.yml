@@ -62,6 +62,22 @@ paths:
           $ref: '#/components/responses/rate_limited'
 components:
   responses:
+    not_found:
+      description: No resource exists with the provided ID.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/json:
+          example:
+            code: not_found
+            message: Record not found
+          schema:
+            $ref: '#/components/schemas/error_response'
     unauthorized:
       description: The access token is missing, expired, or not authorized to access this resource.
       headers:
@@ -95,34 +111,15 @@ components:
             message: You have made too many requests. Please try again later.
           schema:
             $ref: '#/components/schemas/rate_limited_response'
-    not_found:
-      description: No resource exists with the provided ID.
-      headers:
-        RateLimit-Limit:
-          $ref: '#/components/headers/RateLimit-Limit'
-        RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimit-Remaining'
-        RateLimit-Reset:
-          $ref: '#/components/headers/RateLimit-Reset'
-      content:
-        application/json:
-          example:
-            code: not_found
-            message: Record not found
-          schema:
-            $ref: '#/components/schemas/error_response'
+  parameters:
+    id:
+      name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
   schemas:
-    rate_limited_response:
-      description: The body returned by the rate limiter when an access token exceeds its request quota.
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
-          description: Human-readable explanation of the rate limit.
-          examples:
-          - You have made too many requests. Please try again later.
     error_response:
       description: The error body returned for 4xx and 5xx responses, with a machine-readable code and a human-readable message. Some errors include additional detail members alongside these two. The exception is 422 validation failures, which are returned as JSON:API errors documents instead.
       type: object
@@ -140,6 +137,17 @@ components:
           description: Human-readable explanation of the failure.
           examples:
           - Record not found
+    rate_limited_response:
+      description: The body returned by the rate limiter when an access token exceeds its request quota.
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          description: Human-readable explanation of the rate limit.
+          examples:
+          - You have made too many requests. Please try again later.
   headers:
     RateLimit-Remaining:
       description: Number of requests remaining for the current access token in the current rate-limit window.
@@ -147,13 +155,6 @@ components:
         type: string
         examples:
         - '249'
-      examples: {}
-    Retry-After:
-      description: Number of seconds to wait before retrying. Sent with 429 responses.
-      schema:
-        type: string
-        examples:
-        - '10'
       examples: {}
     RateLimit-Limit:
       description: Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).
@@ -169,14 +170,13 @@ components:
         examples:
         - '1719964810'
       examples: {}
-  parameters:
-    id:
-      name: id
-      in: path
-      description: id
-      required: true
+    Retry-After:
+      description: Number of seconds to wait before retrying. Sent with 429 responses.
       schema:
         type: string
+        examples:
+        - '10'
+      examples: {}
   securitySchemes:
     BearerAuth:
       description: Authentication using a bearer token (JWT) issued via OAuth.
