@@ -79,6 +79,33 @@ paths:
           $ref: '#/components/responses/rate_limited'
 components:
   schemas:
+    import_sideload_values:
+      description: Relationship names that can be sideloaded with the include query parameter on import endpoints.
+      type: string
+      enum:
+      - author
+      - point_person
+      - signups
+      - terminator
+    import_field_values:
+      description: Readable import attribute names selectable with sparse fieldsets (fields[imports]).
+      type: string
+      enum:
+      - content_head
+      - created_at
+      - error_lines
+      - file_name
+      - finished_at
+      - is_overwritable
+      - lines_count
+      - rows_successful
+      - rows_unsuccessful
+      - rows_updated
+      - started_at
+      - status
+      - tag_list
+      - type
+      - updated_at
     import_show_response:
       description: A JSON:API response containing a single import.
       allOf:
@@ -124,40 +151,6 @@ components:
           description: Link to the next page.
           examples:
           - /articles?page[number]=3
-    import_sideload_values:
-      description: Relationship names that can be sideloaded with the include query parameter on import endpoints.
-      type: string
-      enum:
-      - author
-      - point_person
-      - signups
-      - terminator
-    index_document:
-      description: The JSON:API top-level document shape for paginated collection responses, with resource objects under data and pagination links.
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          type: array
-          description: The page of resource objects for this collection; each resource binds its concrete item schema here via allOf composition.
-        links:
-          $ref: '#/components/schemas/pagination_links'
-        included:
-          $ref: '#/components/schemas/included'
-        meta:
-          type: object
-          description: Non-standard information about the document, such as requested statistics. Empty unless the endpoint has metadata to convey.
-    import_index_response:
-      description: A paginated JSON:API response containing a list of imports.
-      allOf:
-      - $ref: '#/components/schemas/index_document'
-      - type: object
-        properties:
-          data:
-            type: array
-            items:
-              $ref: '#/components/schemas/import_response_data'
     error_response:
       description: The error body returned for 4xx and 5xx responses, with a machine-readable code and a human-readable message. Some errors include additional detail members alongside these two. The exception is 422 validation failures, which are returned as JSON:API errors documents instead.
       type: object
@@ -204,22 +197,16 @@ components:
         meta:
           type: object
           description: Non-standard information about the document. Empty unless the endpoint has metadata to convey.
-    included:
-      description: Sideloaded resources requested via the include query parameter. Each entry is a full resource object whose shape is documented under its own resource type.
-      type: array
-      items:
-        $ref: '#/components/schemas/resource'
-    rate_limited_response:
-      description: The body returned by the rate limiter when an access token exceeds its request quota.
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
-          description: Human-readable explanation of the rate limit.
-          examples:
-          - You have made too many requests. Please try again later.
+    import_index_response:
+      description: A paginated JSON:API response containing a list of imports.
+      allOf:
+      - $ref: '#/components/schemas/index_document'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/import_response_data'
     import_read_only_attributes:
       description: The read-only attributes of a import.
       type: object
@@ -338,18 +325,33 @@ components:
           format: date-time
           examples:
           - '2019-10-26T10:00:00-04:00'
-    resource:
-      description: A generic JSON:API resource object. Resources sideloaded in a document's included member use this shape; their attributes are those of the resource type named in the type member.
-      allOf:
-      - $ref: '#/components/schemas/resource_identifier'
-      - type: object
-        properties:
-          attributes:
-            type: object
-            description: The attributes of the resource, as documented for its resource type.
-          relationships:
-            type: object
-            description: References from this resource to other resources in the document.
+    rate_limited_response:
+      description: The body returned by the rate limiter when an access token exceeds its request quota.
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          description: Human-readable explanation of the rate limit.
+          examples:
+          - You have made too many requests. Please try again later.
+    index_document:
+      description: The JSON:API top-level document shape for paginated collection responses, with resource objects under data and pagination links.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: array
+          description: The page of resource objects for this collection; each resource binds its concrete item schema here via allOf composition.
+        links:
+          $ref: '#/components/schemas/pagination_links'
+        included:
+          $ref: '#/components/schemas/included'
+        meta:
+          type: object
+          description: Non-standard information about the document, such as requested statistics. Empty unless the endpoint has metadata to convey.
     import_response_data:
       description: The JSON:API resource object representing a import.
       allOf:
@@ -362,54 +364,23 @@ components:
             - imports
           attributes:
             $ref: '#/components/schemas/import_read_only_attributes'
-    import_field_values:
-      description: Readable import attribute names selectable with sparse fieldsets (fields[imports]).
-      type: string
-      enum:
-      - content_head
-      - created_at
-      - error_lines
-      - file_name
-      - finished_at
-      - is_overwritable
-      - lines_count
-      - rows_successful
-      - rows_unsuccessful
-      - rows_updated
-      - started_at
-      - status
-      - tag_list
-      - type
-      - updated_at
-  headers:
-    RateLimit-Remaining:
-      description: Number of requests remaining for the current access token in the current rate-limit window.
-      schema:
-        type: string
-        examples:
-        - '249'
-      examples: {}
-    RateLimit-Reset:
-      description: Unix timestamp (in seconds) at which the current rate-limit window resets.
-      schema:
-        type: string
-        examples:
-        - '1719964810'
-      examples: {}
-    RateLimit-Limit:
-      description: Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).
-      schema:
-        type: string
-        examples:
-        - '250'
-      examples: {}
-    Retry-After:
-      description: Number of seconds to wait before retrying. Sent with 429 responses.
-      schema:
-        type: string
-        examples:
-        - '10'
-      examples: {}
+    resource:
+      description: A generic JSON:API resource object. Resources sideloaded in a document's included member use this shape; their attributes are those of the resource type named in the type member.
+      allOf:
+      - $ref: '#/components/schemas/resource_identifier'
+      - type: object
+        properties:
+          attributes:
+            type: object
+            description: The attributes of the resource, as documented for its resource type.
+          relationships:
+            type: object
+            description: References from this resource to other resources in the document.
+    included:
+      description: Sideloaded resources requested via the include query parameter. Each entry is a full resource object whose shape is documented under its own resource type.
+      type: array
+      items:
+        $ref: '#/components/schemas/resource'
   responses:
     rate_limited:
       description: The access token has exceeded its request quota for the current rate-limit window.
@@ -461,6 +432,26 @@ components:
           schema:
             $ref: '#/components/schemas/error_response'
   parameters:
+    import_sparse_fields:
+      name: fields[imports]
+      in: query
+      required: false
+      description: Comma-delimited list of import attributes to only return in the response
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/import_field_values'
+      style: form
+      explode: false
+    id:
+      name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
     import_show_include:
       name: include
       in: query
@@ -478,26 +469,6 @@ components:
         items:
           $ref: '#/components/schemas/import_sideload_values'
       required: false
-      style: form
-      explode: false
-    id:
-      name: id
-      in: path
-      description: id
-      required: true
-      schema:
-        type: string
-    import_sparse_fields:
-      name: fields[imports]
-      in: query
-      required: false
-      description: Comma-delimited list of import attributes to only return in the response
-      schema:
-        type: array
-        default: []
-        uniqueItems: true
-        items:
-          $ref: '#/components/schemas/import_field_values'
       style: form
       explode: false
     import_index_include:
@@ -519,6 +490,35 @@ components:
       required: false
       style: form
       explode: false
+  headers:
+    RateLimit-Reset:
+      description: Unix timestamp (in seconds) at which the current rate-limit window resets.
+      schema:
+        type: string
+        examples:
+        - '1719964810'
+      examples: {}
+    RateLimit-Remaining:
+      description: Number of requests remaining for the current access token in the current rate-limit window.
+      schema:
+        type: string
+        examples:
+        - '249'
+      examples: {}
+    Retry-After:
+      description: Number of seconds to wait before retrying. Sent with 429 responses.
+      schema:
+        type: string
+        examples:
+        - '10'
+      examples: {}
+    RateLimit-Limit:
+      description: Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).
+      schema:
+        type: string
+        examples:
+        - '250'
+      examples: {}
   securitySchemes:
     BearerAuth:
       description: Authentication using a bearer token (JWT) issued via OAuth.

@@ -169,497 +169,7 @@ paths:
         '429':
           $ref: '#/components/responses/rate_limited'
 components:
-  parameters:
-    event_ticket_level_index_include:
-      name: include
-      in: query
-      description: 'Comma-delimited list of sideloaded resources to include as part of the event ticket level index response.
-
-        See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
-
-        sideloading large numbers of resources and pagination.
-
-        '
-      schema:
-        type: array
-        default: []
-        uniqueItems: true
-        items:
-          $ref: '#/components/schemas/event_ticket_level_sideload_values'
-      required: false
-      style: form
-      explode: false
-    id:
-      name: id
-      in: path
-      description: id
-      required: true
-      schema:
-        type: string
-    pagination_number:
-      name: page[number]
-      description: Page number to list (starting at 1)
-      in: query
-      required: false
-      schema:
-        type: string
-        default: '1'
-    event_ticket_level_sparse_fields:
-      name: fields[event_ticket_levels]
-      in: query
-      required: false
-      description: Comma-delimited list of event ticket level attributes to only return in the response
-      schema:
-        type: array
-        default: []
-        uniqueItems: true
-        items:
-          $ref: '#/components/schemas/event_ticket_level_field_values'
-      style: form
-      explode: false
-    event_ticket_level_show_include:
-      name: include
-      in: query
-      description: 'Comma-delimited list of sideloaded resources to include as part of the event ticket level response.
-
-        See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
-
-        sideloading large numbers of resources and pagination.
-
-        '
-      schema:
-        type: array
-        default: []
-        uniqueItems: true
-        items:
-          $ref: '#/components/schemas/event_ticket_level_sideload_values'
-      required: false
-      style: form
-      explode: false
-    pagination_size:
-      name: page[size]
-      description: 'Number of results to display per page (default: 20, max: 100, min: 1)'
-      in: query
-      required: false
-      schema:
-        type: string
-        default: '20'
-  schemas:
-    event_ticket_level_read_write_attributes:
-      description: The attributes of a event_ticket_level that can be both read and written.
-      type: object
-      properties:
-        amount_in_cents:
-          type:
-          - integer
-          - 'null'
-          examples:
-          - 10000
-          description: Price of the ticket in cents, must be positive.
-        description:
-          type:
-          - string
-          - 'null'
-          examples:
-          - VIP tickets get exclusive access to the VIP lounge.
-          description: Optional description of the ticket level displayed on event pages.
-        event_id:
-          type:
-          - string
-          - 'null'
-          examples:
-          - '1'
-          description: The ID of this ticket levels event
-        limit:
-          type: integer
-          examples:
-          - 100
-          description: The number of tickets that can be purchased for this ticket level for the associated event across all ticket buyers
-        name:
-          type:
-          - string
-          - 'null'
-          examples:
-          - VIP
-          description: Name of the ticket level
-        number:
-          type:
-          - integer
-          - 'null'
-          examples:
-          - 2
-          description: This field indicates how many tickets a ticket level purchases. This is best used when you are giving a discounted rate for couples or group tickets.
-        tickets_sold:
-          type:
-          - integer
-          - 'null'
-          examples:
-          - 53
-          description: The number of tickets already sold for this ticket level for the associated event
-    pagination_links:
-      description: JSON:API pagination links for the pages of a collection. A key whose page is unavailable, or that the server's pagination strategy does not provide, is omitted or null.
-      type: object
-      properties:
-        self:
-          type: string
-          description: Link to the current page.
-          examples:
-          - /articles?page[number]=2
-        first:
-          type:
-          - string
-          - 'null'
-          description: Link to the first page.
-          examples:
-          - /articles?page[number]=1
-        last:
-          type:
-          - string
-          - 'null'
-          description: Link to the last page.
-          examples:
-          - /articles?page[number]=5
-        prev:
-          type:
-          - string
-          - 'null'
-          description: Link to the previous page.
-          examples:
-          - /articles?page[number]=1
-        next:
-          type:
-          - string
-          - 'null'
-          description: Link to the next page.
-          examples:
-          - /articles?page[number]=3
-    validation_error:
-      description: A single JSON:API error object describing a validation failure, locating the invalid field via source.pointer and carrying the model-level attribute, message, and code under meta.
-      type: object
-      properties:
-        code:
-          type: string
-          description: Machine-readable error code.
-          examples:
-          - unprocessable_entity
-        status:
-          type: string
-          description: The HTTP status code, as a string.
-          examples:
-          - '422'
-        title:
-          type: string
-          description: Short human-readable summary of the error type.
-          examples:
-          - Validation Error
-        detail:
-          type: string
-          description: Human-readable explanation specific to this failure.
-          examples:
-          - Email 'not-an-email' should look like an email address
-        source:
-          type: object
-          properties:
-            pointer:
-              type: string
-              description: JSON Pointer to the request document member the error relates to.
-              examples:
-              - /data/attributes/email
-        meta:
-          type: object
-          description: The underlying model validation error, including the attribute name, message, and code. Errors on sideposted resources nest these members under a relationship key.
-          properties:
-            attribute:
-              type: string
-              description: The attribute that failed validation.
-            message:
-              type: string
-              description: The validation failure message.
-            code:
-              type: string
-              description: The validation failure code.
-    update_request_document:
-      description: The JSON:API top-level document shape for update requests, whose data member identifies the resource by type and id and carries the changed attributes.
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - id
-          properties:
-            id:
-              type: string
-              description: The ID of the resource being updated.
-            type:
-              type: string
-              description: The JSON:API resource type of the resource being updated.
-    index_document:
-      description: The JSON:API top-level document shape for paginated collection responses, with resource objects under data and pagination links.
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          type: array
-          description: The page of resource objects for this collection; each resource binds its concrete item schema here via allOf composition.
-        links:
-          $ref: '#/components/schemas/pagination_links'
-        included:
-          $ref: '#/components/schemas/included'
-        meta:
-          type: object
-          description: Non-standard information about the document, such as requested statistics. Empty unless the endpoint has metadata to convey.
-    error_response:
-      description: The error body returned for 4xx and 5xx responses, with a machine-readable code and a human-readable message. Some errors include additional detail members alongside these two. The exception is 422 validation failures, which are returned as JSON:API errors documents instead.
-      type: object
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: string
-          description: Machine-readable error code identifying the failure.
-          examples:
-          - not_found
-        message:
-          type: string
-          description: Human-readable explanation of the failure.
-          examples:
-          - Record not found
-    resource_identifier:
-      description: A JSON:API resource identifier object, the type/id pair that uniquely identifies a single resource.
-      type: object
-      required:
-      - type
-      - id
-      properties:
-        id:
-          type: string
-          description: Unique identifier of the resource.
-          examples:
-          - '1'
-        type:
-          type: string
-          description: The JSON:API resource type.
-    show_document:
-      description: The JSON:API top-level document shape for responses returning a single resource under the data member.
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          type: object
-          description: The primary resource object; each resource binds its concrete schema here via allOf composition.
-        included:
-          $ref: '#/components/schemas/included'
-        meta:
-          type: object
-          description: Non-standard information about the document. Empty unless the endpoint has metadata to convey.
-    delete_document:
-      examples:
-      - meta: {}
-      description: The successful destroy response, an empty JSON:API meta-only document returned with status 200 (rather than JSON:API's commonly used 204 No Content).
-      type: object
-      required:
-      - meta
-      additionalProperties: false
-      properties:
-        meta:
-          examples:
-          - {}
-          type: object
-          properties: {}
-    validation_error_document:
-      description: The JSON:API errors document returned with status 422 when model validations fail on create or update. Unlike this API's flat 4xx error bodies, validation failures follow the JSON:API errors format.
-      type: object
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          minItems: 1
-          items:
-            $ref: '#/components/schemas/validation_error'
-    create_request_document:
-      description: The JSON:API top-level document shape for create requests, whose data member carries the new resource's type and attributes.
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          properties:
-            type:
-              type: string
-              description: The JSON:API resource type of the resource being created.
-    event_ticket_level_update_request:
-      description: The request body for updating an existing event ticket level.
-      allOf:
-      - $ref: '#/components/schemas/update_request_document'
-      - type: object
-        properties:
-          data:
-            type: object
-            properties:
-              id:
-                type: string
-                examples:
-                - '1'
-              type:
-                const: event_ticket_levels
-                examples:
-                - event_ticket_levels
-              attributes:
-                $ref: '#/components/schemas/event_ticket_level_read_write_attributes'
-    event_ticket_level_response_data:
-      description: The JSON:API resource object representing a event ticket level.
-      allOf:
-      - $ref: '#/components/schemas/resource_identifier'
-      - type: object
-        properties:
-          type:
-            const: event_ticket_levels
-            examples:
-            - event_ticket_levels
-          attributes:
-            $ref: '#/components/schemas/event_ticket_level_read_write_attributes'
-    included:
-      description: Sideloaded resources requested via the include query parameter. Each entry is a full resource object whose shape is documented under its own resource type.
-      type: array
-      items:
-        $ref: '#/components/schemas/resource'
-    rate_limited_response:
-      description: The body returned by the rate limiter when an access token exceeds its request quota.
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
-          description: Human-readable explanation of the rate limit.
-          examples:
-          - You have made too many requests. Please try again later.
-    event_ticket_level_create_request:
-      description: The request body for creating a new event ticket level.
-      allOf:
-      - $ref: '#/components/schemas/create_request_document'
-      - type: object
-        properties:
-          data:
-            type: object
-            properties:
-              type:
-                const: event_ticket_levels
-                examples:
-                - event_ticket_levels
-              attributes:
-                $ref: '#/components/schemas/event_ticket_level_read_write_attributes'
-    event_ticket_level_show_response:
-      description: A JSON:API response containing a single event ticket level.
-      allOf:
-      - $ref: '#/components/schemas/show_document'
-      - type: object
-        properties:
-          data:
-            $ref: '#/components/schemas/event_ticket_level_response_data'
-    event_ticket_level_sideload_values:
-      description: Relationship names that can be sideloaded with the include query parameter on event_ticket_level endpoints.
-      type: string
-      enum:
-      - event
-      - event_rsvps
-    resource:
-      description: A generic JSON:API resource object. Resources sideloaded in a document's included member use this shape; their attributes are those of the resource type named in the type member.
-      allOf:
-      - $ref: '#/components/schemas/resource_identifier'
-      - type: object
-        properties:
-          attributes:
-            type: object
-            description: The attributes of the resource, as documented for its resource type.
-          relationships:
-            type: object
-            description: References from this resource to other resources in the document.
-    event_ticket_level_field_values:
-      description: Readable event_ticket_level attribute names selectable with sparse fieldsets (fields[event_ticket_levels]).
-      type: string
-      enum:
-      - amount_in_cents
-      - description
-      - event_id
-      - limit
-      - name
-      - number
-      - tickets_sold
-    event_ticket_level_index_response:
-      description: A paginated JSON:API response containing a list of event ticket levels.
-      allOf:
-      - $ref: '#/components/schemas/index_document'
-      - type: object
-        properties:
-          data:
-            type: array
-            items:
-              $ref: '#/components/schemas/event_ticket_level_response_data'
-  headers:
-    RateLimit-Remaining:
-      description: Number of requests remaining for the current access token in the current rate-limit window.
-      schema:
-        type: string
-        examples:
-        - '249'
-      examples: {}
-    RateLimit-Reset:
-      description: Unix timestamp (in seconds) at which the current rate-limit window resets.
-      schema:
-        type: string
-        examples:
-        - '1719964810'
-      examples: {}
-    RateLimit-Limit:
-      description: Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).
-      schema:
-        type: string
-        examples:
-        - '250'
-      examples: {}
-    Retry-After:
-      description: Number of seconds to wait before retrying. Sent with 429 responses.
-      schema:
-        type: string
-        examples:
-        - '10'
-      examples: {}
   responses:
-    unprocessable:
-      description: Model validations failed for the resource being created or updated. Unlike this API's other errors, validation failures are returned as a JSON:API errors document locating each invalid field.
-      headers:
-        RateLimit-Limit:
-          $ref: '#/components/headers/RateLimit-Limit'
-        RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimit-Remaining'
-        RateLimit-Reset:
-          $ref: '#/components/headers/RateLimit-Reset'
-      content:
-        application/vnd.api+json:
-          example:
-            errors:
-            - code: unprocessable_entity
-              status: '422'
-              title: Validation Error
-              detail: Email 'not-an-email' should look like an email address
-              source:
-                pointer: /data/attributes/email
-              meta:
-                attribute: email
-                message: '''not-an-email'' should look like an email address'
-          schema:
-            $ref: '#/components/schemas/validation_error_document'
     rate_limited:
       description: The access token has exceeded its request quota for the current rate-limit window.
       headers:
@@ -725,6 +235,392 @@ components:
             message: Record not found
           schema:
             $ref: '#/components/schemas/error_response'
+    unprocessable:
+      description: Model validations failed for the resource being created or updated. Unlike this API's other errors, validation failures are returned as a JSON:API errors document locating each invalid field.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/vnd.api+json:
+          example:
+            errors:
+            - code: unprocessable_entity
+              status: '422'
+              title: Validation Error
+              detail: Email 'not-an-email' should look like an email address
+              source:
+                pointer: /data/attributes/email
+              meta:
+                attribute: email
+                message: '''not-an-email'' should look like an email address'
+          schema:
+            $ref: '#/components/schemas/validation_error_document'
+  schemas:
+    event_ticket_level_update_request:
+      description: The request body for updating an existing event ticket level.
+      allOf:
+      - $ref: '#/components/schemas/update_request_document'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              id:
+                type: string
+                examples:
+                - '1'
+              type:
+                const: event_ticket_levels
+                examples:
+                - event_ticket_levels
+              attributes:
+                $ref: '#/components/schemas/event_ticket_level_read_write_attributes'
+    event_ticket_level_response_data:
+      description: The JSON:API resource object representing a event ticket level.
+      allOf:
+      - $ref: '#/components/schemas/resource_identifier'
+      - type: object
+        properties:
+          type:
+            const: event_ticket_levels
+            examples:
+            - event_ticket_levels
+          attributes:
+            $ref: '#/components/schemas/event_ticket_level_read_write_attributes'
+    delete_document:
+      examples:
+      - meta: {}
+      description: The successful destroy response, an empty JSON:API meta-only document returned with status 200 (rather than JSON:API's commonly used 204 No Content).
+      type: object
+      required:
+      - meta
+      additionalProperties: false
+      properties:
+        meta:
+          examples:
+          - {}
+          type: object
+          properties: {}
+    pagination_links:
+      description: JSON:API pagination links for the pages of a collection. A key whose page is unavailable, or that the server's pagination strategy does not provide, is omitted or null.
+      type: object
+      properties:
+        self:
+          type: string
+          description: Link to the current page.
+          examples:
+          - /articles?page[number]=2
+        first:
+          type:
+          - string
+          - 'null'
+          description: Link to the first page.
+          examples:
+          - /articles?page[number]=1
+        last:
+          type:
+          - string
+          - 'null'
+          description: Link to the last page.
+          examples:
+          - /articles?page[number]=5
+        prev:
+          type:
+          - string
+          - 'null'
+          description: Link to the previous page.
+          examples:
+          - /articles?page[number]=1
+        next:
+          type:
+          - string
+          - 'null'
+          description: Link to the next page.
+          examples:
+          - /articles?page[number]=3
+    error_response:
+      description: The error body returned for 4xx and 5xx responses, with a machine-readable code and a human-readable message. Some errors include additional detail members alongside these two. The exception is 422 validation failures, which are returned as JSON:API errors documents instead.
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code identifying the failure.
+          examples:
+          - not_found
+        message:
+          type: string
+          description: Human-readable explanation of the failure.
+          examples:
+          - Record not found
+    validation_error_document:
+      description: The JSON:API errors document returned with status 422 when model validations fail on create or update. Unlike this API's flat 4xx error bodies, validation failures follow the JSON:API errors format.
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/validation_error'
+    resource_identifier:
+      description: A JSON:API resource identifier object, the type/id pair that uniquely identifies a single resource.
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the resource.
+          examples:
+          - '1'
+        type:
+          type: string
+          description: The JSON:API resource type.
+    show_document:
+      description: The JSON:API top-level document shape for responses returning a single resource under the data member.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: object
+          description: The primary resource object; each resource binds its concrete schema here via allOf composition.
+        included:
+          $ref: '#/components/schemas/included'
+        meta:
+          type: object
+          description: Non-standard information about the document. Empty unless the endpoint has metadata to convey.
+    validation_error:
+      description: A single JSON:API error object describing a validation failure, locating the invalid field via source.pointer and carrying the model-level attribute, message, and code under meta.
+      type: object
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code.
+          examples:
+          - unprocessable_entity
+        status:
+          type: string
+          description: The HTTP status code, as a string.
+          examples:
+          - '422'
+        title:
+          type: string
+          description: Short human-readable summary of the error type.
+          examples:
+          - Validation Error
+        detail:
+          type: string
+          description: Human-readable explanation specific to this failure.
+          examples:
+          - Email 'not-an-email' should look like an email address
+        source:
+          type: object
+          properties:
+            pointer:
+              type: string
+              description: JSON Pointer to the request document member the error relates to.
+              examples:
+              - /data/attributes/email
+        meta:
+          type: object
+          description: The underlying model validation error, including the attribute name, message, and code. Errors on sideposted resources nest these members under a relationship key.
+          properties:
+            attribute:
+              type: string
+              description: The attribute that failed validation.
+            message:
+              type: string
+              description: The validation failure message.
+            code:
+              type: string
+              description: The validation failure code.
+    event_ticket_level_sideload_values:
+      description: Relationship names that can be sideloaded with the include query parameter on event_ticket_level endpoints.
+      type: string
+      enum:
+      - event
+      - event_rsvps
+    event_ticket_level_field_values:
+      description: Readable event_ticket_level attribute names selectable with sparse fieldsets (fields[event_ticket_levels]).
+      type: string
+      enum:
+      - amount_in_cents
+      - description
+      - event_id
+      - limit
+      - name
+      - number
+      - tickets_sold
+    rate_limited_response:
+      description: The body returned by the rate limiter when an access token exceeds its request quota.
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          description: Human-readable explanation of the rate limit.
+          examples:
+          - You have made too many requests. Please try again later.
+    index_document:
+      description: The JSON:API top-level document shape for paginated collection responses, with resource objects under data and pagination links.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: array
+          description: The page of resource objects for this collection; each resource binds its concrete item schema here via allOf composition.
+        links:
+          $ref: '#/components/schemas/pagination_links'
+        included:
+          $ref: '#/components/schemas/included'
+        meta:
+          type: object
+          description: Non-standard information about the document, such as requested statistics. Empty unless the endpoint has metadata to convey.
+    event_ticket_level_index_response:
+      description: A paginated JSON:API response containing a list of event ticket levels.
+      allOf:
+      - $ref: '#/components/schemas/index_document'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/event_ticket_level_response_data'
+    resource:
+      description: A generic JSON:API resource object. Resources sideloaded in a document's included member use this shape; their attributes are those of the resource type named in the type member.
+      allOf:
+      - $ref: '#/components/schemas/resource_identifier'
+      - type: object
+        properties:
+          attributes:
+            type: object
+            description: The attributes of the resource, as documented for its resource type.
+          relationships:
+            type: object
+            description: References from this resource to other resources in the document.
+    event_ticket_level_read_write_attributes:
+      description: The attributes of a event_ticket_level that can be both read and written.
+      type: object
+      properties:
+        amount_in_cents:
+          type:
+          - integer
+          - 'null'
+          examples:
+          - 10000
+          description: Price of the ticket in cents, must be positive.
+        description:
+          type:
+          - string
+          - 'null'
+          examples:
+          - VIP tickets get exclusive access to the VIP lounge.
+          description: Optional description of the ticket level displayed on event pages.
+        event_id:
+          type:
+          - string
+          - 'null'
+          examples:
+          - '1'
+          description: The ID of this ticket levels event
+        limit:
+          type: integer
+          examples:
+          - 100
+          description: The number of tickets that can be purchased for this ticket level for the associated event across all ticket buyers
+        name:
+          type:
+          - string
+          - 'null'
+          examples:
+          - VIP
+          description: Name of the ticket level
+        number:
+          type:
+          - integer
+          - 'null'
+          examples:
+          - 2
+          description: This field indicates how many tickets a ticket level purchases. This is best used when you are giving a discounted rate for couples or group tickets.
+        tickets_sold:
+          type:
+          - integer
+          - 'null'
+          examples:
+          - 53
+          description: The number of tickets already sold for this ticket level for the associated event
+    included:
+      description: Sideloaded resources requested via the include query parameter. Each entry is a full resource object whose shape is documented under its own resource type.
+      type: array
+      items:
+        $ref: '#/components/schemas/resource'
+    event_ticket_level_show_response:
+      description: A JSON:API response containing a single event ticket level.
+      allOf:
+      - $ref: '#/components/schemas/show_document'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/event_ticket_level_response_data'
+    create_request_document:
+      description: The JSON:API top-level document shape for create requests, whose data member carries the new resource's type and attributes.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          properties:
+            type:
+              type: string
+              description: The JSON:API resource type of the resource being created.
+    update_request_document:
+      description: The JSON:API top-level document shape for update requests, whose data member identifies the resource by type and id and carries the changed attributes.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          properties:
+            id:
+              type: string
+              description: The ID of the resource being updated.
+            type:
+              type: string
+              description: The JSON:API resource type of the resource being updated.
+    event_ticket_level_create_request:
+      description: The request body for creating a new event ticket level.
+      allOf:
+      - $ref: '#/components/schemas/create_request_document'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              type:
+                const: event_ticket_levels
+                examples:
+                - event_ticket_levels
+              attributes:
+                $ref: '#/components/schemas/event_ticket_level_read_write_attributes'
   requestBodies:
     event_ticket_level_create_request_body:
       description: The event ticket level to create.
@@ -744,6 +640,110 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/event_ticket_level_update_request'
+  parameters:
+    event_ticket_level_sparse_fields:
+      name: fields[event_ticket_levels]
+      in: query
+      required: false
+      description: Comma-delimited list of event ticket level attributes to only return in the response
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/event_ticket_level_field_values'
+      style: form
+      explode: false
+    event_ticket_level_index_include:
+      name: include
+      in: query
+      description: 'Comma-delimited list of sideloaded resources to include as part of the event ticket level index response.
+
+        See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
+
+        sideloading large numbers of resources and pagination.
+
+        '
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/event_ticket_level_sideload_values'
+      required: false
+      style: form
+      explode: false
+    pagination_size:
+      name: page[size]
+      description: 'Number of results to display per page (default: 20, max: 100, min: 1)'
+      in: query
+      required: false
+      schema:
+        type: string
+        default: '20'
+    pagination_number:
+      name: page[number]
+      description: Page number to list (starting at 1)
+      in: query
+      required: false
+      schema:
+        type: string
+        default: '1'
+    event_ticket_level_show_include:
+      name: include
+      in: query
+      description: 'Comma-delimited list of sideloaded resources to include as part of the event ticket level response.
+
+        See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
+
+        sideloading large numbers of resources and pagination.
+
+        '
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/event_ticket_level_sideload_values'
+      required: false
+      style: form
+      explode: false
+    id:
+      name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+  headers:
+    RateLimit-Reset:
+      description: Unix timestamp (in seconds) at which the current rate-limit window resets.
+      schema:
+        type: string
+        examples:
+        - '1719964810'
+      examples: {}
+    RateLimit-Remaining:
+      description: Number of requests remaining for the current access token in the current rate-limit window.
+      schema:
+        type: string
+        examples:
+        - '249'
+      examples: {}
+    Retry-After:
+      description: Number of seconds to wait before retrying. Sent with 429 responses.
+      schema:
+        type: string
+        examples:
+        - '10'
+      examples: {}
+    RateLimit-Limit:
+      description: Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).
+      schema:
+        type: string
+        examples:
+        - '250'
+      examples: {}
   securitySchemes:
     BearerAuth:
       description: Authentication using a bearer token (JWT) issued via OAuth.

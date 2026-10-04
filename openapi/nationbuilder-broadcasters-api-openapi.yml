@@ -81,82 +81,130 @@ paths:
         '429':
           $ref: '#/components/responses/rate_limited'
 components:
-  parameters:
-    broadcaster_show_include:
-      name: include
-      in: query
-      description: 'Comma-delimited list of sideloaded resources to include as part of the broadcaster response.
-
-        See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
-
-        sideloading large numbers of resources and pagination.
-
-        '
-      schema:
-        type: array
-        default: []
-        uniqueItems: true
-        items:
-          $ref: '#/components/schemas/broadcaster_sideload_values'
-      required: false
-      style: form
-      explode: false
-    broadcaster_index_include:
-      name: include
-      in: query
-      description: 'Comma-delimited list of sideloaded resources to include as part of the broadcaster index response.
-
-        See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
-
-        sideloading large numbers of resources and pagination.
-
-        '
-      schema:
-        type: array
-        default: []
-        uniqueItems: true
-        items:
-          $ref: '#/components/schemas/broadcaster_sideload_values'
-      required: false
-      style: form
-      explode: false
-    id:
-      name: id
-      in: path
-      description: id
-      required: true
-      schema:
-        type: string
-    pagination_number:
-      name: page[number]
-      description: Page number to list (starting at 1)
-      in: query
-      required: false
-      schema:
-        type: string
-        default: '1'
-    broadcaster_sparse_fields:
-      name: fields[broadcasters]
-      in: query
-      required: false
-      description: Comma-delimited list of broadcaster attributes to only return in the response
-      schema:
-        type: array
-        default: []
-        uniqueItems: true
-        items:
-          $ref: '#/components/schemas/broadcaster_field_values'
-      style: form
-      explode: false
-    pagination_size:
-      name: page[size]
-      description: 'Number of results to display per page (default: 20, max: 100, min: 1)'
-      in: query
-      required: false
-      schema:
-        type: string
-        default: '20'
+  responses:
+    rate_limited:
+      description: The access token has exceeded its request quota for the current rate-limit window.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+        Retry-After:
+          $ref: '#/components/headers/Retry-After'
+      content:
+        application/json:
+          example:
+            message: You have made too many requests. Please try again later.
+          schema:
+            $ref: '#/components/schemas/rate_limited_response'
+    unauthorized:
+      description: The access token is missing, expired, or not authorized to access this resource.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/json:
+          example:
+            code: unauthorized
+            message: You are not authorized to access this content. Your access token may be missing. The resource owner also may not have a permission level sufficient to grant access.
+          schema:
+            $ref: '#/components/schemas/error_response'
+    not_found:
+      description: No resource exists with the provided ID.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/json:
+          example:
+            code: not_found
+            message: Record not found
+          schema:
+            $ref: '#/components/schemas/error_response'
   schemas:
+    broadcaster_index_response:
+      description: A paginated JSON:API response containing a list of broadcasters.
+      allOf:
+      - $ref: '#/components/schemas/index_document'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/broadcaster_response_data'
+    broadcaster_sideload_values:
+      description: Relationship names that can be sideloaded with the include query parameter on broadcaster endpoints.
+      type: string
+      enum:
+      - mailings
+      - point_person
+      - signups
+      - text_point_person
+      - voicemail_point_person
+    pagination_links:
+      description: JSON:API pagination links for the pages of a collection. A key whose page is unavailable, or that the server's pagination strategy does not provide, is omitted or null.
+      type: object
+      properties:
+        self:
+          type: string
+          description: Link to the current page.
+          examples:
+          - /articles?page[number]=2
+        first:
+          type:
+          - string
+          - 'null'
+          description: Link to the first page.
+          examples:
+          - /articles?page[number]=1
+        last:
+          type:
+          - string
+          - 'null'
+          description: Link to the last page.
+          examples:
+          - /articles?page[number]=5
+        prev:
+          type:
+          - string
+          - 'null'
+          description: Link to the previous page.
+          examples:
+          - /articles?page[number]=1
+        next:
+          type:
+          - string
+          - 'null'
+          description: Link to the next page.
+          examples:
+          - /articles?page[number]=3
+    error_response:
+      description: The error body returned for 4xx and 5xx responses, with a machine-readable code and a human-readable message. Some errors include additional detail members alongside these two. The exception is 422 validation failures, which are returned as JSON:API errors documents instead.
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code identifying the failure.
+          examples:
+          - not_found
+        message:
+          type: string
+          description: Human-readable explanation of the failure.
+          examples:
+          - Record not found
     broadcaster_read_only_attributes:
       description: The read-only attributes of a broadcaster.
       type: object
@@ -311,76 +359,6 @@ components:
           examples:
           - voicemail-tagged
           description: Tag signups that leave voicemails with these tags. (comma separated list)
-    pagination_links:
-      description: JSON:API pagination links for the pages of a collection. A key whose page is unavailable, or that the server's pagination strategy does not provide, is omitted or null.
-      type: object
-      properties:
-        self:
-          type: string
-          description: Link to the current page.
-          examples:
-          - /articles?page[number]=2
-        first:
-          type:
-          - string
-          - 'null'
-          description: Link to the first page.
-          examples:
-          - /articles?page[number]=1
-        last:
-          type:
-          - string
-          - 'null'
-          description: Link to the last page.
-          examples:
-          - /articles?page[number]=5
-        prev:
-          type:
-          - string
-          - 'null'
-          description: Link to the previous page.
-          examples:
-          - /articles?page[number]=1
-        next:
-          type:
-          - string
-          - 'null'
-          description: Link to the next page.
-          examples:
-          - /articles?page[number]=3
-    index_document:
-      description: The JSON:API top-level document shape for paginated collection responses, with resource objects under data and pagination links.
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          type: array
-          description: The page of resource objects for this collection; each resource binds its concrete item schema here via allOf composition.
-        links:
-          $ref: '#/components/schemas/pagination_links'
-        included:
-          $ref: '#/components/schemas/included'
-        meta:
-          type: object
-          description: Non-standard information about the document, such as requested statistics. Empty unless the endpoint has metadata to convey.
-    error_response:
-      description: The error body returned for 4xx and 5xx responses, with a machine-readable code and a human-readable message. Some errors include additional detail members alongside these two. The exception is 422 validation failures, which are returned as JSON:API errors documents instead.
-      type: object
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: string
-          description: Machine-readable error code identifying the failure.
-          examples:
-          - not_found
-        message:
-          type: string
-          description: Human-readable explanation of the failure.
-          examples:
-          - Record not found
     resource_identifier:
       description: A JSON:API resource identifier object, the type/id pair that uniquely identifies a single resource.
       type: object
@@ -422,6 +400,58 @@ components:
             - broadcasters
           attributes:
             $ref: '#/components/schemas/broadcaster_read_only_attributes'
+    broadcaster_show_response:
+      description: A JSON:API response containing a single broadcaster.
+      allOf:
+      - $ref: '#/components/schemas/show_document'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/broadcaster_response_data'
+    rate_limited_response:
+      description: The body returned by the rate limiter when an access token exceeds its request quota.
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          description: Human-readable explanation of the rate limit.
+          examples:
+          - You have made too many requests. Please try again later.
+    index_document:
+      description: The JSON:API top-level document shape for paginated collection responses, with resource objects under data and pagination links.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: array
+          description: The page of resource objects for this collection; each resource binds its concrete item schema here via allOf composition.
+        links:
+          $ref: '#/components/schemas/pagination_links'
+        included:
+          $ref: '#/components/schemas/included'
+        meta:
+          type: object
+          description: Non-standard information about the document, such as requested statistics. Empty unless the endpoint has metadata to convey.
+    resource:
+      description: A generic JSON:API resource object. Resources sideloaded in a document's included member use this shape; their attributes are those of the resource type named in the type member.
+      allOf:
+      - $ref: '#/components/schemas/resource_identifier'
+      - type: object
+        properties:
+          attributes:
+            type: object
+            description: The attributes of the resource, as documented for its resource type.
+          relationships:
+            type: object
+            description: References from this resource to other resources in the document.
+    included:
+      description: Sideloaded resources requested via the include query parameter. Each entry is a full resource object whose shape is documented under its own resource type.
+      type: array
+      items:
+        $ref: '#/components/schemas/resource'
     broadcaster_field_values:
       description: Readable broadcaster attribute names selectable with sparse fieldsets (fields[broadcasters]).
       type: string
@@ -447,69 +477,7 @@ components:
       - voicemail_needs_followup
       - voicemail_point_person_id
       - voicemail_tags
-    included:
-      description: Sideloaded resources requested via the include query parameter. Each entry is a full resource object whose shape is documented under its own resource type.
-      type: array
-      items:
-        $ref: '#/components/schemas/resource'
-    broadcaster_index_response:
-      description: A paginated JSON:API response containing a list of broadcasters.
-      allOf:
-      - $ref: '#/components/schemas/index_document'
-      - type: object
-        properties:
-          data:
-            type: array
-            items:
-              $ref: '#/components/schemas/broadcaster_response_data'
-    rate_limited_response:
-      description: The body returned by the rate limiter when an access token exceeds its request quota.
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
-          description: Human-readable explanation of the rate limit.
-          examples:
-          - You have made too many requests. Please try again later.
-    resource:
-      description: A generic JSON:API resource object. Resources sideloaded in a document's included member use this shape; their attributes are those of the resource type named in the type member.
-      allOf:
-      - $ref: '#/components/schemas/resource_identifier'
-      - type: object
-        properties:
-          attributes:
-            type: object
-            description: The attributes of the resource, as documented for its resource type.
-          relationships:
-            type: object
-            description: References from this resource to other resources in the document.
-    broadcaster_sideload_values:
-      description: Relationship names that can be sideloaded with the include query parameter on broadcaster endpoints.
-      type: string
-      enum:
-      - mailings
-      - point_person
-      - signups
-      - text_point_person
-      - voicemail_point_person
-    broadcaster_show_response:
-      description: A JSON:API response containing a single broadcaster.
-      allOf:
-      - $ref: '#/components/schemas/show_document'
-      - type: object
-        properties:
-          data:
-            $ref: '#/components/schemas/broadcaster_response_data'
   headers:
-    RateLimit-Remaining:
-      description: Number of requests remaining for the current access token in the current rate-limit window.
-      schema:
-        type: string
-        examples:
-        - '249'
-      examples: {}
     RateLimit-Reset:
       description: Unix timestamp (in seconds) at which the current rate-limit window resets.
       schema:
@@ -517,12 +485,12 @@ components:
         examples:
         - '1719964810'
       examples: {}
-    RateLimit-Limit:
-      description: Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).
+    RateLimit-Remaining:
+      description: Number of requests remaining for the current access token in the current rate-limit window.
       schema:
         type: string
         examples:
-        - '250'
+        - '249'
       examples: {}
     Retry-After:
       description: Number of seconds to wait before retrying. Sent with 429 responses.
@@ -531,56 +499,88 @@ components:
         examples:
         - '10'
       examples: {}
-  responses:
-    rate_limited:
-      description: The access token has exceeded its request quota for the current rate-limit window.
-      headers:
-        RateLimit-Limit:
-          $ref: '#/components/headers/RateLimit-Limit'
-        RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimit-Remaining'
-        RateLimit-Reset:
-          $ref: '#/components/headers/RateLimit-Reset'
-        Retry-After:
-          $ref: '#/components/headers/Retry-After'
-      content:
-        application/json:
-          example:
-            message: You have made too many requests. Please try again later.
-          schema:
-            $ref: '#/components/schemas/rate_limited_response'
-    unauthorized:
-      description: The access token is missing, expired, or not authorized to access this resource.
-      headers:
-        RateLimit-Limit:
-          $ref: '#/components/headers/RateLimit-Limit'
-        RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimit-Remaining'
-        RateLimit-Reset:
-          $ref: '#/components/headers/RateLimit-Reset'
-      content:
-        application/json:
-          example:
-            code: unauthorized
-            message: You are not authorized to access this content. Your access token may be missing. The resource owner also may not have a permission level sufficient to grant access.
-          schema:
-            $ref: '#/components/schemas/error_response'
-    not_found:
-      description: No resource exists with the provided ID.
-      headers:
-        RateLimit-Limit:
-          $ref: '#/components/headers/RateLimit-Limit'
-        RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimit-Remaining'
-        RateLimit-Reset:
-          $ref: '#/components/headers/RateLimit-Reset'
-      content:
-        application/json:
-          example:
-            code: not_found
-            message: Record not found
-          schema:
-            $ref: '#/components/schemas/error_response'
+    RateLimit-Limit:
+      description: Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).
+      schema:
+        type: string
+        examples:
+        - '250'
+      examples: {}
+  parameters:
+    pagination_size:
+      name: page[size]
+      description: 'Number of results to display per page (default: 20, max: 100, min: 1)'
+      in: query
+      required: false
+      schema:
+        type: string
+        default: '20'
+    pagination_number:
+      name: page[number]
+      description: Page number to list (starting at 1)
+      in: query
+      required: false
+      schema:
+        type: string
+        default: '1'
+    broadcaster_sparse_fields:
+      name: fields[broadcasters]
+      in: query
+      required: false
+      description: Comma-delimited list of broadcaster attributes to only return in the response
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/broadcaster_field_values'
+      style: form
+      explode: false
+    broadcaster_index_include:
+      name: include
+      in: query
+      description: 'Comma-delimited list of sideloaded resources to include as part of the broadcaster index response.
+
+        See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
+
+        sideloading large numbers of resources and pagination.
+
+        '
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/broadcaster_sideload_values'
+      required: false
+      style: form
+      explode: false
+    id:
+      name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    broadcaster_show_include:
+      name: include
+      in: query
+      description: 'Comma-delimited list of sideloaded resources to include as part of the broadcaster response.
+
+        See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
+
+        sideloading large numbers of resources and pagination.
+
+        '
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/broadcaster_sideload_values'
+      required: false
+      style: form
+      explode: false
   securitySchemes:
     BearerAuth:
       description: Authentication using a bearer token (JWT) issued via OAuth.

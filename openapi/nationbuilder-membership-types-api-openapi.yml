@@ -169,7 +169,103 @@ paths:
         '429':
           $ref: '#/components/responses/rate_limited'
 components:
+  responses:
+    rate_limited:
+      description: The access token has exceeded its request quota for the current rate-limit window.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+        Retry-After:
+          $ref: '#/components/headers/Retry-After'
+      content:
+        application/json:
+          example:
+            message: You have made too many requests. Please try again later.
+          schema:
+            $ref: '#/components/schemas/rate_limited_response'
+    bad_request:
+      description: The request body or query parameters are invalid, such as an unknown attribute, filter, filter operator, sort field, or sideload.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/json:
+          example:
+            code: bad_request
+            message: Tried to filter on attribute :bogus, but could not find an attribute with that name.
+          schema:
+            $ref: '#/components/schemas/error_response'
+    unauthorized:
+      description: The access token is missing, expired, or not authorized to access this resource.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/json:
+          example:
+            code: unauthorized
+            message: You are not authorized to access this content. Your access token may be missing. The resource owner also may not have a permission level sufficient to grant access.
+          schema:
+            $ref: '#/components/schemas/error_response'
+    not_found:
+      description: No resource exists with the provided ID.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/json:
+          example:
+            code: not_found
+            message: Record not found
+          schema:
+            $ref: '#/components/schemas/error_response'
+    unprocessable:
+      description: Model validations failed for the resource being created or updated. Unlike this API's other errors, validation failures are returned as a JSON:API errors document locating each invalid field.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/vnd.api+json:
+          example:
+            errors:
+            - code: unprocessable_entity
+              status: '422'
+              title: Validation Error
+              detail: Email 'not-an-email' should look like an email address
+              source:
+                pointer: /data/attributes/email
+              meta:
+                attribute: email
+                message: '''not-an-email'' should look like an email address'
+          schema:
+            $ref: '#/components/schemas/validation_error_document'
   schemas:
+    membership_type_sideload_values:
+      description: Relationship names that can be sideloaded with the include query parameter on membership_type endpoints.
+      type: string
+      enum:
+      - memberships
+      - page
     membership_type_create_request:
       description: The request body for creating a new membership type.
       allOf:
@@ -204,6 +300,42 @@ components:
                 - membership_types
               attributes:
                 $ref: '#/components/schemas/membership_type_read_write_attributes'
+    membership_type_show_response:
+      description: A JSON:API response containing a single membership type.
+      allOf:
+      - $ref: '#/components/schemas/show_document'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/membership_type_response_data'
+    delete_document:
+      examples:
+      - meta: {}
+      description: The successful destroy response, an empty JSON:API meta-only document returned with status 200 (rather than JSON:API's commonly used 204 No Content).
+      type: object
+      required:
+      - meta
+      additionalProperties: false
+      properties:
+        meta:
+          examples:
+          - {}
+          type: object
+          properties: {}
+    membership_type_read_only_attributes:
+      description: The read-only attributes of a membership_type.
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
+        updated_at:
+          type: string
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
     pagination_links:
       description: JSON:API pagination links for the pages of a collection. A key whose page is unavailable, or that the server's pagination strategy does not provide, is omitted or null.
       type: object
@@ -241,51 +373,47 @@ components:
           description: Link to the next page.
           examples:
           - /articles?page[number]=3
-    validation_error:
-      description: A single JSON:API error object describing a validation failure, locating the invalid field via source.pointer and carrying the model-level attribute, message, and code under meta.
+    error_response:
+      description: The error body returned for 4xx and 5xx responses, with a machine-readable code and a human-readable message. Some errors include additional detail members alongside these two. The exception is 422 validation failures, which are returned as JSON:API errors documents instead.
       type: object
+      required:
+      - code
+      - message
       properties:
         code:
           type: string
-          description: Machine-readable error code.
+          description: Machine-readable error code identifying the failure.
           examples:
-          - unprocessable_entity
-        status:
+          - not_found
+        message:
           type: string
-          description: The HTTP status code, as a string.
+          description: Human-readable explanation of the failure.
           examples:
-          - '422'
-        title:
-          type: string
-          description: Short human-readable summary of the error type.
-          examples:
-          - Validation Error
-        detail:
-          type: string
-          description: Human-readable explanation specific to this failure.
-          examples:
-          - Email 'not-an-email' should look like an email address
-        source:
-          type: object
-          properties:
-            pointer:
-              type: string
-              description: JSON Pointer to the request document member the error relates to.
-              examples:
-              - /data/attributes/email
-        meta:
-          type: object
-          description: The underlying model validation error, including the attribute name, message, and code. Errors on sideposted resources nest these members under a relationship key.
-          properties:
-            attribute:
-              type: string
-              description: The attribute that failed validation.
-            message:
-              type: string
-              description: The validation failure message.
-            code:
-              type: string
-              description: The validation failure code.
+          - Record not found
+    membership_type_field_values:
+      description: Readable membership_type attribute names selectable with sparse fieldsets (fields[membership_types]).
+      type: string
+      enum:
+      - created_at
+      - description
+      - expiration_warning_num_time_periods
+      - expiration_warning_time_period_type
+      - grace_period_num_time_periods
+      - grace_period_time_period_type
+      - name
+      - page_id
+      - updated_at
+    validation_error_document:
+      description: The JSON:API errors document returned with status 422 when model validations fail on create or update. Unlike this API's flat 4xx error bodies, validation failures follow the JSON:API errors format.
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/validation_error'
     membership_type_read_write_attributes:
       description: The attributes of a membership_type that can be both read and written.
       type: object
@@ -355,70 +483,6 @@ components:
           examples:
           - '1'
           description: The ID of the page to renew the membership.
-    update_request_document:
-      description: The JSON:API top-level document shape for update requests, whose data member identifies the resource by type and id and carries the changed attributes.
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          - id
-          properties:
-            id:
-              type: string
-              description: The ID of the resource being updated.
-            type:
-              type: string
-              description: The JSON:API resource type of the resource being updated.
-    index_document:
-      description: The JSON:API top-level document shape for paginated collection responses, with resource objects under data and pagination links.
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          type: array
-          description: The page of resource objects for this collection; each resource binds its concrete item schema here via allOf composition.
-        links:
-          $ref: '#/components/schemas/pagination_links'
-        included:
-          $ref: '#/components/schemas/included'
-        meta:
-          type: object
-          description: Non-standard information about the document, such as requested statistics. Empty unless the endpoint has metadata to convey.
-    membership_type_field_values:
-      description: Readable membership_type attribute names selectable with sparse fieldsets (fields[membership_types]).
-      type: string
-      enum:
-      - created_at
-      - description
-      - expiration_warning_num_time_periods
-      - expiration_warning_time_period_type
-      - grace_period_num_time_periods
-      - grace_period_time_period_type
-      - name
-      - page_id
-      - updated_at
-    error_response:
-      description: The error body returned for 4xx and 5xx responses, with a machine-readable code and a human-readable message. Some errors include additional detail members alongside these two. The exception is 422 validation failures, which are returned as JSON:API errors documents instead.
-      type: object
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: string
-          description: Machine-readable error code identifying the failure.
-          examples:
-          - not_found
-        message:
-          type: string
-          description: Human-readable explanation of the failure.
-          examples:
-          - Record not found
     resource_identifier:
       description: A JSON:API resource identifier object, the type/id pair that uniquely identifies a single resource.
       type: object
@@ -448,31 +512,6 @@ components:
         meta:
           type: object
           description: Non-standard information about the document. Empty unless the endpoint has metadata to convey.
-    delete_document:
-      examples:
-      - meta: {}
-      description: The successful destroy response, an empty JSON:API meta-only document returned with status 200 (rather than JSON:API's commonly used 204 No Content).
-      type: object
-      required:
-      - meta
-      additionalProperties: false
-      properties:
-        meta:
-          examples:
-          - {}
-          type: object
-          properties: {}
-    validation_error_document:
-      description: The JSON:API errors document returned with status 422 when model validations fail on create or update. Unlike this API's flat 4xx error bodies, validation failures follow the JSON:API errors format.
-      type: object
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          minItems: 1
-          items:
-            $ref: '#/components/schemas/validation_error'
     membership_type_index_response:
       description: A paginated JSON:API response containing a list of membership types.
       allOf:
@@ -483,31 +522,51 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/membership_type_response_data'
-    membership_type_sideload_values:
-      description: Relationship names that can be sideloaded with the include query parameter on membership_type endpoints.
-      type: string
-      enum:
-      - memberships
-      - page
-    create_request_document:
-      description: The JSON:API top-level document shape for create requests, whose data member carries the new resource's type and attributes.
+    validation_error:
+      description: A single JSON:API error object describing a validation failure, locating the invalid field via source.pointer and carrying the model-level attribute, message, and code under meta.
       type: object
-      required:
-      - data
       properties:
-        data:
+        code:
+          type: string
+          description: Machine-readable error code.
+          examples:
+          - unprocessable_entity
+        status:
+          type: string
+          description: The HTTP status code, as a string.
+          examples:
+          - '422'
+        title:
+          type: string
+          description: Short human-readable summary of the error type.
+          examples:
+          - Validation Error
+        detail:
+          type: string
+          description: Human-readable explanation specific to this failure.
+          examples:
+          - Email 'not-an-email' should look like an email address
+        source:
           type: object
-          required:
-          - type
           properties:
-            type:
+            pointer:
               type: string
-              description: The JSON:API resource type of the resource being created.
-    included:
-      description: Sideloaded resources requested via the include query parameter. Each entry is a full resource object whose shape is documented under its own resource type.
-      type: array
-      items:
-        $ref: '#/components/schemas/resource'
+              description: JSON Pointer to the request document member the error relates to.
+              examples:
+              - /data/attributes/email
+        meta:
+          type: object
+          description: The underlying model validation error, including the attribute name, message, and code. Errors on sideposted resources nest these members under a relationship key.
+          properties:
+            attribute:
+              type: string
+              description: The attribute that failed validation.
+            message:
+              type: string
+              description: The validation failure message.
+            code:
+              type: string
+              description: The validation failure code.
     rate_limited_response:
       description: The body returned by the rate limiter when an access token exceeds its request quota.
       type: object
@@ -519,32 +578,22 @@ components:
           description: Human-readable explanation of the rate limit.
           examples:
           - You have made too many requests. Please try again later.
-    membership_type_read_only_attributes:
-      description: The read-only attributes of a membership_type.
+    index_document:
+      description: The JSON:API top-level document shape for paginated collection responses, with resource objects under data and pagination links.
       type: object
+      required:
+      - data
       properties:
-        created_at:
-          type: string
-          format: date-time
-          examples:
-          - '2019-10-26T10:00:00-04:00'
-        updated_at:
-          type: string
-          format: date-time
-          examples:
-          - '2019-10-26T10:00:00-04:00'
-    resource:
-      description: A generic JSON:API resource object. Resources sideloaded in a document's included member use this shape; their attributes are those of the resource type named in the type member.
-      allOf:
-      - $ref: '#/components/schemas/resource_identifier'
-      - type: object
-        properties:
-          attributes:
-            type: object
-            description: The attributes of the resource, as documented for its resource type.
-          relationships:
-            type: object
-            description: References from this resource to other resources in the document.
+        data:
+          type: array
+          description: The page of resource objects for this collection; each resource binds its concrete item schema here via allOf composition.
+        links:
+          $ref: '#/components/schemas/pagination_links'
+        included:
+          $ref: '#/components/schemas/included'
+        meta:
+          type: object
+          description: Non-standard information about the document, such as requested statistics. Empty unless the endpoint has metadata to convey.
     membership_type_response_data:
       description: The JSON:API resource object representing a membership type.
       allOf:
@@ -559,164 +608,81 @@ components:
             allOf:
             - $ref: '#/components/schemas/membership_type_read_write_attributes'
             - $ref: '#/components/schemas/membership_type_read_only_attributes'
-    membership_type_show_response:
-      description: A JSON:API response containing a single membership type.
+    resource:
+      description: A generic JSON:API resource object. Resources sideloaded in a document's included member use this shape; their attributes are those of the resource type named in the type member.
       allOf:
-      - $ref: '#/components/schemas/show_document'
+      - $ref: '#/components/schemas/resource_identifier'
       - type: object
         properties:
-          data:
-            $ref: '#/components/schemas/membership_type_response_data'
-  requestBodies:
-    membership_type_update_request_body:
-      description: The attributes to update on the existing membership type.
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/membership_type_update_request'
-        application/json:
-          schema:
-            $ref: '#/components/schemas/membership_type_update_request'
-    membership_type_create_request_body:
-      description: The membership type to create.
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/membership_type_create_request'
-        application/json:
-          schema:
-            $ref: '#/components/schemas/membership_type_create_request'
-  headers:
-    RateLimit-Remaining:
-      description: Number of requests remaining for the current access token in the current rate-limit window.
-      schema:
-        type: string
-        examples:
-        - '249'
-      examples: {}
-    RateLimit-Reset:
-      description: Unix timestamp (in seconds) at which the current rate-limit window resets.
-      schema:
-        type: string
-        examples:
-        - '1719964810'
-      examples: {}
-    RateLimit-Limit:
-      description: Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).
-      schema:
-        type: string
-        examples:
-        - '250'
-      examples: {}
-    Retry-After:
-      description: Number of seconds to wait before retrying. Sent with 429 responses.
-      schema:
-        type: string
-        examples:
-        - '10'
-      examples: {}
-  responses:
-    rate_limited:
-      description: The access token has exceeded its request quota for the current rate-limit window.
-      headers:
-        RateLimit-Limit:
-          $ref: '#/components/headers/RateLimit-Limit'
-        RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimit-Remaining'
-        RateLimit-Reset:
-          $ref: '#/components/headers/RateLimit-Reset'
-        Retry-After:
-          $ref: '#/components/headers/Retry-After'
-      content:
-        application/json:
-          example:
-            message: You have made too many requests. Please try again later.
-          schema:
-            $ref: '#/components/schemas/rate_limited_response'
-    unprocessable:
-      description: Model validations failed for the resource being created or updated. Unlike this API's other errors, validation failures are returned as a JSON:API errors document locating each invalid field.
-      headers:
-        RateLimit-Limit:
-          $ref: '#/components/headers/RateLimit-Limit'
-        RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimit-Remaining'
-        RateLimit-Reset:
-          $ref: '#/components/headers/RateLimit-Reset'
-      content:
-        application/vnd.api+json:
-          example:
-            errors:
-            - code: unprocessable_entity
-              status: '422'
-              title: Validation Error
-              detail: Email 'not-an-email' should look like an email address
-              source:
-                pointer: /data/attributes/email
-              meta:
-                attribute: email
-                message: '''not-an-email'' should look like an email address'
-          schema:
-            $ref: '#/components/schemas/validation_error_document'
-    bad_request:
-      description: The request body or query parameters are invalid, such as an unknown attribute, filter, filter operator, sort field, or sideload.
-      headers:
-        RateLimit-Limit:
-          $ref: '#/components/headers/RateLimit-Limit'
-        RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimit-Remaining'
-        RateLimit-Reset:
-          $ref: '#/components/headers/RateLimit-Reset'
-      content:
-        application/json:
-          example:
-            code: bad_request
-            message: Tried to filter on attribute :bogus, but could not find an attribute with that name.
-          schema:
-            $ref: '#/components/schemas/error_response'
-    unauthorized:
-      description: The access token is missing, expired, or not authorized to access this resource.
-      headers:
-        RateLimit-Limit:
-          $ref: '#/components/headers/RateLimit-Limit'
-        RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimit-Remaining'
-        RateLimit-Reset:
-          $ref: '#/components/headers/RateLimit-Reset'
-      content:
-        application/json:
-          example:
-            code: unauthorized
-            message: You are not authorized to access this content. Your access token may be missing. The resource owner also may not have a permission level sufficient to grant access.
-          schema:
-            $ref: '#/components/schemas/error_response'
-    not_found:
-      description: No resource exists with the provided ID.
-      headers:
-        RateLimit-Limit:
-          $ref: '#/components/headers/RateLimit-Limit'
-        RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimit-Remaining'
-        RateLimit-Reset:
-          $ref: '#/components/headers/RateLimit-Reset'
-      content:
-        application/json:
-          example:
-            code: not_found
-            message: Record not found
-          schema:
-            $ref: '#/components/schemas/error_response'
+          attributes:
+            type: object
+            description: The attributes of the resource, as documented for its resource type.
+          relationships:
+            type: object
+            description: References from this resource to other resources in the document.
+    included:
+      description: Sideloaded resources requested via the include query parameter. Each entry is a full resource object whose shape is documented under its own resource type.
+      type: array
+      items:
+        $ref: '#/components/schemas/resource'
+    create_request_document:
+      description: The JSON:API top-level document shape for create requests, whose data member carries the new resource's type and attributes.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          properties:
+            type:
+              type: string
+              description: The JSON:API resource type of the resource being created.
+    update_request_document:
+      description: The JSON:API top-level document shape for update requests, whose data member identifies the resource by type and id and carries the changed attributes.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          properties:
+            id:
+              type: string
+              description: The ID of the resource being updated.
+            type:
+              type: string
+              description: The JSON:API resource type of the resource being updated.
   parameters:
-    id:
-      name: id
-      in: path
-      description: id
-      required: true
+    membership_type_sparse_fields:
+      name: fields[membership_types]
+      in: query
+      required: false
+      description: Comma-delimited list of membership type attributes to only return in the response
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/membership_type_field_values'
+      style: form
+      explode: false
+    pagination_size:
+      name: page[size]
+      description: 'Number of results to display per page (default: 20, max: 100, min: 1)'
+      in: query
+      required: false
       schema:
         type: string
-    membership_type_show_include:
+        default: '20'
+    membership_type_index_include:
       name: include
       in: query
-      description: 'Comma-delimited list of sideloaded resources to include as part of the membership type response.
+      description: 'Comma-delimited list of sideloaded resources to include as part of the membership type index response.
 
         See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
 
@@ -740,10 +706,10 @@ components:
       schema:
         type: string
         default: '1'
-    membership_type_index_include:
+    membership_type_show_include:
       name: include
       in: query
-      description: 'Comma-delimited list of sideloaded resources to include as part of the membership type index response.
+      description: 'Comma-delimited list of sideloaded resources to include as part of the membership type response.
 
         See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
 
@@ -759,27 +725,61 @@ components:
       required: false
       style: form
       explode: false
-    membership_type_sparse_fields:
-      name: fields[membership_types]
-      in: query
-      required: false
-      description: Comma-delimited list of membership type attributes to only return in the response
-      schema:
-        type: array
-        default: []
-        uniqueItems: true
-        items:
-          $ref: '#/components/schemas/membership_type_field_values'
-      style: form
-      explode: false
-    pagination_size:
-      name: page[size]
-      description: 'Number of results to display per page (default: 20, max: 100, min: 1)'
-      in: query
-      required: false
+    id:
+      name: id
+      in: path
+      description: id
+      required: true
       schema:
         type: string
-        default: '20'
+  headers:
+    RateLimit-Reset:
+      description: Unix timestamp (in seconds) at which the current rate-limit window resets.
+      schema:
+        type: string
+        examples:
+        - '1719964810'
+      examples: {}
+    RateLimit-Remaining:
+      description: Number of requests remaining for the current access token in the current rate-limit window.
+      schema:
+        type: string
+        examples:
+        - '249'
+      examples: {}
+    Retry-After:
+      description: Number of seconds to wait before retrying. Sent with 429 responses.
+      schema:
+        type: string
+        examples:
+        - '10'
+      examples: {}
+    RateLimit-Limit:
+      description: Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).
+      schema:
+        type: string
+        examples:
+        - '250'
+      examples: {}
+  requestBodies:
+    membership_type_update_request_body:
+      description: The attributes to update on the existing membership type.
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/membership_type_update_request'
+        application/json:
+          schema:
+            $ref: '#/components/schemas/membership_type_update_request'
+    membership_type_create_request_body:
+      description: The membership type to create.
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/membership_type_create_request'
+        application/json:
+          schema:
+            $ref: '#/components/schemas/membership_type_create_request'
   securitySchemes:
     BearerAuth:
       description: Authentication using a bearer token (JWT) issued via OAuth.

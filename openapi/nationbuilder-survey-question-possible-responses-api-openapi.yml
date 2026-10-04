@@ -169,26 +169,57 @@ paths:
         '429':
           $ref: '#/components/responses/rate_limited'
 components:
-  requestBodies:
-    survey_question_possible_response_create_request_body:
-      description: The survey question possible response to create.
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/survey_question_possible_response_create_request'
-        application/json:
-          schema:
-            $ref: '#/components/schemas/survey_question_possible_response_create_request'
-    survey_question_possible_response_update_request_body:
-      description: The attributes to update on the existing survey question possible response.
-      content:
-        application/vnd.api+json:
-          schema:
-            $ref: '#/components/schemas/survey_question_possible_response_update_request'
-        application/json:
-          schema:
-            $ref: '#/components/schemas/survey_question_possible_response_update_request'
   schemas:
+    survey_question_possible_response_field_values:
+      description: Readable survey_question_possible_response attribute names selectable with sparse fieldsets (fields[survey_question_possible_responses]).
+      type: string
+      enum:
+      - created_at
+      - name
+      - outro
+      - position
+      - survey_question_id
+      - tag_list
+      - updated_at
+    survey_question_possible_response_sideload_values:
+      description: Relationship names that can be sideloaded with the include query parameter on survey_question_possible_response endpoints.
+      type: string
+      enum:
+      - survey_question
+      - survey_question_responses
+    survey_question_possible_response_update_request:
+      description: The request body for updating an existing survey question possible response.
+      allOf:
+      - $ref: '#/components/schemas/update_request_document'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              id:
+                type: string
+                examples:
+                - '1'
+              type:
+                const: survey_question_possible_responses
+                examples:
+                - survey_question_possible_responses
+              attributes:
+                $ref: '#/components/schemas/survey_question_possible_response_read_write_attributes'
+    delete_document:
+      examples:
+      - meta: {}
+      description: The successful destroy response, an empty JSON:API meta-only document returned with status 200 (rather than JSON:API's commonly used 204 No Content).
+      type: object
+      required:
+      - meta
+      additionalProperties: false
+      properties:
+        meta:
+          examples:
+          - {}
+          type: object
+          properties: {}
     pagination_links:
       description: JSON:API pagination links for the pages of a collection. A key whose page is unavailable, or that the server's pagination strategy does not provide, is omitted or null.
       type: object
@@ -226,6 +257,71 @@ components:
           description: Link to the next page.
           examples:
           - /articles?page[number]=3
+    error_response:
+      description: The error body returned for 4xx and 5xx responses, with a machine-readable code and a human-readable message. Some errors include additional detail members alongside these two. The exception is 422 validation failures, which are returned as JSON:API errors documents instead.
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code identifying the failure.
+          examples:
+          - not_found
+        message:
+          type: string
+          description: Human-readable explanation of the failure.
+          examples:
+          - Record not found
+    survey_question_possible_response_show_response:
+      description: A JSON:API response containing a single survey question possible response.
+      allOf:
+      - $ref: '#/components/schemas/show_document'
+      - type: object
+        properties:
+          data:
+            $ref: '#/components/schemas/survey_question_possible_response_response_data'
+    validation_error_document:
+      description: The JSON:API errors document returned with status 422 when model validations fail on create or update. Unlike this API's flat 4xx error bodies, validation failures follow the JSON:API errors format.
+      type: object
+      required:
+      - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/validation_error'
+    resource_identifier:
+      description: A JSON:API resource identifier object, the type/id pair that uniquely identifies a single resource.
+      type: object
+      required:
+      - type
+      - id
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the resource.
+          examples:
+          - '1'
+        type:
+          type: string
+          description: The JSON:API resource type.
+    show_document:
+      description: The JSON:API top-level document shape for responses returning a single resource under the data member.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: object
+          description: The primary resource object; each resource binds its concrete schema here via allOf composition.
+        included:
+          $ref: '#/components/schemas/included'
+        meta:
+          type: object
+          description: Non-standard information about the document. Empty unless the endpoint has metadata to convey.
     validation_error:
       description: A single JSON:API error object describing a validation failure, locating the invalid field via source.pointer and carrying the model-level attribute, message, and code under meta.
       type: object
@@ -271,24 +367,42 @@ components:
             code:
               type: string
               description: The validation failure code.
-    update_request_document:
-      description: The JSON:API top-level document shape for update requests, whose data member identifies the resource by type and id and carries the changed attributes.
+    survey_question_possible_response_index_response:
+      description: A paginated JSON:API response containing a list of survey question possible responses.
+      allOf:
+      - $ref: '#/components/schemas/index_document'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/survey_question_possible_response_response_data'
+    survey_question_possible_response_create_request:
+      description: The request body for creating a new survey question possible response.
+      allOf:
+      - $ref: '#/components/schemas/create_request_document'
+      - type: object
+        properties:
+          data:
+            type: object
+            properties:
+              type:
+                const: survey_question_possible_responses
+                examples:
+                - survey_question_possible_responses
+              attributes:
+                $ref: '#/components/schemas/survey_question_possible_response_read_write_attributes'
+    rate_limited_response:
+      description: The body returned by the rate limiter when an access token exceeds its request quota.
       type: object
       required:
-      - data
+      - message
       properties:
-        data:
-          type: object
-          required:
-          - type
-          - id
-          properties:
-            id:
-              type: string
-              description: The ID of the resource being updated.
-            type:
-              type: string
-              description: The JSON:API resource type of the resource being updated.
+        message:
+          type: string
+          description: Human-readable explanation of the rate limit.
+          examples:
+          - You have made too many requests. Please try again later.
     index_document:
       description: The JSON:API top-level document shape for paginated collection responses, with resource objects under data and pagination links.
       type: object
@@ -305,167 +419,18 @@ components:
         meta:
           type: object
           description: Non-standard information about the document, such as requested statistics. Empty unless the endpoint has metadata to convey.
-    survey_question_possible_response_index_response:
-      description: A paginated JSON:API response containing a list of survey question possible responses.
+    resource:
+      description: A generic JSON:API resource object. Resources sideloaded in a document's included member use this shape; their attributes are those of the resource type named in the type member.
       allOf:
-      - $ref: '#/components/schemas/index_document'
+      - $ref: '#/components/schemas/resource_identifier'
       - type: object
         properties:
-          data:
-            type: array
-            items:
-              $ref: '#/components/schemas/survey_question_possible_response_response_data'
-    error_response:
-      description: The error body returned for 4xx and 5xx responses, with a machine-readable code and a human-readable message. Some errors include additional detail members alongside these two. The exception is 422 validation failures, which are returned as JSON:API errors documents instead.
-      type: object
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: string
-          description: Machine-readable error code identifying the failure.
-          examples:
-          - not_found
-        message:
-          type: string
-          description: Human-readable explanation of the failure.
-          examples:
-          - Record not found
-    survey_question_possible_response_show_response:
-      description: A JSON:API response containing a single survey question possible response.
-      allOf:
-      - $ref: '#/components/schemas/show_document'
-      - type: object
-        properties:
-          data:
-            $ref: '#/components/schemas/survey_question_possible_response_response_data'
-    resource_identifier:
-      description: A JSON:API resource identifier object, the type/id pair that uniquely identifies a single resource.
-      type: object
-      required:
-      - type
-      - id
-      properties:
-        id:
-          type: string
-          description: Unique identifier of the resource.
-          examples:
-          - '1'
-        type:
-          type: string
-          description: The JSON:API resource type.
-    survey_question_possible_response_read_only_attributes:
-      description: The read-only attributes of a survey_question_possible_response.
-      type: object
-      properties:
-        created_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          examples:
-          - '2019-10-26T10:00:00-04:00'
-        updated_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          examples:
-          - '2019-10-26T10:00:00-04:00'
-    show_document:
-      description: The JSON:API top-level document shape for responses returning a single resource under the data member.
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          type: object
-          description: The primary resource object; each resource binds its concrete schema here via allOf composition.
-        included:
-          $ref: '#/components/schemas/included'
-        meta:
-          type: object
-          description: Non-standard information about the document. Empty unless the endpoint has metadata to convey.
-    delete_document:
-      examples:
-      - meta: {}
-      description: The successful destroy response, an empty JSON:API meta-only document returned with status 200 (rather than JSON:API's commonly used 204 No Content).
-      type: object
-      required:
-      - meta
-      additionalProperties: false
-      properties:
-        meta:
-          examples:
-          - {}
-          type: object
-          properties: {}
-    validation_error_document:
-      description: The JSON:API errors document returned with status 422 when model validations fail on create or update. Unlike this API's flat 4xx error bodies, validation failures follow the JSON:API errors format.
-      type: object
-      required:
-      - errors
-      properties:
-        errors:
-          type: array
-          minItems: 1
-          items:
-            $ref: '#/components/schemas/validation_error'
-    survey_question_possible_response_create_request:
-      description: The request body for creating a new survey question possible response.
-      allOf:
-      - $ref: '#/components/schemas/create_request_document'
-      - type: object
-        properties:
-          data:
+          attributes:
             type: object
-            properties:
-              type:
-                const: survey_question_possible_responses
-                examples:
-                - survey_question_possible_responses
-              attributes:
-                $ref: '#/components/schemas/survey_question_possible_response_read_write_attributes'
-    create_request_document:
-      description: The JSON:API top-level document shape for create requests, whose data member carries the new resource's type and attributes.
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          type: object
-          required:
-          - type
-          properties:
-            type:
-              type: string
-              description: The JSON:API resource type of the resource being created.
-    survey_question_possible_response_update_request:
-      description: The request body for updating an existing survey question possible response.
-      allOf:
-      - $ref: '#/components/schemas/update_request_document'
-      - type: object
-        properties:
-          data:
+            description: The attributes of the resource, as documented for its resource type.
+          relationships:
             type: object
-            properties:
-              id:
-                type: string
-                examples:
-                - '1'
-              type:
-                const: survey_question_possible_responses
-                examples:
-                - survey_question_possible_responses
-              attributes:
-                $ref: '#/components/schemas/survey_question_possible_response_read_write_attributes'
-    survey_question_possible_response_sideload_values:
-      description: Relationship names that can be sideloaded with the include query parameter on survey_question_possible_response endpoints.
-      type: string
-      enum:
-      - survey_question
-      - survey_question_responses
+            description: References from this resource to other resources in the document.
     survey_question_possible_response_read_write_attributes:
       description: The attributes of a survey_question_possible_response that can be both read and written.
       type: object
@@ -510,17 +475,24 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/resource'
-    rate_limited_response:
-      description: The body returned by the rate limiter when an access token exceeds its request quota.
+    survey_question_possible_response_read_only_attributes:
+      description: The read-only attributes of a survey_question_possible_response.
       type: object
-      required:
-      - message
       properties:
-        message:
-          type: string
-          description: Human-readable explanation of the rate limit.
+        created_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
           examples:
-          - You have made too many requests. Please try again later.
+          - '2019-10-26T10:00:00-04:00'
+        updated_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          examples:
+          - '2019-10-26T10:00:00-04:00'
     survey_question_possible_response_response_data:
       description: The JSON:API resource object representing a survey question possible response.
       allOf:
@@ -535,83 +507,39 @@ components:
             allOf:
             - $ref: '#/components/schemas/survey_question_possible_response_read_write_attributes'
             - $ref: '#/components/schemas/survey_question_possible_response_read_only_attributes'
-    resource:
-      description: A generic JSON:API resource object. Resources sideloaded in a document's included member use this shape; their attributes are those of the resource type named in the type member.
-      allOf:
-      - $ref: '#/components/schemas/resource_identifier'
-      - type: object
-        properties:
-          attributes:
-            type: object
-            description: The attributes of the resource, as documented for its resource type.
-          relationships:
-            type: object
-            description: References from this resource to other resources in the document.
-    survey_question_possible_response_field_values:
-      description: Readable survey_question_possible_response attribute names selectable with sparse fieldsets (fields[survey_question_possible_responses]).
-      type: string
-      enum:
-      - created_at
-      - name
-      - outro
-      - position
-      - survey_question_id
-      - tag_list
-      - updated_at
-  headers:
-    RateLimit-Remaining:
-      description: Number of requests remaining for the current access token in the current rate-limit window.
-      schema:
-        type: string
-        examples:
-        - '249'
-      examples: {}
-    RateLimit-Reset:
-      description: Unix timestamp (in seconds) at which the current rate-limit window resets.
-      schema:
-        type: string
-        examples:
-        - '1719964810'
-      examples: {}
-    RateLimit-Limit:
-      description: Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).
-      schema:
-        type: string
-        examples:
-        - '250'
-      examples: {}
-    Retry-After:
-      description: Number of seconds to wait before retrying. Sent with 429 responses.
-      schema:
-        type: string
-        examples:
-        - '10'
-      examples: {}
+    create_request_document:
+      description: The JSON:API top-level document shape for create requests, whose data member carries the new resource's type and attributes.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          properties:
+            type:
+              type: string
+              description: The JSON:API resource type of the resource being created.
+    update_request_document:
+      description: The JSON:API top-level document shape for update requests, whose data member identifies the resource by type and id and carries the changed attributes.
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: object
+          required:
+          - type
+          - id
+          properties:
+            id:
+              type: string
+              description: The ID of the resource being updated.
+            type:
+              type: string
+              description: The JSON:API resource type of the resource being updated.
   responses:
-    unprocessable:
-      description: Model validations failed for the resource being created or updated. Unlike this API's other errors, validation failures are returned as a JSON:API errors document locating each invalid field.
-      headers:
-        RateLimit-Limit:
-          $ref: '#/components/headers/RateLimit-Limit'
-        RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimit-Remaining'
-        RateLimit-Reset:
-          $ref: '#/components/headers/RateLimit-Reset'
-      content:
-        application/vnd.api+json:
-          example:
-            errors:
-            - code: unprocessable_entity
-              status: '422'
-              title: Validation Error
-              detail: Email 'not-an-email' should look like an email address
-              source:
-                pointer: /data/attributes/email
-              meta:
-                attribute: email
-                message: '''not-an-email'' should look like an email address'
-          schema:
-            $ref: '#/components/schemas/validation_error_document'
     rate_limited:
       description: The access token has exceeded its request quota for the current rate-limit window.
       headers:
@@ -677,33 +605,87 @@ components:
             message: Record not found
           schema:
             $ref: '#/components/schemas/error_response'
-  parameters:
-    id:
-      name: id
-      in: path
-      description: id
-      required: true
+    unprocessable:
+      description: Model validations failed for the resource being created or updated. Unlike this API's other errors, validation failures are returned as a JSON:API errors document locating each invalid field.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/vnd.api+json:
+          example:
+            errors:
+            - code: unprocessable_entity
+              status: '422'
+              title: Validation Error
+              detail: Email 'not-an-email' should look like an email address
+              source:
+                pointer: /data/attributes/email
+              meta:
+                attribute: email
+                message: '''not-an-email'' should look like an email address'
+          schema:
+            $ref: '#/components/schemas/validation_error_document'
+  headers:
+    RateLimit-Reset:
+      description: Unix timestamp (in seconds) at which the current rate-limit window resets.
       schema:
         type: string
-    survey_question_possible_response_show_include:
-      name: include
-      in: query
-      description: 'Comma-delimited list of sideloaded resources to include as part of the survey question possible response response.
-
-        See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
-
-        sideloading large numbers of resources and pagination.
-
-        '
+        examples:
+        - '1719964810'
+      examples: {}
+    RateLimit-Remaining:
+      description: Number of requests remaining for the current access token in the current rate-limit window.
       schema:
-        type: array
-        default: []
-        uniqueItems: true
-        items:
-          $ref: '#/components/schemas/survey_question_possible_response_sideload_values'
+        type: string
+        examples:
+        - '249'
+      examples: {}
+    Retry-After:
+      description: Number of seconds to wait before retrying. Sent with 429 responses.
+      schema:
+        type: string
+        examples:
+        - '10'
+      examples: {}
+    RateLimit-Limit:
+      description: Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).
+      schema:
+        type: string
+        examples:
+        - '250'
+      examples: {}
+  requestBodies:
+    survey_question_possible_response_update_request_body:
+      description: The attributes to update on the existing survey question possible response.
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/survey_question_possible_response_update_request'
+        application/json:
+          schema:
+            $ref: '#/components/schemas/survey_question_possible_response_update_request'
+    survey_question_possible_response_create_request_body:
+      description: The survey question possible response to create.
+      content:
+        application/vnd.api+json:
+          schema:
+            $ref: '#/components/schemas/survey_question_possible_response_create_request'
+        application/json:
+          schema:
+            $ref: '#/components/schemas/survey_question_possible_response_create_request'
+  parameters:
+    pagination_size:
+      name: page[size]
+      description: 'Number of results to display per page (default: 20, max: 100, min: 1)'
+      in: query
       required: false
-      style: form
-      explode: false
+      schema:
+        type: string
+        default: '20'
     pagination_number:
       name: page[number]
       description: Page number to list (starting at 1)
@@ -731,6 +713,32 @@ components:
       required: false
       style: form
       explode: false
+    survey_question_possible_response_show_include:
+      name: include
+      in: query
+      description: 'Comma-delimited list of sideloaded resources to include as part of the survey question possible response response.
+
+        See guidance [here](https://support.nationbuilder.com/en/articles/9899245-api-v2-walkthrough#h_2d5333adab) about
+
+        sideloading large numbers of resources and pagination.
+
+        '
+      schema:
+        type: array
+        default: []
+        uniqueItems: true
+        items:
+          $ref: '#/components/schemas/survey_question_possible_response_sideload_values'
+      required: false
+      style: form
+      explode: false
+    id:
+      name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
     survey_question_possible_response_sparse_fields:
       name: fields[survey_question_possible_responses]
       in: query
@@ -744,14 +752,6 @@ components:
           $ref: '#/components/schemas/survey_question_possible_response_field_values'
       style: form
       explode: false
-    pagination_size:
-      name: page[size]
-      description: 'Number of results to display per page (default: 20, max: 100, min: 1)'
-      in: query
-      required: false
-      schema:
-        type: string
-        default: '20'
   securitySchemes:
     BearerAuth:
       description: Authentication using a bearer token (JWT) issued via OAuth.

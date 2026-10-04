@@ -61,39 +61,15 @@ paths:
         '429':
           $ref: '#/components/responses/rate_limited'
 components:
+  parameters:
+    id:
+      name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
   responses:
-    not_found:
-      description: No resource exists with the provided ID.
-      headers:
-        RateLimit-Limit:
-          $ref: '#/components/headers/RateLimit-Limit'
-        RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimit-Remaining'
-        RateLimit-Reset:
-          $ref: '#/components/headers/RateLimit-Reset'
-      content:
-        application/json:
-          example:
-            code: not_found
-            message: Record not found
-          schema:
-            $ref: '#/components/schemas/error_response'
-    unauthorized:
-      description: The access token is missing, expired, or not authorized to access this resource.
-      headers:
-        RateLimit-Limit:
-          $ref: '#/components/headers/RateLimit-Limit'
-        RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimit-Remaining'
-        RateLimit-Reset:
-          $ref: '#/components/headers/RateLimit-Reset'
-      content:
-        application/json:
-          example:
-            code: unauthorized
-            message: You are not authorized to access this content. Your access token may be missing. The resource owner also may not have a permission level sufficient to grant access.
-          schema:
-            $ref: '#/components/schemas/error_response'
     rate_limited:
       description: The access token has exceeded its request quota for the current rate-limit window.
       headers:
@@ -111,14 +87,38 @@ components:
             message: You have made too many requests. Please try again later.
           schema:
             $ref: '#/components/schemas/rate_limited_response'
-  parameters:
-    id:
-      name: id
-      in: path
-      description: id
-      required: true
-      schema:
-        type: string
+    unauthorized:
+      description: The access token is missing, expired, or not authorized to access this resource.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/json:
+          example:
+            code: unauthorized
+            message: You are not authorized to access this content. Your access token may be missing. The resource owner also may not have a permission level sufficient to grant access.
+          schema:
+            $ref: '#/components/schemas/error_response'
+    not_found:
+      description: No resource exists with the provided ID.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+      content:
+        application/json:
+          example:
+            code: not_found
+            message: Record not found
+          schema:
+            $ref: '#/components/schemas/error_response'
   schemas:
     error_response:
       description: The error body returned for 4xx and 5xx responses, with a machine-readable code and a human-readable message. Some errors include additional detail members alongside these two. The exception is 422 validation failures, which are returned as JSON:API errors documents instead.
@@ -149,12 +149,12 @@ components:
           examples:
           - You have made too many requests. Please try again later.
   headers:
-    RateLimit-Remaining:
-      description: Number of requests remaining for the current access token in the current rate-limit window.
+    Retry-After:
+      description: Number of seconds to wait before retrying. Sent with 429 responses.
       schema:
         type: string
         examples:
-        - '249'
+        - '10'
       examples: {}
     RateLimit-Limit:
       description: Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).
@@ -170,12 +170,12 @@ components:
         examples:
         - '1719964810'
       examples: {}
-    Retry-After:
-      description: Number of seconds to wait before retrying. Sent with 429 responses.
+    RateLimit-Remaining:
+      description: Number of requests remaining for the current access token in the current rate-limit window.
       schema:
         type: string
         examples:
-        - '10'
+        - '249'
       examples: {}
   securitySchemes:
     BearerAuth:
