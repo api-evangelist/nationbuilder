@@ -1,0 +1,477 @@
+generated: '2026-10-12'
+method: searched
+source:
+- https://zapier.com/apps/nationbuilder/integrations
+checked:
+- https://composio.dev/toolkits/nationbuilder
+- https://monid.ai/tools/nationbuilder
+- https://n8n.io/integrations/nationbuilder/
+- https://zapier.com/apps/nationbuilder/integrations
+summary: null
+marketplace_apps:
+- marketplace: zapier
+  channel: ipaas-listing
+  app: nationbuilder
+  url: https://zapier.com/apps/nationbuilder/integrations
+  external_url: https://nationbuilder.com/?utm_source=zapier&utm_medium=referral
+  partner_tier: BRONZE
+  triggers:
+  - key: new_donation
+    label: New Donation
+  - key: new_event
+    label: New Event
+  - key: new_event_rsvp
+    label: New Event RSVP
+  - key: new_page
+    label: New Page
+  - key: new_person_organization
+    label: New Person
+  - key: new_suggestion
+    label: New Suggestion
+  - key: new_tag_added_to_signup
+    label: New Tag Added to Person
+  - key: search_events
+    label: Search Events
+  - key: updated_donation
+    label: Updated Donation
+  - key: updated_path_journey
+    label: Updated Path Journey
+  - key: updated_signup
+    label: Updated Person
+  actions:
+  - key: add_signup_to_list
+    label: Add Person to List
+  - key: add_signup_to_path
+    label: Add Person to a Path
+  - key: award_social_capital
+    label: Award Social Capital
+  - key: create_automation_enrollment
+    label: Enroll in Automation
+  - key: create_donation
+    label: Create Donation
+  - key: create_event
+    label: Create Event
+  - key: create_event_rsvp
+    label: Create/Update Event RSVP
+  - key: create_logged_contact_v1
+    label: Create Logged Contact
+  - key: create_membership
+    label: Add/Update Person Membership
+  - key: create_petition_signature
+    label: Create Petition Signature
+  - key: create_private_note_v1
+    label: Create Private Note
+  - key: create_signup
+    label: Create/Update Person
+  - key: create_signup_tagging
+    label: Add Tag to Person
+  - key: delete_signup_taggings
+    label: Delete Tag From Person
+  - key: update_membership
+    label: Update Membership
+  - key: update_path_journey
+    label: Update Path Journey
+  searches:
+  - key: search_events
+    label: Search Events
+  - key: search_lists_action
+    label: Search List
+  - key: search_path_journey_participants
+    label: Search Path Participants
+  - key: search_signup_action
+    label: Search Person
+  - key: search_signup_taggings_action
+    label: Search Person Taggings
+edges:
+- partner_name: Zoom
+  partner: zoom
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/nationbuilder/integrations/zoom
+  direction: third-party
+  category: Video Conferencing
+  partner_url: https://www.zoom.us/
+- partner_name: Raisely
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/nationbuilder/integrations/raisely
+  direction: third-party
+  category: Fundraising
+  partner_url: https://raisely.com/
+- partner_name: Gravity Forms
+  partner: gravity-forms
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/nationbuilder/integrations/gravity-forms
+  direction: third-party
+  category: Forms & Surveys
+  partner_url: https://www.gravityforms.com/?utm_campaign=partners&utm_source=zapier-listing-learn-more&utm_medium=free-placement
+- partner_name: Squarespace Forms
+  partner: squarespace
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/nationbuilder/integrations/squarespace-forms
+  direction: third-party
+  category: Forms & Surveys
+  partner_url: https://www.squarespace.com/
+- partner_name: Google Sheets
+  partner: google-sheets
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/nationbuilder/integrations/google-sheets
+  direction: third-party
+  category: Google
+  partner_url: http://sheets.google.com/
+- partner_name: 123FormBuilder
+  partner: 123formbuilder
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/nationbuilder/integrations/123formbuilder
+  direction: third-party
+  category: Forms & Surveys
+  partner_url: https://www.123formbuilder.com/?utm_source=zapier&utm_medium=zapier
+- partner_name: Facebook Lead Ads
+  partner: facebook-lead-ads
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/nationbuilder/integrations/facebook-lead-ads
+  direction: third-party
+  category: Ads & Conversion
+  partner_url: https://www.facebook.com/business/ads/lead-ads
+- partner_name: Google Forms
+  partner: google-forms
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/nationbuilder/integrations/google-forms
+  direction: third-party
+  category: Forms & Surveys
+  partner_url: http://google.com/
+- partner_name: PhoneBurner
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/nationbuilder/integrations/phoneburner
+  direction: third-party
+  category: Phone & SMS
+  partner_url: https://phoneburner.com/
+- partner_name: Facebook Lead Ads (for Business admins)
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/nationbuilder/integrations/facebook-lead-ads-beta
+  direction: third-party
+  category: Ads & Conversion
+  partner_url: https://facebook.com/
+- partner_name: Google Slides
+  partner: google-slides
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/nationbuilder/integrations/google-slides
+  direction: third-party
+  category: Documents
+  partner_url: https://www.google.com/slides/about/
+- partner_name: Eventbrite
+  partner: eventbrite
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/nationbuilder/integrations/eventbrite
+  direction: third-party
+  category: Event Management
+  partner_url: https://eventbrite.com/
+- partner_name: Mailchimp
+  partner: mailchimp
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/nationbuilder/integrations/mailchimp
+  direction: third-party
+  category: Marketing Automation
+  partner_url: https://mailchimp.com/
+- partner_name: Microsoft Outlook
+  partner: microsoft-outlook
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/nationbuilder/integrations/microsoft-outlook
+  direction: third-party
+  category: Calendar
+  partner_url: https://outlook.live.com/
+- partner_name: Google Calendar
+  partner: google-calendar
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/nationbuilder/integrations/google-calendar
+  direction: third-party
+  category: Calendar
+  partner_url: https://calendar.google.com/
+- partner_name: Jotform
+  partner: jotform
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/nationbuilder/integrations/jotform
+  direction: third-party
+  category: Forms & Surveys
+  partner_url: http://www.jotform.com/
+- partner_name: Ecwid by Lightspeed
+  partner: ecwid
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/nationbuilder/integrations/ecwid
+  direction: third-party
+  category: eCommerce
+  partner_url: https://www.ecwid.com/
+- partner_name: Revv
+  partner: revv
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/nationbuilder/integrations/revv
+  direction: third-party
+  category: Fundraising
+  partner_url: https://revv.co/
+- partner_name: Webflow
+  partner: webflow
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/nationbuilder/integrations/webflow
+  direction: third-party
+  category: Website Builders
+  partner_url: https://webflow.com/
+- partner_name: Academy by Coassemble
+  partner: null
+  partner_match: null
+  partner_candidate: zapier
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/nationbuilder/integrations/academy-by-coassemble
+  direction: third-party
+  category: Education
+  partner_url: https://zapier.com/apps/coassemble/integrations
+- partner_name: Stripe
+  partner: stripe
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/nationbuilder/integrations/stripe
+  direction: third-party
+  category: Payment Processing
+  partner_url: https://stripe.com/
+- partner_name: SQL Server
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/nationbuilder/integrations/sql-server
+  direction: third-party
+  category: Databases
+  partner_url: https://www.microsoft.com/sql-server
+- partner_name: Donorbox
+  partner: donorbox
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/nationbuilder/integrations/donorbox
+  direction: third-party
+  category: Fundraising
+  partner_url: https://donorbox.org/
+- partner_name: Bloomerang Fundraising
+  partner: null
+  partner_match: null
+  partner_candidate: qgiv
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/nationbuilder/integrations/bloomerang-fundraising
+  direction: third-party
+  category: Fundraising
+  partner_url: https://www.qgiv.com/
+- partner_name: Square
+  partner: square
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/nationbuilder/integrations/square
+  direction: third-party
+  category: eCommerce
+  partner_url: https://squareup.com/t/cmtp_performance/pr_developers/d_partnerships/p_zapier/?route=
+- partner_name: TicketSpice
+  partner: ticketspice
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/nationbuilder/integrations/ticketspice
+  direction: third-party
+  category: Event Management
+  partner_url: http://www.ticketspice.com/
+- partner_name: Thankster
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/nationbuilder/integrations/thankster
+  direction: third-party
+  category: Customer Appreciation
+  partner_url: http://thankster.com/
+- partner_name: Manychat
+  partner: manychat
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/nationbuilder/integrations/manychat
+  direction: third-party
+  category: Social Media Marketing
+  partner_url: https://manychat.com/
+- partner_name: Anedot
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/nationbuilder/integrations/anedot
+  direction: third-party
+  category: Fundraising
+  partner_url: https://www.anedot.com/?utm_source=zapier&utm_medium=referral
+- partner_name: Mightycause
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/nationbuilder/integrations/mightycause
+  direction: third-party
+  category: Fundraising
+  partner_url: https://www.razoo.com/
+templates:
+- title: Add new Jotform submissions to NationBuilder as persons for seamless management
+  url: https://zapier.com/apps/jotform/integrations/nationbuilder/1270790/add-new-jotform-submissions-to-nationbuilder-as-persons-for-seamless-management
+  apps:
+  - jotform
+  - nationbuilder
+- title: Create QuickBooks Online deposits and private notes in NationBuilder from new NationBuilder donations
+  url: https://zapier.com/apps/nationbuilder/integrations/nationbuilder/255606082/create-quickbooks-online-deposits-and-private-notes-in-nationbuilder-from-new-nationbuilder-donations
+  apps:
+  - nationbuilder
+  - quickbooks
+- title: Create NationBuilder persons for new Facebook leads
+  url: https://zapier.com/apps/facebook-lead-ads/integrations/nationbuilder/56381/create-nationbuilder-persons-for-new-facebook-leads
+  apps:
+  - facebook-lead-ads
+  - nationbuilder
+- title: Record new NationBuilder donations by creating rows in Google Sheets
+  url: https://zapier.com/apps/google-sheets/integrations/nationbuilder/1674012/record-new-nationbuilder-donations-by-creating-rows-in-google-sheets
+  apps:
+  - nationbuilder
+  - google-sheets
+- title: Add new Zoom registrants to NationBuilder as persons
+  url: https://zapier.com/apps/nationbuilder/integrations/zoom/1260553/add-new-zoom-registrants-to-nationbuilder-as-persons
+  apps:
+  - zoom
+  - nationbuilder
+- title: Create NationBuilder donations from new Shopify orders
+  url: https://zapier.com/apps/nationbuilder/integrations/shopify/89853/create-nationbuilder-donations-from-new-shopify-orders
+  apps:
+  - shopify
+  - nationbuilder
+- title: Process new Google Forms responses to create or update persons in NationBuilder
+  url: https://zapier.com/apps/google-forms/integrations/nationbuilder/1460521/process-new-google-forms-responses-to-create-or-update-persons-in-nationbuilder
+  apps:
+  - google-forms
+  - nationbuilder
+- title: Create NationBuilder donations for new Raisely online donations
+  url: https://zapier.com/apps/nationbuilder/integrations/raisely/1230693/create-nationbuilder-donations-for-new-raisely-online-donations
+  apps:
+  - raisely
+  - nationbuilder
+- title: Create NationBuilder persons from new Eventbrite attendees
+  url: https://zapier.com/apps/eventbrite/integrations/nationbuilder/89886/create-nationbuilder-persons-from-new-eventbrite-attendees
+  apps:
+  - eventbrite
+  - nationbuilder
+- title: Create NationBuilder donations from new Square transactions
+  url: https://zapier.com/apps/nationbuilder/integrations/square/89891/create-nationbuilder-donations-from-new-square-transactions
+  apps:
+  - square
+  - nationbuilder
+- title: Create persons in NationBuilder from new Google Sheets rows
+  url: https://zapier.com/apps/google-sheets/integrations/nationbuilder/90408/create-persons-in-nationbuilder-from-new-google-sheets-rows
+  apps:
+  - google-sheets
+  - nationbuilder
+- title: Create new NationBuilder persons for new Google Contacts contacts
+  url: https://zapier.com/apps/google-contacts/integrations/nationbuilder/90412/create-new-nationbuilder-persons-for-new-google-contacts-contacts
+  apps:
+  - google-contacts
+  - nationbuilder
+template_total: 154
