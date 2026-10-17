@@ -61,32 +61,65 @@ paths:
         '429':
           $ref: '#/components/responses/rate_limited'
 components:
-  parameters:
-    id:
-      name: id
-      in: path
-      description: id
-      required: true
+  schemas:
+    error_response:
+      description: The error body returned for 4xx and 5xx responses, with a machine-readable code and a human-readable message. Some errors include additional detail members alongside these two. The exception is 422 validation failures, which are returned as JSON:API errors documents instead.
+      type: object
+      required:
+      - code
+      - message
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code identifying the failure.
+          examples:
+          - not_found
+        message:
+          type: string
+          description: Human-readable explanation of the failure.
+          examples:
+          - Record not found
+    rate_limited_response:
+      description: The body returned by the rate limiter when an access token exceeds its request quota.
+      type: object
+      required:
+      - message
+      properties:
+        message:
+          type: string
+          description: Human-readable explanation of the rate limit.
+          examples:
+          - You have made too many requests. Please try again later.
+  headers:
+    RateLimit-Reset:
+      description: Unix timestamp (in seconds) at which the current rate-limit window resets.
       schema:
         type: string
+        examples:
+        - '1719964810'
+      examples: {}
+    RateLimit-Limit:
+      description: Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).
+      schema:
+        type: string
+        examples:
+        - '250'
+      examples: {}
+    Retry-After:
+      description: Number of seconds to wait before retrying. Sent with 429 responses.
+      schema:
+        type: string
+        examples:
+        - '10'
+      examples: {}
+    RateLimit-Remaining:
+      description: Number of requests remaining for the current access token in the current rate-limit window.
+      schema:
+        type: string
+        examples:
+        - '249'
+      examples: {}
   responses:
-    rate_limited:
-      description: The access token has exceeded its request quota for the current rate-limit window.
-      headers:
-        RateLimit-Limit:
-          $ref: '#/components/headers/RateLimit-Limit'
-        RateLimit-Remaining:
-          $ref: '#/components/headers/RateLimit-Remaining'
-        RateLimit-Reset:
-          $ref: '#/components/headers/RateLimit-Reset'
-        Retry-After:
-          $ref: '#/components/headers/Retry-After'
-      content:
-        application/json:
-          example:
-            message: You have made too many requests. Please try again later.
-          schema:
-            $ref: '#/components/schemas/rate_limited_response'
     unauthorized:
       description: The access token is missing, expired, or not authorized to access this resource.
       headers:
@@ -119,64 +152,31 @@ components:
             message: Record not found
           schema:
             $ref: '#/components/schemas/error_response'
-  schemas:
-    error_response:
-      description: The error body returned for 4xx and 5xx responses, with a machine-readable code and a human-readable message. Some errors include additional detail members alongside these two. The exception is 422 validation failures, which are returned as JSON:API errors documents instead.
-      type: object
-      required:
-      - code
-      - message
-      properties:
-        code:
-          type: string
-          description: Machine-readable error code identifying the failure.
-          examples:
-          - not_found
-        message:
-          type: string
-          description: Human-readable explanation of the failure.
-          examples:
-          - Record not found
-    rate_limited_response:
-      description: The body returned by the rate limiter when an access token exceeds its request quota.
-      type: object
-      required:
-      - message
-      properties:
-        message:
-          type: string
-          description: Human-readable explanation of the rate limit.
-          examples:
-          - You have made too many requests. Please try again later.
-  headers:
-    Retry-After:
-      description: Number of seconds to wait before retrying. Sent with 429 responses.
+    rate_limited:
+      description: The access token has exceeded its request quota for the current rate-limit window.
+      headers:
+        RateLimit-Limit:
+          $ref: '#/components/headers/RateLimit-Limit'
+        RateLimit-Remaining:
+          $ref: '#/components/headers/RateLimit-Remaining'
+        RateLimit-Reset:
+          $ref: '#/components/headers/RateLimit-Reset'
+        Retry-After:
+          $ref: '#/components/headers/Retry-After'
+      content:
+        application/json:
+          example:
+            message: You have made too many requests. Please try again later.
+          schema:
+            $ref: '#/components/schemas/rate_limited_response'
+  parameters:
+    id:
+      name: id
+      in: path
+      description: id
+      required: true
       schema:
         type: string
-        examples:
-        - '10'
-      examples: {}
-    RateLimit-Limit:
-      description: Maximum number of requests allowed for the current access token per rate-limit window (10 seconds).
-      schema:
-        type: string
-        examples:
-        - '250'
-      examples: {}
-    RateLimit-Reset:
-      description: Unix timestamp (in seconds) at which the current rate-limit window resets.
-      schema:
-        type: string
-        examples:
-        - '1719964810'
-      examples: {}
-    RateLimit-Remaining:
-      description: Number of requests remaining for the current access token in the current rate-limit window.
-      schema:
-        type: string
-        examples:
-        - '249'
-      examples: {}
   securitySchemes:
     BearerAuth:
       description: Authentication using a bearer token (JWT) issued via OAuth.
